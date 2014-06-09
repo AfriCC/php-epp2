@@ -1,12 +1,18 @@
 <?php
+/**
+ *
+ * @author Gavin Brown <gavin.brown@nospam.centralnic.com>
+ * @author Gunter Grodotzki <gunter@afri.cc>
+ * @license GPL
+ */
+namespace AfriCC\EPP\Frame\Command\Update;
 
-    /**
-    * @package Net_EPP
-    */
-    class Net_EPP_Frame_Command_Update_Host extends Net_EPP_Frame_Command_Update
+use AfriCC\EPP\Frame\Command\Update;
+
+class Host extends Update
+{
+    public function __construct()
     {
-        function __construct()
-        {
-            parent::__construct('host');
-        }
+        parent::__construct('host');
     }
+}

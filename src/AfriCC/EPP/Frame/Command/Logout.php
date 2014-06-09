@@ -10,8 +10,5 @@ use AfriCC\EPP\Frame\Command;
 
 class Logout extends Command
 {
-    public function __construct()
-    {
-        parent::__construct('logout');
-    }
+
 }

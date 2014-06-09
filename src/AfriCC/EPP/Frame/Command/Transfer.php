@@ -7,9 +7,9 @@
  */
 namespace AfriCC\EPP\Frame\Command;
 
-use AfriCC\EPP\Frame\Command as CommandFrame;
+use AfriCC\EPP\Frame\Command;
 
-abstract class Transfer extends CommandFrame
+abstract class Transfer extends Command
 {
     function __construct($type)
     {

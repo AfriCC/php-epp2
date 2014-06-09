@@ -1,21 +1,26 @@
 <?php
+/**
+ *
+ * @author Gavin Brown <gavin.brown@nospam.centralnic.com>
+ * @author Gunter Grodotzki <gunter@afri.cc>
+ * @license GPL
+ */
+namespace AfriCC\EPP\Frame\Command\Transfer;
 
-    /**
-    * @package Net_EPP
-    */
-    class Net_EPP_Frame_Command_Transfer_Domain extends Net_EPP_Frame_Command_Transfer
+use AfriCC\EPP\Frame\Command\Transfer;
+
+class Domain extends Transfer
+{
+    public function __construct()
     {
-        function __construct()
-        {
-            parent::__construct('domain');
-        }
-
-        function setPeriod($period, $units='y')
-        {
-            $el = $this->createObjectPropertyElement('period');
-            $el->setAttribute('unit', $units);
-            $el->appendChild($this->createTextNode($period));
-            $this->payload->appendChild($el);
-        }
-
+        parent::__construct('domain');
     }
+
+    function setPeriod($period, $units='y')
+    {
+        $el = $this->createObjectPropertyElement('period');
+        $el->setAttribute('unit', $units);
+        $el->appendChild($this->createTextNode($period));
+        $this->payload->appendChild($el);
+    }
+}

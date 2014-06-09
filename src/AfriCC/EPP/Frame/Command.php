@@ -13,25 +13,11 @@ use Exception;
 
 class Command extends Frame
 {
-    protected $knownCommands = array(
-    	'check' => true,
-        'info' => true,
-        'create' => true,
-        'update' => true,
-        'delete' => true,
-        'renew' => true,
-        'transfer' => true,
-        'poll' => true,
-        'login' => true,
-        'logout' => true,
-    );
-
-    public function __construct($command, $type = '')
+    public function __construct($command = null, $type = null)
     {
         $this->type = $type;
-        $command = strtolower($command);
-        if (!isset($this->knownCommands[$command])) {
-            throw new Exception(sprintf('unknown command: %s', $command));
+        if ($command === null) {
+            $command = strtolower(substr(strrchr(get_class($this), '\\'), 1));
         }
 
         parent::__construct('command');
