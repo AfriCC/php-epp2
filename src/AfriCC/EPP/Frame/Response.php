@@ -19,14 +19,11 @@ class Response extends AbstractFrame
 
     public function code()
     {
-        $nodes = $this->get('//epp:epp/epp:response/epp:result/@code');
-        var_dump((string) $nodes->item(0));
-        exit;
-        //return $this->getElementsByTagName('result')->item(0)->getAttribute('code');
+        return (int) $this->get('//epp:epp/epp:response/epp:result/@code');
     }
 
     public function message()
     {
-        return $this->getElementsByTagName('msg')->item(0)->firstChild->textContent;
+        return (string) $this->get('//epp:epp/epp:response/epp:result/epp:msg/text()');
     }
 }

@@ -39,7 +39,7 @@ abstract class AbstractFrame extends DOMDocument implements FrameInterface
             $this->xpath = new DOMXPath($this);
             $this->xpath->registerNamespace('epp', ObjectSpec::ROOT_NS);
             foreach (ObjectSpec::all() as $prefix => $spec) {
-                $this->xpath->registerNamespace($prefix, $spec['namespace']);
+                $this->xpath->registerNamespace($prefix, $spec['xmlns']);
             }
 
         } else {
@@ -54,11 +54,20 @@ abstract class AbstractFrame extends DOMDocument implements FrameInterface
     public function get($query)
     {
         $nodes = $this->xpath->query($query);
-        var_dump(get_class($nodes));
-        if ($nodes instanceof DOMNodeList && $nodes->length > 0) {
+        if ($nodes === null || $nodes->length === 0) {
+            return false;
+        }
+
+        // try to figure out what type is being requested
+        $last_bit = substr(strrchr($query, '/'), 1);
+
+        if ($last_bit{0} === '@' && $nodes->length === 1 && $nodes->item(0)->nodeType === XML_ATTRIBUTE_NODE) {
+            return $nodes->item(0)->value;
+        } elseif (stripos($last_bit, 'text()') === 0 && $nodes->length === 1 && $nodes->item(0)->nodeType === XML_TEXT_NODE) {
+            return $nodes->item(0)->nodeValue;
+        } else {
             return $nodes;
         }
-        return false;
     }
 
     public function __toString()

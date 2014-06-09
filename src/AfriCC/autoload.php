@@ -9,7 +9,7 @@
 spl_autoload_register(function ($class) {
 
     // project-specific namespace prefix
-    $prefix = 'AfriCC\\EPP\\';
+    $prefix = 'AfriCC\\';
 
     // base directory for the namespace prefix
     $base_dir = __DIR__ . '/';

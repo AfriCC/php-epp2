@@ -17,16 +17,16 @@ class ObjectSpec
 
     protected static $specs = array(
         'domain' => array(
-            'namespace' => 'urn:ietf:params:xml:ns:domain-1.0',
-            'id'        => 'name',
+            'xmlns' => 'urn:ietf:params:xml:ns:domain-1.0',
+            'id'    => 'name',
         ),
         'host' => array(
-            'namespace' => 'urn:ietf:params:xml:ns:host-1.0',
-            'id'        => 'name',
+            'xmlns' => 'urn:ietf:params:xml:ns:host-1.0',
+            'id'    => 'name',
         ),
         'contact' => array(
-            'namespace' => 'urn:ietf:params:xml:ns:contact-1.0',
-            'id'        => 'id',
+            'xmlns' => 'urn:ietf:params:xml:ns:contact-1.0',
+            'id'    => 'id',
         ),
     );
 

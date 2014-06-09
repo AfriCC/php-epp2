@@ -34,7 +34,7 @@ class Command extends AbstractFrame implements TransactionAwareInterface
         if (!empty($this->mapping_name)) {
             $this->payload = $this->createElementNS(
                 ObjectSpec::xmlns($this->mapping_name),
-                $this->mapping_name.':'. $this->command_name
+                $this->mapping_name . ':' . $this->command_name
             );
 
             $this->command->appendChild($this->payload);
@@ -45,31 +45,34 @@ class Command extends AbstractFrame implements TransactionAwareInterface
         $this->body->appendChild($this->client_transaction_id);
     }
 
-    function addObjectProperty($name, $value = null)
+    public function addObjectProperty($name, $value = null, $dst = null)
     {
         $element = $this->createObjectPropertyElement($name);
-        $this->command->appendChild($element);
 
-        if ($value instanceof DomNode) {
+        if ($dst === null) {
+            $this->payload->appendChild($element);
+        } else {
+            $dst->appendChild($element);
+        }
+
+        if ($value instanceof DOMNode) {
             $element->appendChild($value);
-
         } elseif (isset($value)) {
             $element->appendChild($this->createTextNode($value));
-
         }
 
         return $element;
     }
 
-    function createObjectPropertyElement($name)
+    public function createObjectPropertyElement($name)
     {
         return $this->createElementNS(
             ObjectSpec::xmlns($this->mapping_name),
-            $this->type.':'.$name
+            $this->mapping_name . ':' . $name
         );
     }
 
-    function createExtensionElement($ext, $command)
+    public function createExtensionElement($ext, $command)
     {
         $this->extension = $this->createElement('extension');
         $this->body->appendChild($this->extension);

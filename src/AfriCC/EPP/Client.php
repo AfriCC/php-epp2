@@ -19,6 +19,7 @@ use DOMDocument;
 
 /**
  * A high level TCP (SSL) based client for the Extensible Provisioning Protocol (EPP)
+ * @link http://tools.ietf.org/html/rfc5734
  */
 class Client
 {
@@ -140,24 +141,9 @@ class Client
         // get greeting
         $greeting = $this->getFrame();
 
-        // send login command
-        $login = new LoginCommand;
-        $login->clientId($this->username);
-        $login->password($this->password);
-        $login->version('1.0');
-        $login->lang('en');
-        if (!empty($this->services) && is_array($this->services)) {
-            foreach($this->services as $urn) {
-                $login->addService($urn);
-            }
-        }
-        $response = $this->request($login);
+        // login
+        $this->login();
 
-        if ($response instanceof ResponseFrame) {
-            $response->code();
-
-        }
-exit;
         // return greeting
         return $greeting;
     }
@@ -233,6 +219,32 @@ exit;
     public function active()
     {
         return (!is_resource($this->socket) || feof($this->socket) ? false : true);
+    }
+
+
+    protected function login()
+    {
+        // send login command
+        $login = new LoginCommand;
+        $login->clientId($this->username);
+        $login->password($this->password);
+        $login->version('1.0');
+        $login->lang('en');
+
+        if (!empty($this->services) && is_array($this->services)) {
+            foreach($this->services as $urn) {
+                $login->addService($urn);
+            }
+        }
+
+        $response = $this->request($login);
+
+        // check if login was successfull
+        if (!($response instanceof ResponseFrame)) {
+            throw new Exception('there was a problem logging onto the EPP server');
+        } elseif ($response->code() !== 1000) {
+            throw new Exception($response->message(), $response->code());
+        }
     }
 
 
