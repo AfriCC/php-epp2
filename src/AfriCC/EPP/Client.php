@@ -1,120 +1,343 @@
 <?php
 /**
- * A simple client class for the Extensible Provisioning Protocol (EPP)
- * @author Gavin Brown <gavin.brown@nospam.centralnic.com>
+ * A high level TCP (SSL) based client for the Extensible Provisioning Protocol (EPP)
  * @author Gunter Grodotzki <gunter@afri.cc>
  * @license GPL
  */
 namespace AfriCC\EPP;
 
+use AfriCC\EPP\Frame\Command\Login as LoginFrame;
+use AfriCC\EPP\Frame\Command\Logout as LogoutFrame;
+use Exception;
+
 class Client
 {
-    /**
-    * @var resource the socket resource, once connected
-    */
-    var $socket;
+    protected $socket;
+    protected $host;
+    protected $port;
+    protected $username;
+    protected $password;
+    protected $services;
+    protected $ssl;
+    protected $local_cert;
+    protected $debug;
+    protected $connect_timeout;
+    protected $timeout;
 
-    /**
-    * Establishes a connect to the server
-    * This method establishes the connection to the server. If the connection was
-    * established, then this method will call getFrame() and return the EPP <greeting>
-    * frame which is sent by the server upon connection. If connection fails, then
-    * an exception with a message explaining the error will be thrown and handled
-    * in the calling code.
-    * @param string $host the hostname
-    * @param integer $port the TCP port
-    * @param integer $timeout the timeout in seconds
-    * @param boolean $ssl whether to connect using SSL
-    * @param resource $context a stream resource to use when setting up the socket connection
-    * @throws Exception on connection errors
-    * @return a string containing the server <greeting>
-    */
-    function connect($host, $port=700, $timeout=1, $ssl=true, $context=NULL)
+    public function __construct(array $config)
     {
-        $target = sprintf('%s://%s:%d', ($ssl === true ? 'tls' : 'tcp'), $host, $port);
-        if (is_resource($context)) {
-            $result = stream_socket_client($target, $errno, $errstr, $timeout, STREAM_CLIENT_CONNECT, $context);
+        if (!empty($config['host'])) {
+            $this->host = (string) $config['host'];
+        }
 
+        if (!empty($config['port'])) {
+            $this->port = (int) $config['port'];
         } else {
-            $result = stream_socket_client($target, $errno, $errstr, $timeout, STREAM_CLIENT_CONNECT);
-        }
-        if ($result === False) {
-            throw new Exception("Error connecting to $target: $errstr (code $errno)");
-
+            $this->port = 700;
         }
 
-        // Set our socket
-        $this->socket = $result;
+        if (!empty($config['username'])) {
+            $this->username = (string) $config['username'];
+        }
 
-        // Set stream timeout
-        if (!stream_set_timeout($this->socket,$timeout)) {
-            throw new Exception("Failed to set timeout on socket: $errstr (code $errno)");
+        if (!empty($config['password'])) {
+            $this->password = (string) $config['password'];
         }
-        // Set blocking
-        if (!stream_set_blocking($this->socket,0)) {
-            throw new Exception("Failed to set blocking on socket: $errstr (code $errno)");
+
+        if (!empty($config['services']) && is_array($config['services'])) {
+            $this->services = $config['services'];
         }
+
+        if (!empty($config['ssl'])) {
+            $this->ssl = true;
+        } else {
+            $this->ssl = false;
+        }
+
+        if (!empty($config['local_cert'])) {
+            $this->local_cert = (string) $config['local_cert'];
+
+            if (!is_readable($this->local_cert)) {
+                throw new Exception(sprintf('unable to read local_cert: %s', $this->local_cert));
+            }
+        }
+
+        if (!empty($config['debug'])) {
+            $this->debug = true;
+        } else {
+            $this->debug = false;
+        }
+
+        if (!empty($config['connect_timeout'])) {
+            $this->connect_timeout = (int) $config['connect_timeout'];
+        } else {
+            $this->connect_timeout = 4;
+        }
+
+        if (!empty($config['timeout'])) {
+            $this->timeout = (int) $config['timeout'];
+        } else {
+            $this->timeout = 8;
+        }
+    }
+
+    public function __destruct()
+    {
+        $this->close();
+    }
+
+    /**
+     * Open a new connection to the EPP server
+     */
+    public function connect()
+    {
+        if ($this->ssl) {
+            $proto = 'ssl';
+
+            $context = stream_context_create();
+            stream_context_set_option($context, 'ssl', 'verify_peer', false);
+            stream_context_set_option($context, 'ssl', 'allow_self_signed', true);
+
+            if ($this->local_cert !== null) {
+                stream_context_set_option($context, 'ssl', 'local_cert', $this->local_cert);
+            }
+        } else {
+            $proto = 'tcp';
+        }
+
+        $target = sprintf('%s://%s:%d', $proto, $this->host, $this->port);
+
+        if (isset($contect) && is_resource($context)) {
+            $this->socket = @stream_socket_client($target, $errno, $errstr, $this->connect_timeout, STREAM_CLIENT_CONNECT, $context);
+        } else {
+            $this->socket = @stream_socket_client($target, $errno, $errstr, $this->connect_timeout, STREAM_CLIENT_CONNECT);
+        }
+
+        if ($this->socket === false) {
+            throw new Exception($errstr, $errno);
+        }
+
+        // set stream time out
+        if (!stream_set_timeout($this->socket, $this->timeout)) {
+            throw new Exception('unable to set stream timeout');
+        }
+
+        // set to non-blocking
+        if (!stream_set_blocking($this->socket, 0)) {
+            throw new Exception('unable to set blocking');
+        }
+
+        // get greeting
+        $greeting = $this->getFrame();
+
+        // send login frame
+        $login_frame = new LoginFrame;
+        $login_frame->clientId($this->username);
+        $login_frame->password($this->password);
+        $login_frame->version('1.0');
+        $login_frame->lang('en');
+        if (!empty($this->services) && is_array($this->services)) {
+            foreach($this->services as $urn) {
+                $login_frame->addService($urn);
+            }
+        }
+        $response = $this->request($login_frame);
+
+        // return greeting
+        return $greeting;
+    }
+
+
+    /**
+     * Closes a previously opened EPP connection
+     */
+    public function close()
+    {
+        if ($this->active()) {
+            // send logout frame
+            $buffer = $this->request(new LogoutFrame);
+            return fclose($this->socket);
+        }
+        return false;
+    }
+
+
+    /**
+     * Get an EPP frame from the server.
+     */
+    public function getFrame()
+    {
+        $header = $this->recv(4);
+
+        // Unpack first 4 bytes which is our length
+        $unpacked = unpack('N', $header);
+        $length = $unpacked[1];
+
+        if ($length < 5) {
+            throw new Exception(sprintf('Got a bad frame header length of %d bytes from peer', $length));
+        } else {
+            $length -= 4;
+            return $this->recv($length);
+        }
+    }
+
+
+    /**
+     * sends a XML-based frame to the server
+     * @param FrameInterface $frame the frame to send to the server
+     */
+    public function sendFrame(FrameInterface $frame)
+    {
+        // some frames might require a client transaction identifier, so let us
+        // inject it before sending the frame
+        if ($frame instanceof TransactionAwareInterface) {
+            $frame->setClientTransactionId($this->generateClientTransactionId());
+        }
+
+        $buffer = (string) $frame;
+        $header = pack('N', strlen($buffer) + 4);
+        return $this->send($header . $buffer);
+    }
+
+    /**
+     * a wrapper around sendFrame() and getFrame()
+     * @param DOMDocument $xml the frame to send to the server
+     */
+    public function request(FrameInterface $frame)
+    {
+        $res = $this->sendFrame($frame);
 
         return $this->getFrame();
     }
 
-    /**
-    * Get an EPP frame from the server.
-    * This retrieves a frame from the server. Since the connection is blocking, this
-    * method will wait until one becomes available. If the connection has been broken,
-    * this method will return a string containing the XML from the server
-    * @throws Exception on frame errors
-    * @return a string containing the frame
-    */
-    function getFrame()
-    {
-        return Net_EPP_Protocol::getFrame($this->socket);
-    }
 
     /**
-    * Send an XML frame to the server.
-    * This method sends an EPP frame to the server.
-    * @param string the XML data to send
-    * @throws Exception when it doesn't complete the write to the socket
-    * @return boolean the result of the fwrite() operation
-    */
-    function sendFrame($xml)
-    {
-        return Net_EPP_Protocol::sendFrame($this->socket, $xml);
-    }
-
-    /**
-    * a wrapper around sendFrame() and getFrame()
-    * @param string $xml the frame to send to the server
-    * @throws Exception when it doesn't complete the write to the socket
-    * @return string the frame returned by the server, or an error object
-    */
-    function request($xml)
-    {
-        $res = $this->sendFrame($xml);
-
-        return $this->getFrame();
-    }
-
-    /**
-    * Close the connection.
-    * This method closes the connection to the server. Note that the
-    * EPP specification indicates that clients should send a <logout>
-    * command before ending the session.
-    * @return boolean the result of the fclose() operation
-    */
-    function disconnect()
-    {
-        return @fclose($this->socket);
-    }
-
-    /**
-    * ping the connection to check that it's up
-    * @return boolean
-    */
-    function ping()
+     * check if socket is still active
+     * @return boolean
+     */
+    public function active()
     {
         return (!is_resource($this->socket) || feof($this->socket) ? false : true);
     }
 
+
+    protected function log($message, $color = '0;32') {
+        if ($message === '') {
+            return;
+        }
+        echo sprintf("\033[%sm%s\033[0m" . PHP_EOL, $color, trim($message));
+    }
+
+
+    protected function generateClientTransactionId() {
+        return substr(uniqid($this->username . '-', true), 0, 64);
+    }
+
+
+    /**
+     * receive socket data
+     * @param int $length
+     * @throws Exception
+     * @return string
+     */
+    private function recv($length)
+    {
+        $result = '';
+
+        $info = stream_get_meta_data($this->socket);
+        $hard_time_limit = time() + $this->timeout + 2;
+
+        while (!$info['timed_out'] && !feof($this->socket)) {
+            // Try read remaining data from socket
+            $buffer = @fread($this->socket, $length - strlen($result));
+
+            // If the buffer actually contains something then add it to the result
+            if ($buffer !== false) {
+                if ($this->debug) {
+                    $this->log($buffer);
+                }
+
+                $result .= $buffer;
+
+                // break if all data received
+                if (strlen($result) === $length) {
+                    break;
+                }
+            } else {
+                // sleep 0.25s
+                usleep(250000);
+            }
+
+            // update metadata
+            $info = stream_get_meta_data($this->socket);
+            if (time() >= $hard_time_limit) {
+                throw new Exception('Timeout while reading from EPP Server');
+            }
+        }
+
+        // check for timeout
+        if ($info['timed_out']) {
+            throw new Exception('Timeout while reading data from socket');
+        }
+
+        return $result;
+    }
+
+
+    /**
+     * send data to socket
+     * @param string $string
+     */
+    private function send($buffer)
+    {
+        $info = stream_get_meta_data($this->socket);
+        $hard_time_limit = time() + $this->timeout + 2;
+        $length = strlen($buffer);
+
+        $pos = 0;
+        while (!$info['timed_out'] && !feof($this->socket)) {
+            // Some servers don't like alot of data, so keep it small per chunk
+            $wlen = $length - $pos;
+
+            if ($wlen > 1024) {
+                $wlen = 1024;
+            }
+
+            // try write remaining data from socket
+            $written = @fwrite($this->socket, substr($buffer, $pos), $wlen);
+
+            // If we read something, bump up the position
+            if ($written) {
+                if ($this->debug) {
+                    $this->log(substr($buffer, $pos), '1;31');
+                }
+                $pos += $written;
+
+                // break if all written
+                if ($pos === $length) {
+                    break;
+                }
+            } else {
+                // sleep 0.25s
+                usleep(250000);
+            }
+
+            // update metadata
+            $info = stream_get_meta_data($this->socket);
+            if (time() >= $hard_time_limit) {
+                throw new Exception('Timeout while writing to EPP Server');
+            }
+        }
+
+        // check for timeout
+        if ($info['timed_out']) {
+            throw new Exception('Timeout while writing data to socket');
+        }
+
+        if ($pos !== $length) {
+            throw new Exception('Writing short %d bytes', $length - $pos);
+        }
+
+        return $pos;
+    }
 }

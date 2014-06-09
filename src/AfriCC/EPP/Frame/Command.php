@@ -1,22 +1,28 @@
 <?php
+
 /**
+ * This file is part of the php-epp2 library.
  *
- * @author Gavin Brown <gavin.brown@nospam.centralnic.com>
- * @author Gunter Grodotzki <gunter@afri.cc>
- * @license GPL
+ * (c) Gunter Grodotzki <gunter@afri.cc>
+ *
+ * For the full copyright and license information, please view the LICENSE file
+ * that was distributed with this source code.
  */
+
 namespace AfriCC\EPP\Frame;
 
+use AfriCC\EPP\TransactionAwareInterface;
 use AfriCC\EPP\Frame;
 use AfriCC\EPP\ObjectSpec;
 use Exception;
 use DOMNode;
 
-class Command extends Frame
+class Command extends Frame implements TransactionAwareInterface
 {
     protected $format_name = 'command';
     protected $command_name;
     protected $command;
+    protected $client_transaction_id;
 
     public function __construct()
     {
@@ -34,9 +40,9 @@ class Command extends Frame
             $this->command->appendChild($this->payload);
         }
 
-        $this->clTRID = $this->createElement('clTRID');
-        $this->clTRID->appendChild($this->createTextNode(''));
-        $this->body->appendChild($this->clTRID);
+        $this->client_transaction_id = $this->createElement('clTRID');
+        $this->client_transaction_id->appendChild($this->createTextNode(''));
+        $this->body->appendChild($this->client_transaction_id);
     }
 
     function addObjectProperty($name, $value = null)
@@ -74,5 +80,13 @@ class Command extends Frame
         );
 
         $this->extension->appendChild($this->extension->payload);
+    }
+
+    public function setClientTransactionId($cltrid) {
+        $this->client_transaction_id->nodeValue = $cltrid;
+    }
+
+    public function getClientTransactionId() {
+        return $this->client_transaction_id->nodeValue;
     }
 }

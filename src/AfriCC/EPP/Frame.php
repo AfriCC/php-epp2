@@ -10,7 +10,7 @@ namespace AfriCC\EPP;
 use DOMDocument;
 use Exception;
 
-abstract class Frame extends DOMDocument
+abstract class Frame extends DOMDocument implements FrameInterface
 {
     const EPP_NS        = 'urn:ietf:params:xml:ns:epp-1.0';
     const SCHEMA_URI    = 'http://www.w3.org/2001/XMLSchema-instance';
