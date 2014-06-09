@@ -1,21 +1,28 @@
 <?php
+
 /**
+ * This file is part of the php-epp2 library.
  *
- * @author Gavin Brown <gavin.brown@nospam.centralnic.com>
- * @author Gunter Grodotzki <gunter@afri.cc>
- * @license GPL
+ * (c) Gunter Grodotzki <gunter@afri.cc>
+ *
+ * For the full copyright and license information, please view the LICENSE file
+ * that was distributed with this source code.
  */
+
 namespace AfriCC\EPP\Frame;
 
-use AfriCC\EPP\Frame;
+use AfriCC\EPP\AbstractFrame;
 
-final class Response extends Frame
+class Response extends AbstractFrame
 {
     protected $format = 'response';
 
     public function code()
     {
-        return $this->getElementsByTagName('result')->item(0)->getAttribute('code');
+        $nodes = $this->get('//epp:epp/epp:response/epp:result/@code');
+        var_dump((string) $nodes->item(0));
+        exit;
+        //return $this->getElementsByTagName('result')->item(0)->getAttribute('code');
     }
 
     public function message()

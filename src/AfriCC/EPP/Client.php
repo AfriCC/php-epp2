@@ -1,15 +1,25 @@
 <?php
+
 /**
- * A high level TCP (SSL) based client for the Extensible Provisioning Protocol (EPP)
- * @author Gunter Grodotzki <gunter@afri.cc>
- * @license GPL
+ * This file is part of the php-epp2 library.
+ *
+ * (c) Gunter Grodotzki <gunter@afri.cc>
+ *
+ * For the full copyright and license information, please view the LICENSE file
+ * that was distributed with this source code.
  */
+
 namespace AfriCC\EPP;
 
-use AfriCC\EPP\Frame\Command\Login as LoginFrame;
-use AfriCC\EPP\Frame\Command\Logout as LogoutFrame;
+use AfriCC\EPP\Frame\Response as ResponseFrame;
+use AfriCC\EPP\Frame\Command\Login as LoginCommand;
+use AfriCC\EPP\Frame\Command\Logout as LogoutCommand;
 use Exception;
+use DOMDocument;
 
+/**
+ * A high level TCP (SSL) based client for the Extensible Provisioning Protocol (EPP)
+ */
 class Client
 {
     protected $socket;
@@ -130,19 +140,24 @@ class Client
         // get greeting
         $greeting = $this->getFrame();
 
-        // send login frame
-        $login_frame = new LoginFrame;
-        $login_frame->clientId($this->username);
-        $login_frame->password($this->password);
-        $login_frame->version('1.0');
-        $login_frame->lang('en');
+        // send login command
+        $login = new LoginCommand;
+        $login->clientId($this->username);
+        $login->password($this->password);
+        $login->version('1.0');
+        $login->lang('en');
         if (!empty($this->services) && is_array($this->services)) {
             foreach($this->services as $urn) {
-                $login_frame->addService($urn);
+                $login->addService($urn);
             }
         }
-        $response = $this->request($login_frame);
+        $response = $this->request($login);
 
+        if ($response instanceof ResponseFrame) {
+            $response->code();
+
+        }
+exit;
         // return greeting
         return $greeting;
     }
@@ -155,7 +170,7 @@ class Client
     {
         if ($this->active()) {
             // send logout frame
-            $buffer = $this->request(new LogoutFrame);
+            $buffer = $this->request(new LogoutCommand);
             return fclose($this->socket);
         }
         return false;
@@ -177,7 +192,7 @@ class Client
             throw new Exception(sprintf('Got a bad frame header length of %d bytes from peer', $length));
         } else {
             $length -= 4;
-            return $this->recv($length);
+            return $this->loadFrame($this->recv($length));
         }
     }
 
@@ -221,7 +236,8 @@ class Client
     }
 
 
-    protected function log($message, $color = '0;32') {
+    protected function log($message, $color = '0;32')
+    {
         if ($message === '') {
             return;
         }
@@ -229,8 +245,45 @@ class Client
     }
 
 
-    protected function generateClientTransactionId() {
+    protected function generateClientTransactionId()
+    {
         return substr(uniqid($this->username . '-', true), 0, 64);
+    }
+
+
+    /**
+     * Tries to load a frame into an object. Should be overriden.
+     * @param string $buffer
+     */
+    protected function loadFrame($buffer)
+    {
+        $xml = new DOMDocument('1.0', 'UTF-8');
+        $xml->formatOutput = true;
+        $xml->loadXML($buffer);
+
+        $nodes = $xml->getElementsByTagNameNS(ObjectSpec::ROOT_NS, 'epp');
+        if ($nodes === null || $nodes->length !== 1) {
+            return $buffer;
+        }
+
+        if (!$nodes->item(0)->hasChildNodes()) {
+            return $buffer;
+        }
+
+        foreach($nodes->item(0)->childNodes as $node) {
+            // ignore non-nodes
+            if ($node->nodeType !== XML_ELEMENT_NODE) {
+                continue;
+            }
+
+            // ok now we can create an object according to the response-frame
+            $frame_type = strtolower($node->nodeName);
+            if ($frame_type === 'response') {
+                return new ResponseFrame($xml);
+            }
+        }
+
+        return $buffer;
     }
 
 

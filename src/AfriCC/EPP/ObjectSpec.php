@@ -1,49 +1,47 @@
 <?php
+
 /**
+ * This file is part of the php-epp2 library.
  *
- * @author Gavin Brown <gavin.brown@nospam.centralnic.com>
- * @author Gunter Grodotzki <gunter@afri.cc>
- * @license GPL
+ * (c) Gunter Grodotzki <gunter@afri.cc>
+ *
+ * For the full copyright and license information, please view the LICENSE file
+ * that was distributed with this source code.
  */
+
 namespace AfriCC\EPP;
 
 class ObjectSpec
 {
-    protected static $_spec = array(
+    const ROOT_NS = 'urn:ietf:params:xml:ns:epp-1.0';
+
+    protected static $specs = array(
         'domain' => array(
-            'xmlns'		=> 'urn:ietf:params:xml:ns:domain-1.0',
-            'id'		=> 'name',
-            'schema'	=> 'urn:ietf:params:xml:ns:domain-1.0 domain-1.0.xsd',
+            'namespace' => 'urn:ietf:params:xml:ns:domain-1.0',
+            'id'        => 'name',
         ),
         'host' => array(
-            'xmlns'		=> 'urn:ietf:params:xml:ns:host-1.0',
-            'id'		=> 'name',
-            'schema'	=> 'urn:ietf:params:xml:ns:host-1.0 host-1.0.xsd',
+            'namespace' => 'urn:ietf:params:xml:ns:host-1.0',
+            'id'        => 'name',
         ),
         'contact' => array(
-            'xmlns'		=> 'urn:ietf:params:xml:ns:contact-1.0',
-            'id'		=> 'id',
-            'schema'	=> 'urn:ietf:params:xml:ns:contact-1.0 contact-1.0.xsd',
-        ),
-        'rgp' => array(
-            'xmlns'		=> 'urn:ietf:params:xml:ns:rgp-1.0',
-            'id'		=> 'id',
-            'schema'	=> 'urn:ietf:params:xml:ns:rgp-1.0 rgp-1.0.xsd',
+            'namespace' => 'urn:ietf:params:xml:ns:contact-1.0',
+            'id'        => 'id',
         ),
     );
 
     public static function id($object)
     {
-        return self::$_spec[$object]['id'];
+        return self::$specs[$object]['id'];
     }
 
     public static function xmlns($object)
     {
-        return self::$_spec[$object]['xmlns'];
+        return self::$specs[$object]['xmlns'];
     }
 
-    public static function schema($object)
+    public static function all()
     {
-        return self::$_spec[$object]['schema'];
+        return self::$specs;
     }
 }

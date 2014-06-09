@@ -12,12 +12,12 @@
 namespace AfriCC\EPP\Frame;
 
 use AfriCC\EPP\TransactionAwareInterface;
-use AfriCC\EPP\Frame;
+use AfriCC\EPP\AbstractFrame;
 use AfriCC\EPP\ObjectSpec;
 use Exception;
 use DOMNode;
 
-class Command extends Frame implements TransactionAwareInterface
+class Command extends AbstractFrame implements TransactionAwareInterface
 {
     protected $format_name = 'command';
     protected $command_name;

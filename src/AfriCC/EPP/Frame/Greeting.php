@@ -7,9 +7,9 @@
  */
 namespace AfriCC\EPP\Frame;
 
-use AfriCC\EPP\Frame;
+use AfriCC\EPP\AbstractFrame;
 
-final class Greeting extends Frame
+final class Greeting extends AbstractFrame
 {
     protected $format = 'greeting';
 

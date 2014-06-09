@@ -13,6 +13,7 @@ Released under the GPLv3 License, feel free to contribute!
     - [Requirements](#user-content-requirements)
     - [Features](#user-content-features)
     - [Usage](#user-content-usage)
+        - [Basic Client Connection](#user-content-basic-client-connection)
     - [Future](#user-content-future)
     - [Credits](#user-content-credits)
     - [Acknowledgments](#user-content-acknowledgments)

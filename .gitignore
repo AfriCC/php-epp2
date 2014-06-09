@@ -2,3 +2,6 @@
 /.settings/
 /.buildpath
 /.project
+
+# configs
+/config.php
