@@ -11,10 +11,8 @@ use AfriCC\EPP\Frame\Command;
 
 abstract class Info extends Command
 {
-    function __construct($type)
-    {
-        parent::__construct('info', $type);
-    }
+    protected $command_name = 'info';
+    protected $mapping_name;
 
     function setObject($object)
     {

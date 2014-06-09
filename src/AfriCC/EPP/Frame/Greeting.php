@@ -11,9 +11,11 @@ use AfriCC\EPP\Frame;
 
 final class Greeting extends Frame
 {
+    protected $format = 'greeting';
+
     function __construct()
     {
-        parent::__construct('greeting');
+        parent::__construct();
 
         $this->svID = $this->createElement('svID');
         $this->body->appendChild($this->svID);

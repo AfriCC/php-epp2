@@ -1,7 +1,5 @@
 <?php
 /**
- *
- * @author Gavin Brown <gavin.brown@nospam.centralnic.com>
  * @author Gunter Grodotzki <gunter@afri.cc>
  * @license GPL
  */
@@ -11,8 +9,5 @@ use AfriCC\EPP\Frame\Command\Update;
 
 class Contact extends Update
 {
-    public function __construct()
-    {
-        parent::__construct('contact');
-    }
+    protected $mapping_name = 'contact';
 }

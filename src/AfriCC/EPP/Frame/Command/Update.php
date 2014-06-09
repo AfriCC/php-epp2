@@ -1,7 +1,5 @@
 <?php
 /**
- *
- * @author Gavin Brown <gavin.brown@nospam.centralnic.com>
  * @author Gunter Grodotzki <gunter@afri.cc>
  * @license GPL
  */
@@ -11,9 +9,6 @@ use AfriCC\EPP\Frame\Command;
 
 class Update extends Command
 {
-    function __construct($type)
-    {
-        $this->type = $type;
-        parent::__construct('update', $type);
-    }
+    protected $command_name = 'update';
+    protected $mapping_name;
 }

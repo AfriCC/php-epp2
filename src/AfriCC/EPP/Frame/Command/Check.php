@@ -11,10 +11,8 @@ use AfriCC\EPP\Frame\Command;
 
 abstract class Check extends Command
 {
-    function __construct($type)
-    {
-        parent::__construct('check', $type);
-    }
+    protected $command_name = 'check';
+    protected $mapping_name;
 
     function addObject($object)
     {

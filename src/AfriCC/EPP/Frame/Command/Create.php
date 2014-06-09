@@ -11,9 +11,6 @@ use AfriCC\EPP\Frame\Command;
 
 class Create extends Command
 {
-    function __construct($type)
-    {
-        $this->type = $type;
-        parent::__construct('create', $type);
-    }
+    protected $command_name = 'create';
+    protected $mapping_name;
 }

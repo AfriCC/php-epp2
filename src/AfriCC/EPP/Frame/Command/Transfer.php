@@ -11,10 +11,8 @@ use AfriCC\EPP\Frame\Command;
 
 abstract class Transfer extends Command
 {
-    function __construct($type)
-    {
-        parent::__construct('transfer', $type);
-    }
+    protected $command_name = 'transfer';
+    protected $mapping_name;
 
     function setObject($object)
     {

@@ -11,8 +11,5 @@ use AfriCC\EPP\Frame;
 
 final class Hello extends Frame
 {
-    function __construct()
-    {
-        parent::__construct('hello');
-    }
+    protected $format = 'hello';
 }

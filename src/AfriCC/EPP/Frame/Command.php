@@ -10,25 +10,25 @@ namespace AfriCC\EPP\Frame;
 use AfriCC\EPP\Frame;
 use AfriCC\EPP\ObjectSpec;
 use Exception;
+use DOMNode;
 
 class Command extends Frame
 {
-    public function __construct($command = null, $type = null)
+    protected $format_name = 'command';
+    protected $command_name;
+    protected $command;
+
+    public function __construct()
     {
-        $this->type = $type;
-        if ($command === null) {
-            $command = strtolower(substr(strrchr(get_class($this), '\\'), 1));
-        }
+        parent::__construct();
 
-        parent::__construct('command');
-
-        $this->command = $this->createElement($command);
+        $this->command = $this->createElement($this->command_name);
         $this->body->appendChild($this->command);
 
-        if (!empty($this->type)) {
+        if (!empty($this->mapping_name)) {
             $this->payload = $this->createElementNS(
-                Net_EPP_ObjectSpec::xmlns($this->type),
-                $this->type.':'.$command
+                ObjectSpec::xmlns($this->mapping_name),
+                $this->mapping_name.':'. $this->command_name
             );
 
             $this->command->appendChild($this->payload);
@@ -42,7 +42,7 @@ class Command extends Frame
     function addObjectProperty($name, $value = null)
     {
         $element = $this->createObjectPropertyElement($name);
-        $this->payload->appendChild($element);
+        $this->command->appendChild($element);
 
         if ($value instanceof DomNode) {
             $element->appendChild($value);
@@ -58,7 +58,7 @@ class Command extends Frame
     function createObjectPropertyElement($name)
     {
         return $this->createElementNS(
-            ObjectSpec::xmlns($this->type),
+            ObjectSpec::xmlns($this->mapping_name),
             $this->type.':'.$name
         );
     }
@@ -69,7 +69,7 @@ class Command extends Frame
         $this->body->appendChild($this->extension);
 
         $this->extension->payload = $this->createElementNS(
-            Net_EPP_ObjectSpec::xmlns($ext),
+            ObjectSpec::xmlns($ext),
             $ext.':'.$command
         );
 

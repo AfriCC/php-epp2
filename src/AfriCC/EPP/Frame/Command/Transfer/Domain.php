@@ -11,12 +11,9 @@ use AfriCC\EPP\Frame\Command\Transfer;
 
 class Domain extends Transfer
 {
-    public function __construct()
-    {
-        parent::__construct('domain');
-    }
+    protected $mapping_name = 'domain';
 
-    function setPeriod($period, $units='y')
+    public function setPeriod($period, $units='y')
     {
         $el = $this->createObjectPropertyElement('period');
         $el->setAttribute('unit', $units);

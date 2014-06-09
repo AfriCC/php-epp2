@@ -1,7 +1,5 @@
 <?php
 /**
- *
- * @author Gavin Brown <gavin.brown@nospam.centralnic.com>
  * @author Gunter Grodotzki <gunter@afri.cc>
  * @license GPL
  */
@@ -11,12 +9,9 @@ use AfriCC\EPP\Frame\Command;
 
 abstract class Poll extends Command
 {
-    function __construct()
-    {
-        parent::__construct('poll');
-    }
+    protected $command_name = 'poll';
 
-    function setOp($op)
+    protected function setOp($op)
     {
         $this->command->setAttribute('op', $op);
     }

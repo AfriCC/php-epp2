@@ -15,14 +15,9 @@ abstract class Frame extends DOMDocument
     const EPP_NS        = 'urn:ietf:params:xml:ns:epp-1.0';
     const SCHEMA_URI    = 'http://www.w3.org/2001/XMLSchema-instance';
 
-    protected $knownFormats = array(
-    	'hello' => true,
-        'greeting' => true,
-        'command' => true,
-        'response' => true,
-    );
+    protected $format_name;
 
-    public function __construct($type)
+    public function __construct()
     {
         parent::__construct('1.0', 'UTF-8');
         $this->xmlStandalone = false;
@@ -30,13 +25,8 @@ abstract class Frame extends DOMDocument
 
         $this->appendChild($this->createElementNS(self::EPP_NS, 'epp'));
 
-        $type = strtolower($type);
-        if (!isset($this->knownFormats[$type])) {
-            throw new Exception(sprintf('unknown format: %s', $type));
-        }
-
         $this->epp = $this->firstChild;
-        $this->body = $this->createElement($type);
+        $this->body = $this->createElement($this->format_name);
         $this->epp->appendChild($this->body);
     }
 

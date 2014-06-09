@@ -10,5 +10,5 @@ use AfriCC\EPP\Frame\Command;
 
 class Logout extends Command
 {
-
+    protected $command_name = 'logout';
 }

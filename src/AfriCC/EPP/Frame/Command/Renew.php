@@ -11,10 +11,8 @@ use AfriCC\EPP\Frame\Command;
 
 abstract class Renew extends Command
 {
-    function __construct($type)
-    {
-        parent::__construct('renew', $type);
-    }
+    protected $command_name = 'renew';
+    protected $mapping_name;
 
     function addObject($object)
     {
