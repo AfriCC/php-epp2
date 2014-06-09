@@ -7,6 +7,17 @@ It started as a "fork" of [centralnic/php-epp](https://github.com/centralnic/php
 
 Released under the GPLv3 License, feel free to contribute!
 
+**Table of Contents**  *generated with [DocToc](http://doctoc.herokuapp.com/)*
+
+- [php-epp2](#user-content-php-epp2)
+    - [Requirements](#user-content-requirements)
+    - [Features](#user-content-features)
+    - [Usage](#user-content-usage)
+    - [Future](#user-content-future)
+    - [Credits](#user-content-credits)
+    - [Acknowledgments](#user-content-acknowledgments)
+    - [License](#user-content-license)
+
 Requirements
 ------------
 
@@ -29,6 +40,37 @@ Features
 Usage
 -----
 
+### Basic Client Connection
+
+this will automatically login on connect() and logout on close()
+
+```php
+<?php
+require 'src/AfriCC/EPP/Autoload.php';
+
+use AfriCC\EPP\Client as EPPClient;
+
+$epp_client = new EPPClient(array(
+    'host' => 'epptest.org',
+    'username' => 'foo',
+    'password' => 'bar',
+    'services' => array(
+        'urn:ietf:params:xml:ns:domain-1.0',
+        'urn:ietf:params:xml:ns:contact-1.0'
+    ),
+    'debug' => true,
+));
+
+try {
+    $greeting = $epp_client->connect();
+} catch(Exception $e) {
+    echo $e->getMessage() . PHP_EOL;
+    unset($epp_client);
+    exit(1);
+}
+
+$epp_client->close();
+```
 
     
 Future
