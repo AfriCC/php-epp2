@@ -43,7 +43,7 @@ abstract class AbstractFrame extends DOMDocument implements FrameInterface
         }
     }
 
-    public function set($path, $value = null)
+    public function set($path = null, $value = null)
     {
         $path = $this->realxpath($path);
 
@@ -88,7 +88,16 @@ abstract class AbstractFrame extends DOMDocument implements FrameInterface
 
         for ($i = 0, $limit = count($path_parts); $i < $limit; ++$i) {
 
-            list($node_ns, $node_name) = explode(':', $path_parts[$i], 2);
+            $attr_name = $attr_value = null;
+
+            // if no namespace given, use root-namespace
+            if (strpos($path_parts[$i], ':') === false) {
+                $node_ns = 'epp';
+                $node_name = $path_parts[$i];
+                $path_parts[$i] = $node_ns . ':' . $node_name;
+            } else {
+                list($node_ns, $node_name) = explode(':', $path_parts[$i], 2);
+            }
 
             // check for node-array
             if (substr($node_name, -2) === '[]') {
@@ -104,6 +113,12 @@ abstract class AbstractFrame extends DOMDocument implements FrameInterface
                 }
                 ++$next_key;
                 $path_parts[$i] = sprintf('%s:%s[%d]', $node_ns, $node_name, $next_key);
+            }
+            // check if attribute needs to be set
+            elseif (preg_match('/^(.*)\[@([a-z0-9]+)=\'([a-z0-9]+)\'\]$/i', $node_name, $matches)) {
+                $node_name  = $matches[1];
+                $attr_name  = $matches[2];
+                $attr_value = $matches[3];
             }
 
             $node_path = implode('/', array_slice($path_parts, 0, $i + 1));
@@ -125,6 +140,11 @@ abstract class AbstractFrame extends DOMDocument implements FrameInterface
                 $this->nodes[$node_path] = $this->createElementNS($node_xmlns, $node_ns . ':' . $node_name);
             }
 
+            // set attribute
+            if ($attr_name !== null && $attr_value !== null) {
+                $this->nodes[$node_path]->setAttribute($attr_name, $attr_value);
+            }
+
             // now append node to parent
             if ($i === 0) {
                 $parent = $this;
@@ -140,11 +160,16 @@ abstract class AbstractFrame extends DOMDocument implements FrameInterface
     protected function realxpath($path)
     {
         // absolute path
-        if ($path{0} === '/' && $path{1} === '/') {
+        if (isset($path{1}) && $path{0} === '/' && $path{1} === '/') {
             return substr($path, 2);
         }
 
-        $path_parts = explode('/', $path);
+        if ($path === null) {
+            $path_parts = array();
+        } else {
+            $path_parts = explode('/', $path);
+        }
+
         if (!empty($this->mapping_name) && !empty($this->command_name)) {
             array_unshift($path_parts, $this->mapping_name . ':' . $this->command_name);
         }

@@ -9,7 +9,7 @@
  * that was distributed with this source code.
  */
 
-namespace AfriCC\EPP\Frame\Command\Session;
+namespace AfriCC\EPP\Frame\Command;
 
 use AfriCC\EPP\Frame\Command as CommandFrame;
 
@@ -23,6 +23,6 @@ class Logout extends CommandFrame
     public function __construct()
     {
         parent::__construct();
-        $this->set('//epp:epp/epp:command/epp:logout');
+        $this->set();
     }
 }

@@ -1,18 +1,22 @@
 <?php
+
 /**
- * @author Gunter Grodotzki <gunter@afri.cc>
- * @license GPL
+ * This file is part of the php-epp2 library.
+ *
+ * (c) Gunter Grodotzki <gunter@afri.cc>
+ *
+ * For the full copyright and license information, please view the LICENSE file
+ * that was distributed with this source code.
  */
+
 namespace AfriCC\EPP\Frame\Command;
 
-use AfriCC\EPP\Frame\Command;
+use AfriCC\EPP\Frame\Command as CommandFrame;
 
-abstract class Poll extends Command
+/**
+ * @link http://tools.ietf.org/html/rfc5730#section-2.9.2.3
+ */
+abstract class Poll extends CommandFrame
 {
     protected $command_name = 'poll';
-
-    protected function setOp($op)
-    {
-        $this->command->setAttribute('op', $op);
-    }
 }

@@ -12,6 +12,8 @@
 namespace AfriCC\EPP\Frame\Command\Create;
 
 use AfriCC\EPP\Frame\Command\Create as CreateCommand;
+use AfriCC\EPP\Validator;
+use Exception;
 
 /**
  * @link http://tools.ietf.org/html/rfc5733#section-3.2.1
@@ -19,132 +21,84 @@ use AfriCC\EPP\Frame\Command\Create as CreateCommand;
 class Contact extends CreateCommand
 {
     protected $mapping_name = 'contact';
-    protected $id_node;
-    protected $postalinfo_node = array('int' => null, 'loc' => null);
-    protected $postalinfo_nodes = array();
-    protected $addr_nodes = array();
 
     public function setId($id)
     {
-        if ($this->id_node instanceof DOMNode) {
-            $this->id_node->nodeValue = $id;
-        } else {
-            $this->id_node = $this->addObjectProperty('id', $id);
-        }
+        $this->set('contact:id', $id);
     }
 
     public function setName($name)
     {
-        $this->createPostalInfoNode('name', $name);
+        $this->set('contact:postalInfo[@type=\'loc\']/contact:name', $name);
+        $this->set('contact:postalInfo[@type=\'int\']/contact:name', $this->asciiTranslit($name));
     }
 
-    public function setOrganization($organization)
+    public function setOrganization($org)
     {
-        $this->createPostalInfoNode('org', $organization);
+        $this->set('contact:postalInfo[@type=\'loc\']/contact:org', $org);
+        $this->set('contact:postalInfo[@type=\'int\']/contact:org', $this->asciiTranslit($org));
     }
 
     public function addStreet($street)
     {
-        $this->addPostalInfoAddr('street', $street);
+        $this->set('contact:postalInfo[@type=\'loc\']/contact:addr/contact:street[]', $street);
+        $this->set('contact:postalInfo[@type=\'int\']/contact:addr/contact:street[]', $this->asciiTranslit($street));
     }
 
     public function setCity($city)
     {
-        $this->setPostalInfoAddr('city', $city);
+        $this->set('contact:postalInfo[@type=\'loc\']/contact:addr/contact:city', $city);
+        $this->set('contact:postalInfo[@type=\'int\']/contact:addr/contact:city', $this->asciiTranslit($city));
     }
 
-    public function setProvince($province)
+    public function setProvince($sp)
     {
-
+        $this->set('contact:postalInfo[@type=\'loc\']/contact:addr/contact:sp', $sp);
+        $this->set('contact:postalInfo[@type=\'int\']/contact:addr/contact:sp', $this->asciiTranslit($sp));
     }
 
-    public function setPostalCode($postalcode)
+    public function setPostalCode($pc)
     {
-
+        $this->set('contact:postalInfo[@type=\'loc\']/contact:addr/contact:pc', $pc);
+        $this->set('contact:postalInfo[@type=\'int\']/contact:addr/contact:pc', $this->asciiTranslit($pc));
     }
 
-    public function setCountryCode($country)
+    public function setCountryCode($cc)
     {
-
+        if (!Validator::isCountryCode($cc)) {
+            throw new Exception(sprintf('the country-code: \'%s\' is unknown', $cc));
+        }
+        $this->set('contact:postalInfo[@type=\'loc\']/contact:addr/contact:cc', $cc);
+        $this->set('contact:postalInfo[@type=\'int\']/contact:addr/contact:cc', $this->asciiTranslit($cc));
     }
 
-    public function setVoice()
+    public function setVoice($voice)
     {
-
+        $this->set('contact:voice', $voice);
     }
 
-    public function setFax()
+    public function setFax($fax)
     {
-
+        $this->set('contact:fax', $fax);
     }
 
-    public function setEmail()
+    public function setEmail($email)
     {
-
-    }
-
-    public function setAuthInfo()
-    {
-
-    }
-
-    public function addDisclose()
-    {
-
-    }
-
-    protected function createPostalInfoNodes()
-    {
-        if ($this->postalinfo_node['int'] === null) {
-            $this->postalinfo_node['int'] = $this->addObjectProperty('postalInfo');
-            $this->postalinfo_node['int']->setAttribute('type', 'int');
+        if (!Validator::isEmail($email)) {
+            throw new Exception(sprintf('%s is not a valid email', $email));
         }
 
-        if ($this->postalinfo_node['loc'] === null) {
-            $this->postalinfo_node['loc'] = $this->addObjectProperty('postalInfo');
-            $this->postalinfo_node['loc']->setAttribute('type', 'loc');
-        }
+        $this->set('contact:email', $email);
     }
 
-    protected function createPostalInfoNode($node_name, $node_value = null)
+    public function setAuthInfo($pw)
     {
-        $this->createPostalInfoNodes();
-
-        if (!isset($this->postalinfo_nodes[$node_name]['loc'])) {
-            $this->postalinfo_nodes[$node_name]['loc'] = $this->addObjectProperty($node_name, $node_value);
-            $this->postalinfo_nodes[$node_name]['int'] = clone $this->postalinfo_nodes[$node_name]['loc'];
-
-            if ($node_value !== null) {
-                $this->postalinfo_nodes[$node_name]['int']->nodeValue = $this->asciiTranslit($this->postalinfo_nodes[$node_name]['int']->nodeValue);
-            }
-
-            $this->postalinfo_node['loc']->appendChild($this->postalinfo_nodes[$node_name]['loc']);
-            $this->postalinfo_node['int']->appendChild($this->postalinfo_nodes[$node_name]['int']);
-        } elseif (!$this->postalinfo_nodes[$node_name]['loc']->hasChildNodes()) {
-            $this->postalinfo_nodes[$node_name]['loc']->nodeValue = $node_value;
-            $this->postalinfo_nodes[$node_name]['int']->nodeValue = $this->asciiTranslit($node_value);
-        }
+        $this->set('contact:authInfo/contact:pw', $pw);
     }
 
-    protected function createPostalInfoAddr()
+    public function addDisclose($value)
     {
-        $this->createPostalInfoNode('addr');
-    }
-
-    protected function addPostalInfoAddr($node_name, $node_value)
-    {
-        $this->createPostalInfoAddr();
-
-        $this->addObjectProperty($node_name, $node_value, $this->postalinfo_nodes['addr']['loc']);
-        $this->addObjectProperty($node_name, $this->asciiTranslit($node_value), $this->postalinfo_nodes['addr']['int']);
-    }
-
-    protected function setPostalInfoAddr($node_name, $node_value)
-    {
-        $this->createPostalInfoAddr();
-
-        $this->addr_nodes[$node_name]['loc'] = $this->addObjectProperty($node_name, $node_value, $this->postalinfo_nodes['addr']['loc']);
-        $this->addr_nodes[$node_name]['int'] = $this->addObjectProperty($node_name, $node_value, $this->postalinfo_nodes['addr']['int']);
+        $this->set('contact:disclose[@flag=\'0\']/contact:' . $value);
     }
 
     protected function asciiTranslit($string)
@@ -156,5 +110,4 @@ class Contact extends CreateCommand
         // php-fpm, fastcgi or similar it can/will break
         return transliterator_transliterate('Any-Latin; Latin-ASCII; [\u0100-\u7fff] remove', $string);
     }
-
 }

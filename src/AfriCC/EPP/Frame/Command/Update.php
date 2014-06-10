@@ -1,14 +1,22 @@
 <?php
+
 /**
- * @author Gunter Grodotzki <gunter@afri.cc>
- * @license GPL
+ * This file is part of the php-epp2 library.
+ *
+ * (c) Gunter Grodotzki <gunter@afri.cc>
+ *
+ * For the full copyright and license information, please view the LICENSE file
+ * that was distributed with this source code.
  */
+
 namespace AfriCC\EPP\Frame\Command;
 
-use AfriCC\EPP\Frame\Command;
+use AfriCC\EPP\Frame\Command as CommandFrame;
 
-class Update extends Command
+/**
+ * @link http://tools.ietf.org/html/rfc5730#section-2.9.3.5
+ */
+abstract class Update extends CommandFrame
 {
     protected $command_name = 'update';
-    protected $mapping_name;
 }

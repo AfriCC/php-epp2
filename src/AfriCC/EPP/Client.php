@@ -148,7 +148,6 @@ class Client
         return $greeting;
     }
 
-
     /**
      * Closes a previously opened EPP connection
      */
@@ -161,7 +160,6 @@ class Client
         }
         return false;
     }
-
 
     /**
      * Get an EPP frame from the server.
@@ -181,7 +179,6 @@ class Client
             return $this->loadFrame($this->recv($length));
         }
     }
-
 
     /**
      * sends a XML-based frame to the server
@@ -211,7 +208,6 @@ class Client
         return $this->getFrame();
     }
 
-
     /**
      * check if socket is still active
      * @return boolean
@@ -221,15 +217,14 @@ class Client
         return (!is_resource($this->socket) || feof($this->socket) ? false : true);
     }
 
-
     protected function login()
     {
         // send login command
         $login = new LoginCommand;
-        $login->clientId($this->username);
-        $login->password($this->password);
-        $login->version('1.0');
-        $login->lang('en');
+        $login->setClientId($this->username);
+        $login->setPassword($this->password);
+        $login->setVersion('1.0');
+        $login->setLanguage('en');
 
         if (!empty($this->services) && is_array($this->services)) {
             foreach($this->services as $urn) {
@@ -238,6 +233,7 @@ class Client
         }
 
         $response = $this->request($login);
+        unset($login);
 
         // check if login was successfull
         if (!($response instanceof ResponseFrame)) {
@@ -247,7 +243,6 @@ class Client
         }
     }
 
-
     protected function log($message, $color = '0;32')
     {
         if ($message === '') {
@@ -256,12 +251,10 @@ class Client
         echo sprintf("\033[%sm%s\033[0m" . PHP_EOL, $color, trim($message));
     }
 
-
     protected function generateClientTransactionId()
     {
         return substr(uniqid($this->username . '-', true), 0, 64);
     }
-
 
     /**
      * Tries to load a frame into an object. Should be overriden.
@@ -297,7 +290,6 @@ class Client
 
         return $buffer;
     }
-
 
     /**
      * receive socket data
@@ -347,7 +339,6 @@ class Client
 
         return $result;
     }
-
 
     /**
      * send data to socket

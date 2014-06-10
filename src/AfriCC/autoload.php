@@ -10,7 +10,7 @@
  */
 
 /**
- * Autoloader for the AfriCC\EPP namespace
+ * Autoloader for the AfriCC namespace
  * @link https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-4-autoloader-examples.md
  * @param string $class The fully-qualified class name.
  * @return void

@@ -14,16 +14,19 @@ namespace AfriCC\EPP\Frame;
 use AfriCC\EPP\TransactionAwareInterface;
 use AfriCC\EPP\AbstractFrame;
 
-class Command extends AbstractFrame implements TransactionAwareInterface
+abstract class Command extends AbstractFrame implements TransactionAwareInterface
 {
     protected $format = 'command';
-    protected $client_transaction_id;
+    protected $clTRID;
 
-    public function setClientTransactionId($cltrid) {
-        $this->client_transaction_id->nodeValue = $cltrid;
+    public function setClientTransactionId($clTRID)
+    {
+        $this->clTRID = substr($clTRID, 0, 64);
+        $this->set('//epp:epp/epp:command/epp:clTRID', $this->clTRID);
     }
 
-    public function getClientTransactionId() {
-        return $this->client_transaction_id->nodeValue;
+    public function getClientTransactionId()
+    {
+        return $this->clTRID;
     }
 }

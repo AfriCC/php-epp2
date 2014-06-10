@@ -21,6 +21,8 @@ $frame->setPostalCode('8001');
 $frame->setCountryCode('ZA');
 $frame->setVoice('+27.844784784');
 $frame->setFax('+1.844784784');
-$frame->setEmail('foo');
-
+$frame->setEmail('github@afri.cc');
+$frame->setAuthInfo('password');
+$frame->addDisclose('voice');
+$frame->addDisclose('email');
 echo $frame;
