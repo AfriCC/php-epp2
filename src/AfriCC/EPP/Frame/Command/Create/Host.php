@@ -20,9 +20,9 @@ use Exception;
  */
 class Host extends CreateCommand
 {
-    protected $mapping_name = 'host';
+    protected $mapping = 'host';
 
-    public function setName($hostname)
+    public function setHost($hostname)
     {
         // validate hostname
         if (!Validator::isHostname($hostname)) {

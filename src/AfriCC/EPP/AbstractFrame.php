@@ -114,6 +114,10 @@ abstract class AbstractFrame extends DOMDocument implements FrameInterface
                 ++$next_key;
                 $path_parts[$i] = sprintf('%s:%s[%d]', $node_ns, $node_name, $next_key);
             }
+            // direct node-array access
+            if (preg_match('/^(.*)\[(\d+)\]$/', $node_name, $matches)) {
+                $node_name = $matches[1];
+            }
             // check if attribute needs to be set
             elseif (preg_match('/^(.*)\[@([a-z0-9]+)=\'([a-z0-9]+)\'\]$/i', $node_name, $matches)) {
                 $node_name  = $matches[1];
@@ -170,8 +174,8 @@ abstract class AbstractFrame extends DOMDocument implements FrameInterface
             $path_parts = explode('/', $path);
         }
 
-        if (!empty($this->mapping_name) && !empty($this->command_name)) {
-            array_unshift($path_parts, $this->mapping_name . ':' . $this->command_name);
+        if (!empty($this->mapping) && !empty($this->command_name)) {
+            array_unshift($path_parts, $this->mapping . ':' . $this->command_name);
         }
 
         if (!empty($this->format) && !empty($this->command_name)) {

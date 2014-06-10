@@ -20,7 +20,7 @@ use Exception;
  */
 class Domain extends CheckCommand
 {
-    protected $mapping_name = 'domain';
+    protected $mapping = 'domain';
 
     public function addDomain($domain)
     {

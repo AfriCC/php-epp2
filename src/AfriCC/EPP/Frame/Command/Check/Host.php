@@ -20,7 +20,7 @@ use Exception;
  */
 class Host extends CheckCommand
 {
-    protected $mapping_name = 'host';
+    protected $mapping = 'host';
 
     public function addHost($host)
     {

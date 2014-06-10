@@ -8,16 +8,16 @@ require '../src/AfriCC/autoload.php';
 
 use AfriCC\EPP\Client as EPPClient;
 
-$epp_client = new EPPClient(array(
+$epp_client = new EPPClient([
     'host' => 'epptest.org',
     'username' => 'gunter',
     'password' => 'grodotzki',
-    'services' => array(
+    'services' => [
         'urn:ietf:params:xml:ns:domain-1.0',
         'urn:ietf:params:xml:ns:contact-1.0'
-    ),
+    ],
     'debug' => true,
-));
+]);
 
 try {
     $greeting = $epp_client->connect();

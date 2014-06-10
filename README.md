@@ -1,7 +1,7 @@
 php-epp2
 ========
 
-**php-epp2** is a EPP high-level TCP client written in modern PHP.
+**php-epp2** is a High Level Extensible Provisioning Protocol (EPP) TCP/SSL client written in modern PHP.
 
 It started as a "fork" of [centralnic/php-epp](https://github.com/centralnic/php-epp).
 
@@ -29,6 +29,7 @@ Requirements
 * PHP 5.4+
 * libicu 4.8.x+
 * php-intl 3.x+
+* php-mcrypt
 
 
 Features
@@ -43,6 +44,7 @@ Features
 * SSL (+local-cert)
 * Xpath like setter to simplify the creation of complex XML structures
 * XML based responses for direct traversal via Xpath
+* [RFC 5730](http://tools.ietf.org/html/rfc5730), [RFC 5731](http://tools.ietf.org/html/rfc5731), [RFC 5732](http://tools.ietf.org/html/rfc5732), [RFC 5733](http://tools.ietf.org/html/rfc5733), [RFC 5734](http://tools.ietf.org/html/rfc5734)
 
 
 Usage
@@ -62,16 +64,16 @@ require 'src/AfriCC/autoload.php';
 
 use AfriCC\EPP\Client as EPPClient;
 
-$epp_client = new EPPClient(array(
+$epp_client = new EPPClient([
     'host' => 'epptest.org',
     'username' => 'foo',
     'password' => 'bar',
-    'services' => array(
+    'services' => [
         'urn:ietf:params:xml:ns:domain-1.0',
         'urn:ietf:params:xml:ns:contact-1.0'
-    ),
+    ],
     'debug' => true,
-));
+]);
 
 try {
     $greeting = $epp_client->connect();
@@ -100,8 +102,8 @@ require 'src/AfriCC/autoload.php';
 use AfriCC\EPP\Frame\Command\Create\Host as CreateHost;
 
 $frame = new CreateHost;
-$frame->setName('ns1.example.com');
-$frame->setName('ns2.example.com');
+$frame->setHost('ns1.example.com');
+$frame->setHost('ns2.example.com');
 $frame->addAddr('8.8.8.8');
 $frame->addAddr('8.8.4.4');
 $frame->addAddr('2a00:1450:4009:809::1001');

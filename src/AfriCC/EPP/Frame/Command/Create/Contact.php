@@ -13,6 +13,7 @@ namespace AfriCC\EPP\Frame\Command\Create;
 
 use AfriCC\EPP\Frame\Command\Create as CreateCommand;
 use AfriCC\EPP\Validator;
+use AfriCC\EPP\Random;
 use Exception;
 
 /**
@@ -20,7 +21,7 @@ use Exception;
  */
 class Contact extends CreateCommand
 {
-    protected $mapping_name = 'contact';
+    protected $mapping = 'contact';
 
     public function setId($id)
     {
@@ -91,9 +92,13 @@ class Contact extends CreateCommand
         $this->set('contact:email', $email);
     }
 
-    public function setAuthInfo($pw)
+    public function setAuthInfo($pw = null)
     {
+        if ($pw === null) {
+            $pw = Random::auth(12);
+        }
         $this->set('contact:authInfo/contact:pw', $pw);
+        return $pw;
     }
 
     public function addDisclose($value)

@@ -253,7 +253,7 @@ class Client
 
     protected function generateClientTransactionId()
     {
-        return substr(uniqid($this->username . '-', true), 0, 64);
+        return Random::id(64, $this->username);
     }
 
     /**
