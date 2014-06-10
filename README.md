@@ -127,7 +127,8 @@ Future
 ------
 
 * stricter response parsing
-* make it server capable (in conjunction with mod_epp)
+* stricter request validation
+* make it server capable (in conjunction with apache mod_epp)
 
 
 Credits

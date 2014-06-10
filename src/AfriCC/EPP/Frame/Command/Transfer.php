@@ -12,6 +12,7 @@
 namespace AfriCC\EPP\Frame\Command;
 
 use AfriCC\EPP\Frame\Command as CommandFrame;
+use Exception;
 
 /**
  * @link http://tools.ietf.org/html/rfc5730#section-2.9.3.4
@@ -19,4 +20,14 @@ use AfriCC\EPP\Frame\Command as CommandFrame;
 abstract class Transfer extends CommandFrame
 {
     protected $command_name = 'transfer';
+
+    public function setOperation($op)
+    {
+        if (!in_array($op, ['request', 'cancel', 'approve', 'reject'])) {
+            throw new Exception(sprintf('%s is a unknown operation', $op));
+        }
+
+        $node = $this->set('//epp:epp/epp:command/epp:transfer');
+        $node->setAttribute('op', $op);
+    }
 }
