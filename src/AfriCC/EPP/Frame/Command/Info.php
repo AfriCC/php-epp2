@@ -18,5 +18,5 @@ use AfriCC\EPP\Frame\Command as CommandFrame;
  */
 abstract class Info extends CommandFrame
 {
-    protected $command_name = 'info';
+    protected $command = 'info';
 }

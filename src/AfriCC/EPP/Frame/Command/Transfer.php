@@ -19,7 +19,7 @@ use Exception;
  */
 abstract class Transfer extends CommandFrame
 {
-    protected $command_name = 'transfer';
+    protected $command = 'transfer';
 
     public function setOperation($op)
     {

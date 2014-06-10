@@ -174,12 +174,12 @@ abstract class AbstractFrame extends DOMDocument implements FrameInterface
             $path_parts = explode('/', $path);
         }
 
-        if (!empty($this->mapping) && !empty($this->command_name)) {
-            array_unshift($path_parts, $this->mapping . ':' . $this->command_name);
+        if (!empty($this->mapping) && !empty($this->command)) {
+            array_unshift($path_parts, $this->mapping . ':' . $this->command);
         }
 
-        if (!empty($this->format) && !empty($this->command_name)) {
-            array_unshift($path_parts, 'epp:' . $this->command_name);
+        if (!empty($this->format) && !empty($this->command)) {
+            array_unshift($path_parts, 'epp:' . $this->command);
             array_unshift($path_parts, 'epp:' . $this->format);
         }
 

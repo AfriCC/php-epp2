@@ -18,5 +18,5 @@ use AfriCC\EPP\Frame\Command as CommandFrame;
  */
 abstract class Update extends CommandFrame
 {
-    protected $command_name = 'update';
+    protected $command = 'update';
 }

@@ -16,7 +16,20 @@ use AfriCC\EPP\Frame\Command as CommandFrame;
 /**
  * @link http://tools.ietf.org/html/rfc5730#section-2.9.2.3
  */
-abstract class Poll extends CommandFrame
+class Poll extends CommandFrame
 {
-    protected $command_name = 'poll';
+    protected $command = 'poll';
+
+    public function request()
+    {
+        $node = $this->set();
+        $node->setAttribute('op', 'req');
+    }
+
+    public function ack($msgID)
+    {
+        $node = $this->set();
+        $node->setAttribute('op', 'ack');
+        $node->setAttribute('msgID', $msgID);
+    }
 }

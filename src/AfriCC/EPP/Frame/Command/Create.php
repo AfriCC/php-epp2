@@ -18,5 +18,5 @@ use AfriCC\EPP\Frame\Command as CommandFrame;
  */
 abstract class Create extends CommandFrame
 {
-    protected $command_name = 'create';
+    protected $command = 'create';
 }

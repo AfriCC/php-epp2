@@ -18,7 +18,7 @@ use AfriCC\EPP\Frame\Command as CommandFrame;
  */
 class Login extends CommandFrame
 {
-    protected $command_name = 'login';
+    protected $command = 'login';
 
     public function setClientId($clID)
     {
