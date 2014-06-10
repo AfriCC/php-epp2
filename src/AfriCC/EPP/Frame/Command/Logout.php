@@ -1,14 +1,28 @@
 <?php
+
+/**
+ * This file is part of the php-epp2 library.
+ *
+ * (c) Gunter Grodotzki <gunter@afri.cc>
+ *
+ * For the full copyright and license information, please view the LICENSE file
+ * that was distributed with this source code.
+ */
+
+namespace AfriCC\EPP\Frame\Command\Session;
+
+use AfriCC\EPP\Frame\Command as CommandFrame;
+
 /**
  * @link http://tools.ietf.org/html/rfc5730#section-2.9.1.2
- * @author Gunter Grodotzki <gunter@afri.cc>
- * @license GPL
  */
-namespace AfriCC\EPP\Frame\Command;
-
-use AfriCC\EPP\Frame\Command;
-
-class Logout extends Command
+class Logout extends CommandFrame
 {
     protected $command_name = 'logout';
+
+    public function __construct()
+    {
+        parent::__construct();
+        $this->set('//epp:epp/epp:command/epp:logout');
+    }
 }

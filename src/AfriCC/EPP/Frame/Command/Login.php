@@ -4,11 +4,11 @@
  * @author Gunter Grodotzki <gunter@afri.cc>
  * @license GPL
  */
-namespace AfriCC\EPP\Frame\Command;
+namespace AfriCC\EPP\Frame\Command\Session;
 
-use AfriCC\EPP\Frame\Command;
+use AfriCC\EPP\Frame\Command as CommandFrame;
 
-class Login extends Command
+class Login extends CommandFrame
 {
     protected $command_name = 'login';
     protected $clid_node;

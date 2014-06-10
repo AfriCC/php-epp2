@@ -13,7 +13,6 @@ namespace AfriCC\EPP\Frame\Command\Create;
 
 use AfriCC\EPP\Frame\Command\Create as CreateCommand;
 use AfriCC\EPP\Validator;
-use DOMNode;
 use Exception;
 
 /**
@@ -22,7 +21,6 @@ use Exception;
 class Host extends CreateCommand
 {
     protected $mapping_name = 'host';
-    protected $hostname_node;
 
     public function setName($hostname)
     {
@@ -31,11 +29,7 @@ class Host extends CreateCommand
             throw new Exception(sprintf('not a valid Hostname: %s', $hostname));
         }
 
-        if ($this->hostname_node instanceof DOMNode) {
-            $this->hostname_node->nodeValue = $hostname;
-        } else {
-            $this->hostname_node = $this->addObjectProperty('name', $hostname);
-        }
+        $this->set('host:name', $hostname);
     }
 
     public function addAddr($ip)
@@ -46,7 +40,7 @@ class Host extends CreateCommand
             throw new Exception(sprintf('not a valid IP address: %s', $ip));
         }
 
-        $node = $this->addObjectProperty('addr', $ip);
+        $node = $this->set('host:addr[]', $ip);
 
         if ($ip_type === Validator::TYPE_IPV4) {
             $node->setAttribute('ip', 'v4');

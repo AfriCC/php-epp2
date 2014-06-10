@@ -273,7 +273,7 @@ class Client
         $xml->formatOutput = true;
         $xml->loadXML($buffer);
 
-        $nodes = $xml->getElementsByTagNameNS(ObjectSpec::ROOT_NS, 'epp');
+        $nodes = $xml->getElementsByTagNameNS(ObjectSpec::xmlns('epp'), 'epp');
         if ($nodes === null || $nodes->length !== 1) {
             return $buffer;
         }

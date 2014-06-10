@@ -11,6 +11,9 @@
 
 namespace AfriCC\EPP;
 
+/**
+ * various validating methods needed to create sane EPP requests
+ */
 class Validator
 {
     const TYPE_IPV4 = 1;
@@ -21,7 +24,7 @@ class Validator
      * @link https://gist.github.com/vxnick/380904
      * @var array
      */
-    protected static $countries = array(
+    protected static $countries = [
         'AF' => 'Afghanistan',
         'AX' => 'Aland Islands',
         'AL' => 'Albania',
@@ -267,7 +270,7 @@ class Validator
         'YE' => 'Yemen',
         'ZM' => 'Zambia',
         'ZW' => 'Zimbabwe',
-    );
+    ];
 
     /**
      * returns version of IP address, or false if not an IP
@@ -310,7 +313,14 @@ class Validator
      */
     public static function isEmail($email)
     {
-        //
+        $pos = strrpos($email, '@');
+        if ($pos === false) {
+            return false;
+        }
+
+        $ascii_email = substr($email, 0, $pos) . '@' . idn_to_ascii(substr($email, $pos + 1), 0, INTL_IDNA_VARIANT_2003);
+
+        return filter_var($ascii_email, FILTER_VALIDATE_EMAIL);
     }
 
     /**

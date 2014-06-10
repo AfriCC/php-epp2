@@ -11,24 +11,29 @@
 
 namespace AfriCC\EPP;
 
+/**
+ * EPP object definitions and xml namespaces
+ */
 class ObjectSpec
 {
-    const ROOT_NS = 'urn:ietf:params:xml:ns:epp-1.0';
-
-    protected static $specs = array(
-        'domain' => array(
+    protected static $specs = [
+        'epp'     => [
+            'xmlns' => 'urn:ietf:params:xml:ns:epp-1.0',
+            'id'    => 'name',
+        ],
+        'domain'  => [
             'xmlns' => 'urn:ietf:params:xml:ns:domain-1.0',
             'id'    => 'name',
-        ),
-        'host' => array(
+        ],
+        'host'    => [
             'xmlns' => 'urn:ietf:params:xml:ns:host-1.0',
             'id'    => 'name',
-        ),
-        'contact' => array(
+        ],
+        'contact' => [
             'xmlns' => 'urn:ietf:params:xml:ns:contact-1.0',
             'id'    => 'id',
-        ),
-    );
+        ],
+    ];
 
     public static function id($object)
     {
@@ -37,6 +42,9 @@ class ObjectSpec
 
     public static function xmlns($object)
     {
+        if (!isset(self::$specs[$object]['xmlns'])) {
+            return false;
+        }
         return self::$specs[$object]['xmlns'];
     }
 
