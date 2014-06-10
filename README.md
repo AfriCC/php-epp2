@@ -27,8 +27,8 @@ Requirements
 ------------
 
 * PHP 5.4+
-* libicu 4.8.x
-* php-intl 3.x
+* libicu 4.8.x+
+* php-intl 3.x+
 
 
 Features
@@ -37,18 +37,19 @@ Features
 * modern PHP standards
     * autoloader (e.g. lazy loading, we don't want to load XXX php files, if we only need few operations)
     * [PSR-1](http://www.php-fig.org/psr/psr-1/) and [PSR-2](http://www.php-fig.org/psr/psr-2/) compliant
-    * notice and warning free
-* high-level usage
-* simplified client
+    * notice and warning free (find them, and I'll fix it!)
+* high-level usage (Plug & Play)
+* simplified client (auto login/logout, auto injet clTRID)
 * SSL (+local-cert)
-* XML based responses for direct traversal via xpath
+* Xpath like setter to simplify the creation of complex XML structures
+* XML based responses for direct traversal via Xpath
 
 
 Usage
 -----
 
 See the [examples](https://github.com/AfriCC/php-epp2/blob/master/examples) folder
-for further usage examples.
+for a complete usage reference.
 
 
 ### Basic Client Connection
