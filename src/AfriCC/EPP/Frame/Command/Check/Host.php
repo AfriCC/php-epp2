@@ -20,8 +20,6 @@ use Exception;
  */
 class Host extends CheckCommand
 {
-    protected $mapping = 'host';
-
     public function addHost($host)
     {
         if (!Validator::isHostname($host)) {

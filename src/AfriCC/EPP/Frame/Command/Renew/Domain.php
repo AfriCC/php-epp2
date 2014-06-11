@@ -20,8 +20,6 @@ use Exception;
  */
 class Domain extends RenewCommand
 {
-    protected $mapping = 'domain';
-
     public function setDomain($domain)
     {
         if (!Validator::isHostname($domain)) {

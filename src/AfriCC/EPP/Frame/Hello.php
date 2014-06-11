@@ -15,5 +15,4 @@ use AfriCC\EPP\AbstractFrame;
 
 class Hello extends AbstractFrame
 {
-    protected $format = 'hello';
 }

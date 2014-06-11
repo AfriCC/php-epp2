@@ -19,8 +19,6 @@ use Exception;
  */
 abstract class Transfer extends CommandFrame
 {
-    protected $command = 'transfer';
-
     public function setOperation($op)
     {
         if (!in_array($op, ['request', 'cancel', 'approve', 'reject'])) {

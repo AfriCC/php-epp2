@@ -18,8 +18,6 @@ use AfriCC\EPP\Frame\Command as CommandFrame;
  */
 class Poll extends CommandFrame
 {
-    protected $command = 'poll';
-
     public function request()
     {
         $node = $this->set();

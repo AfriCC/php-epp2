@@ -18,8 +18,6 @@ use AfriCC\EPP\Frame\Command as CommandFrame;
  */
 class Logout extends CommandFrame
 {
-    protected $command = 'logout';
-
     public function __construct()
     {
         parent::__construct();

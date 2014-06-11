@@ -18,8 +18,6 @@ use AfriCC\EPP\Frame\Command\Delete as DeleteCommand;
  */
 class Contact extends DeleteCommand
 {
-    protected $mapping = 'contact';
-
     public function setId($id)
     {
         $this->set('contact:id', $id);

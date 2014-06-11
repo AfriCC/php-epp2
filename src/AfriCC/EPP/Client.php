@@ -275,7 +275,7 @@ class Client
             return $buffer;
         }
 
-        foreach($nodes->item(0)->childNodes as $node) {
+        foreach ($nodes->item(0)->childNodes as $node) {
             // ignore non-nodes
             if ($node->nodeType !== XML_ELEMENT_NODE) {
                 continue;

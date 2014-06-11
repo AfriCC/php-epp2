@@ -16,29 +16,24 @@ namespace AfriCC\EPP;
  */
 class ObjectSpec
 {
-    protected static $specs = [
+    public static $specs = [
         'epp'     => [
             'xmlns' => 'urn:ietf:params:xml:ns:epp-1.0',
-            'id'    => 'name',
         ],
         'domain'  => [
             'xmlns' => 'urn:ietf:params:xml:ns:domain-1.0',
-            'id'    => 'name',
         ],
         'host'    => [
             'xmlns' => 'urn:ietf:params:xml:ns:host-1.0',
-            'id'    => 'name',
         ],
         'contact' => [
             'xmlns' => 'urn:ietf:params:xml:ns:contact-1.0',
-            'id'    => 'id',
         ],
     ];
 
-    public static function id($object)
-    {
-        return self::$specs[$object]['id'];
-    }
+    public static $mappings = [
+        'check', 'create', 'delete', 'info', 'renew', 'transfer', 'update',
+    ];
 
     public static function xmlns($object)
     {
@@ -46,10 +41,5 @@ class ObjectSpec
             return false;
         }
         return self::$specs[$object]['xmlns'];
-    }
-
-    public static function all()
-    {
-        return self::$specs;
     }
 }

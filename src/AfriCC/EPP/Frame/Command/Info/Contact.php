@@ -18,8 +18,6 @@ use AfriCC\EPP\Frame\Command\Info as InfoCommand;
  */
 class Contact extends InfoCommand
 {
-    protected $mapping = 'contact';
-
     public function setId($id)
     {
         $this->set('contact:id', $id);

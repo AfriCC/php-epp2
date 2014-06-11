@@ -23,6 +23,10 @@ abstract class AbstractFrame extends DOMDocument implements FrameInterface
 {
     protected $xpath;
     protected $nodes;
+    protected $format;
+    protected $command;
+    protected $mapping;
+    protected $extension;
 
     public function __construct($import = null)
     {
@@ -37,10 +41,12 @@ abstract class AbstractFrame extends DOMDocument implements FrameInterface
             // register namespaces
             $this->xpath = new DOMXPath($this);
             $this->xpath->registerNamespace('epp', ObjectSpec::xmlns('epp'));
-            foreach (ObjectSpec::all() as $prefix => $spec) {
+            foreach (ObjectSpec::$specs as $prefix => $spec) {
                 $this->xpath->registerNamespace($prefix, $spec['xmlns']);
             }
         }
+
+        $this->getStructure();
     }
 
     public function set($path = null, $value = null)
@@ -186,5 +192,44 @@ abstract class AbstractFrame extends DOMDocument implements FrameInterface
         array_unshift($path_parts, 'epp:epp');
 
         return implode('/', $path_parts);
+    }
+
+    private function getStructure()
+    {
+        // get class structure
+        $classes = [get_class($this)];
+        $classes = array_merge($classes, class_parents($this));
+
+        foreach ($classes as $class) {
+            $bare_class = $this->className($class);
+
+            // stop when we reach self
+            if ($bare_class === $this->className(__CLASS__)) {
+                break;
+            }
+
+            // try to figure out the structure
+            $parent_class = $this->className(get_parent_class($class));
+            if ($parent_class === false) {
+                continue;
+            } elseif (empty($this->mapping) && in_array(strtolower($parent_class), ObjectSpec::$mappings)) {
+                $this->mapping = strtolower($bare_class);
+            } elseif (empty($this->command) && $parent_class === 'Command') {
+                $this->command = strtolower($bare_class);
+            } elseif ($parent_class === 'AbstractFrame') {
+                $this->format  = strtolower($bare_class);
+            }
+        }
+    }
+
+    private function className($class)
+    {
+        if (!is_string($class)) {
+            return $class;
+        }
+        if (($pos = strrpos($class, '\\')) === false) {
+            return $class;
+        }
+        return substr($class, $pos + 1);
     }
 }

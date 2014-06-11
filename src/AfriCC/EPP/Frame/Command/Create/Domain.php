@@ -21,7 +21,6 @@ use Exception;
  */
 class Domain extends CreateCommand
 {
-    protected $mapping = 'domain';
     protected $host_attr_index = 0;
 
     public function setDomain($domain)

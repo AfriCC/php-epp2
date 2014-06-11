@@ -21,8 +21,6 @@ use Exception;
  */
 class Contact extends CreateCommand
 {
-    protected $mapping = 'contact';
-
     public function setId($id)
     {
         $this->set('contact:id', $id);

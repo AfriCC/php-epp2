@@ -20,8 +20,6 @@ use Exception;
  */
 class Host extends InfoCommand
 {
-    protected $mapping = 'host';
-
     public function setHost($host)
     {
         if (!Validator::isHostname($host)) {

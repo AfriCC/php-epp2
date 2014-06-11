@@ -20,8 +20,6 @@ use Exception;
  */
 class Domain extends InfoCommand
 {
-    protected $mapping = 'domain';
-
     public function setDomain($domain, $return = 'all')
     {
         if (!Validator::isHostname($domain)) {

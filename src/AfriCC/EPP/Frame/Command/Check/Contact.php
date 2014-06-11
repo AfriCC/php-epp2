@@ -18,8 +18,6 @@ use AfriCC\EPP\Frame\Command\Check as CheckCommand;
  */
 class Contact extends CheckCommand
 {
-    protected $mapping = 'contact';
-
     public function addId($id)
     {
         $this->set('contact:id[]', $id);

@@ -16,7 +16,6 @@ use AfriCC\EPP\AbstractFrame;
 
 abstract class Command extends AbstractFrame implements TransactionAwareInterface
 {
-    protected $format = 'command';
     protected $clTRID;
 
     public function setClientTransactionId($clTRID)

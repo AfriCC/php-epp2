@@ -15,8 +15,6 @@ use AfriCC\EPP\AbstractFrame;
 
 class Response extends AbstractFrame
 {
-    protected $format = 'response';
-
     public function code()
     {
         return (int) $this->get('//epp:epp/epp:response/epp:result/@code');

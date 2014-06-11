@@ -18,8 +18,6 @@ use AfriCC\EPP\Frame\Command\Transfer as TransferCommand;
  */
 class Contact extends TransferCommand
 {
-    protected $mapping = 'contact';
-
     public function setId($id)
     {
         $this->set('contact:id', $id);

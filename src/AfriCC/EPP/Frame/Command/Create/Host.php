@@ -20,8 +20,6 @@ use Exception;
  */
 class Host extends CreateCommand
 {
-    protected $mapping = 'host';
-
     public function setHost($hostname)
     {
         // validate hostname

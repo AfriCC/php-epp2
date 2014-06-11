@@ -20,8 +20,6 @@ use Exception;
  */
 class Domain extends TransferCommand
 {
-    protected $mapping = 'domain';
-
     public function setDomain($domain)
     {
         if (!Validator::isHostname($domain)) {
