@@ -37,9 +37,19 @@ class Host extends UpdateCommand
         $this->appendAddr('host:add/host:addr[]', $ip);
     }
 
+    public function addStatus($status)
+    {
+        $this->set(sprintf('host:add/host:status[@s=\'%s\']', $status));
+    }
+
     public function removeAddr($ip)
     {
         $this->appendAddr('host:rem/host:addr[]', $ip);
+    }
+
+    public function removeStatus($status)
+    {
+        $this->set(sprintf('host:rem/host:status[@s=\'%s\']', $status));
     }
 
     public function changeHost($host)

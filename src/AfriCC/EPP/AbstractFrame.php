@@ -184,13 +184,15 @@ abstract class AbstractFrame extends DOMDocument implements FrameInterface
             array_unshift($path_parts, $this->mapping . ':' . $this->command);
         }
 
-        if (!empty($this->format) && !empty($this->command)) {
+        if (!empty($this->command)) {
             array_unshift($path_parts, 'epp:' . $this->command);
+        }
+
+        if (!empty($this->format)) {
             array_unshift($path_parts, 'epp:' . $this->format);
         }
 
         array_unshift($path_parts, 'epp:epp');
-
         return implode('/', $path_parts);
     }
 
@@ -219,6 +221,12 @@ abstract class AbstractFrame extends DOMDocument implements FrameInterface
             } elseif ($parent_class === 'AbstractFrame') {
                 $this->format  = strtolower($bare_class);
             }
+        }
+
+        if ($this instanceof ExtensionInterface) {
+            $this->extension = strtolower($this->className(get_class($this)));
+            // add to object spec
+            ObjectSpec::$specs[$this->extension]['xmlns'] = $this->extension_xmlns;
         }
     }
 

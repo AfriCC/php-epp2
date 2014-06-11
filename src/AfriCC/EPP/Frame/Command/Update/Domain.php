@@ -89,8 +89,8 @@ class Domain extends UpdateCommand
         }
 
         $node = $this->set(sprintf('domain:%s/domain:status[@s=\'%s\']', $key, $status));
-        $node->setAttribute('lang', 'en');
         if (!empty($text)) {
+            $node->setAttribute('lang', 'en');
             $node->nodeValue = $text;
         }
     }

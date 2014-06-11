@@ -1,3 +1,5 @@
+[![Latest Stable Version](https://poser.pugx.org/africc/php-epp2/v/stable.svg)](https://packagist.org/packages/africc/php-epp2) [![Total Downloads](https://poser.pugx.org/africc/php-epp2/downloads.svg)](https://packagist.org/packages/africc/php-epp2) [![Latest Unstable Version](https://poser.pugx.org/africc/php-epp2/v/unstable.svg)](https://packagist.org/packages/africc/php-epp2) [![License](https://poser.pugx.org/africc/php-epp2/license.svg)](https://packagist.org/packages/africc/php-epp2)
+
 php-epp2
 ========
 
