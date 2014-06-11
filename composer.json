@@ -3,7 +3,7 @@
     "type": "library",
     "description": "A High Level EPP (Extensible Provisioning Protocol) TCP/SSL Client for PHP",
     "keywords": ["epp", "domains", "registrar", "registry", "client", "tcp"],
-    "homepage": "https://github.com/AfriCC/monolog",
+    "homepage": "https://github.com/AfriCC/php-epp2",
     "license": "GPL-3.0+",
     "authors": [
         {

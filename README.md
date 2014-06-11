@@ -13,7 +13,7 @@ meaningful branchname, issue pull request with thus branchname)!
 - [php-epp2](#user-content-php-epp2)
     - [Requirements](#user-content-requirements)
     - [Features](#user-content-features)
-    - [Usage](#user-content-install)
+    - [Install](#user-content-install)
     - [Usage](#user-content-usage)
         - [Basic Client Connection](#user-content-basic-client-connection)
         - [Create Frame Objects](#user-content-create-frame-objects)
