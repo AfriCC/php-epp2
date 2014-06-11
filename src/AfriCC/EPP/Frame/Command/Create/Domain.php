@@ -14,6 +14,7 @@ namespace AfriCC\EPP\Frame\Command\Create;
 use AfriCC\EPP\Frame\Command\Create as CreateCommand;
 use AfriCC\EPP\Validator;
 use AfriCC\EPP\Random;
+use AfriCC\EPP\PeriodTrait;
 use Exception;
 
 /**
@@ -21,6 +22,8 @@ use Exception;
  */
 class Domain extends CreateCommand
 {
+    use PeriodTrait;
+
     protected $host_attr_index = 0;
 
     public function setDomain($domain)
@@ -34,11 +37,7 @@ class Domain extends CreateCommand
 
     public function setPeriod($period)
     {
-        if (preg_match('/^(\d+)([a-z])$/i', $period, $matches)) {
-            $this->set(sprintf('domain:period[@unit=\'%s\']', $matches[2]), $matches[1]);
-        } else {
-            throw new Exception(sprintf('%s is not a valid period', $period));
-        }
+        $this->appendPeriod('domain:period[@unit=\'%s\']', $period);
     }
 
     public function addHostObj($host)

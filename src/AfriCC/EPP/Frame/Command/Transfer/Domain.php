@@ -13,6 +13,7 @@ namespace AfriCC\EPP\Frame\Command\Transfer;
 
 use AfriCC\EPP\Frame\Command\Transfer as TransferCommand;
 use AfriCC\EPP\Validator;
+use AfriCC\EPP\PeriodTrait;
 use Exception;
 
 /**
@@ -20,6 +21,8 @@ use Exception;
  */
 class Domain extends TransferCommand
 {
+    use PeriodTrait;
+
     public function setDomain($domain)
     {
         if (!Validator::isHostname($domain)) {
@@ -31,11 +34,7 @@ class Domain extends TransferCommand
 
     public function setPeriod($period)
     {
-        if (preg_match('/^(\d+)([a-z])$/i', $period, $matches)) {
-            $this->set(sprintf('domain:period[@unit=\'%s\']', $matches[2]), $matches[1]);
-        } else {
-            throw new Exception(sprintf('%s is not a valid period', $period));
-        }
+        $this->appendPeriod('domain:period[@unit=\'%s\']', $period);
     }
 
     public function setAuthInfo($pw, $roid = null)

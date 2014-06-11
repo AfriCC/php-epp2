@@ -13,6 +13,7 @@ namespace AfriCC\EPP\Frame\Command\Renew;
 
 use AfriCC\EPP\Frame\Command\Renew as RenewCommand;
 use AfriCC\EPP\Validator;
+use AfriCC\EPP\PeriodTrait;
 use Exception;
 
 /**
@@ -20,6 +21,8 @@ use Exception;
  */
 class Domain extends RenewCommand
 {
+    use PeriodTrait;
+
     public function setDomain($domain)
     {
         if (!Validator::isHostname($domain)) {
@@ -36,10 +39,6 @@ class Domain extends RenewCommand
 
     public function setPeriod($period)
     {
-        if (preg_match('/^(\d+)([a-z])$/i', $period, $matches)) {
-            $this->set(sprintf('domain:period[@unit=\'%s\']', $matches[2]), $matches[1]);
-        } else {
-            throw new Exception(sprintf('%s is not a valid period', $period));
-        }
+        $this->appendPeriod('domain:period[@unit=\'%s\']', $period);
     }
 }

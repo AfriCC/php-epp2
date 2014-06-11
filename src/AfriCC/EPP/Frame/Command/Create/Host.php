@@ -13,6 +13,7 @@ namespace AfriCC\EPP\Frame\Command\Create;
 
 use AfriCC\EPP\Frame\Command\Create as CreateCommand;
 use AfriCC\EPP\Validator;
+use AfriCC\EPP\AddrTrait;
 use Exception;
 
 /**
@@ -20,6 +21,8 @@ use Exception;
  */
 class Host extends CreateCommand
 {
+    use AddrTrait;
+
     public function setHost($hostname)
     {
         // validate hostname
@@ -32,18 +35,6 @@ class Host extends CreateCommand
 
     public function addAddr($ip)
     {
-        // validate IP
-        $ip_type = Validator::getIPType($ip);
-        if ($ip_type === false) {
-            throw new Exception(sprintf('not a valid IP address: %s', $ip));
-        }
-
-        $node = $this->set('host:addr[]', $ip);
-
-        if ($ip_type === Validator::TYPE_IPV4) {
-            $node->setAttribute('ip', 'v4');
-        } elseif ($ip_type === Validator::TYPE_IPV6) {
-            $node->setAttribute('ip', 'v6');
-        }
+        $this->appendAddr('host:addr[]', $ip);
     }
 }

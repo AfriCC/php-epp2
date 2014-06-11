@@ -1,0 +1,26 @@
+{
+    "name": "africc/php-epp2",
+    "type": "library",
+    "description": "A High Level EPP (Extensible Provisioning Protocol) TCP/SSL Client for PHP",
+    "keywords": ["epp", "domains", "registrar", "registry", "client", "tcp"],
+    "homepage": "https://github.com/AfriCC/monolog",
+    "license": "GPL-3.0+",
+    "authors": [
+        {
+            "name": "Gunter Grodotzki",
+            "email": "packagist@afri.cc",
+            "homepage": "https://www.afri.cc",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": ">=5.4.0",
+        "ext-intl": "*",
+        "ext-mcrypt": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "AfriCC\\": "src/AfriCC"
+        }
+    }
+}
