@@ -6,11 +6,15 @@ ini_set('display_errors', true);
 
 require '../src/AfriCC/autoload.php';
 
-use AfriCC\EPP\Frame\Command\Transfer\Domain as TransferDomain;
+use AfriCC\EPP\Frame\Command\Update\Contact as ContactUpdate;
 
-$frame = new TransferDomain;
-$frame->setOperation('cancel');
-$frame->setDomain('google.com');
-$frame->setPeriod('6y');
-$frame->setAuthInfo('password', 'REP-REP-YEP');
+$frame = new ContactUpdate;
+$frame->setId('C0054');
+$frame->addCity('Voerde');
+$frame->addAddStreet('Long St. 14');
+$frame->addAddStreet('CBD');
+$frame->changeAddStreet('Long St. 15');
+$frame->changeCity('Cape Town');
+$frame->removeAddStreet('Long St. 16');
+$frame->removeCity('Durban');
 echo $frame;

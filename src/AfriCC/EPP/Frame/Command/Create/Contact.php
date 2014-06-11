@@ -12,96 +12,77 @@
 namespace AfriCC\EPP\Frame\Command\Create;
 
 use AfriCC\EPP\Frame\Command\Create as CreateCommand;
-use AfriCC\EPP\Validator;
-use AfriCC\EPP\Random;
-use AfriCC\EPP\Translit;
-use Exception;
+use AfriCC\EPP\ContactTrait;
 
 /**
  * @link http://tools.ietf.org/html/rfc5733#section-3.2.1
  */
 class Contact extends CreateCommand
 {
+    use ContactTrait;
+
     public function setId($id)
     {
-        $this->set('contact:id', $id);
+        $this->appendId('contact:id', $id);
     }
 
     public function setName($name)
     {
-        $this->set('contact:postalInfo[@type=\'loc\']/contact:name', $name);
-        $this->set('contact:postalInfo[@type=\'int\']/contact:name', Translit::transliterate($name));
+        $this->appendName('contact:postalInfo[@type=\'%s\']/contact:name', $name);
     }
 
     public function setOrganization($org)
     {
-        $this->set('contact:postalInfo[@type=\'loc\']/contact:org', $org);
-        $this->set('contact:postalInfo[@type=\'int\']/contact:org', Translit::transliterate($org));
+        $this->appendOrganization('contact:postalInfo[@type=\'%s\']/contact:org', $org);
     }
 
     public function addStreet($street)
     {
-        $this->set('contact:postalInfo[@type=\'loc\']/contact:addr/contact:street[]', $street);
-        $this->set('contact:postalInfo[@type=\'int\']/contact:addr/contact:street[]', Translit::transliterate($street));
+        $this->appendStreet('contact:postalInfo[@type=\'%s\']/contact:addr/contact:street[]', $street);
     }
 
     public function setCity($city)
     {
-        $this->set('contact:postalInfo[@type=\'loc\']/contact:addr/contact:city', $city);
-        $this->set('contact:postalInfo[@type=\'int\']/contact:addr/contact:city', Translit::transliterate($city));
+        $this->appendCity('contact:postalInfo[@type=\'%s\']/contact:addr/contact:city', $city);
     }
 
     public function setProvince($sp)
     {
-        $this->set('contact:postalInfo[@type=\'loc\']/contact:addr/contact:sp', $sp);
-        $this->set('contact:postalInfo[@type=\'int\']/contact:addr/contact:sp', Translit::transliterate($sp));
+        $this->appendProvince('contact:postalInfo[@type=\'%s\']/contact:addr/contact:sp', $sp);
     }
 
     public function setPostalCode($pc)
     {
-        $this->set('contact:postalInfo[@type=\'loc\']/contact:addr/contact:pc', $pc);
-        $this->set('contact:postalInfo[@type=\'int\']/contact:addr/contact:pc', Translit::transliterate($pc));
+        $this->appendPostalCode('contact:postalInfo[@type=\'%s\']/contact:addr/contact:pc', $pc);
     }
 
     public function setCountryCode($cc)
     {
-        if (!Validator::isCountryCode($cc)) {
-            throw new Exception(sprintf('the country-code: \'%s\' is unknown', $cc));
-        }
-        $this->set('contact:postalInfo[@type=\'loc\']/contact:addr/contact:cc', $cc);
-        $this->set('contact:postalInfo[@type=\'int\']/contact:addr/contact:cc', Translit::transliterate($cc));
+        $this->appendCountryCode('contact:postalInfo[@type=\'%s\']/contact:addr/contact:cc', $cc);
     }
 
     public function setVoice($voice)
     {
-        $this->set('contact:voice', $voice);
+        $this->appendVoice('contact:voice', $voice);
     }
 
     public function setFax($fax)
     {
-        $this->set('contact:fax', $fax);
+        $this->appendFax('contact:fax', $fax);
     }
 
     public function setEmail($email)
     {
-        if (!Validator::isEmail($email)) {
-            throw new Exception(sprintf('%s is not a valid email', $email));
-        }
-
-        $this->set('contact:email', $email);
+        $this->appendEmail('contact:email', $email);
     }
 
     public function setAuthInfo($pw = null)
     {
-        if ($pw === null) {
-            $pw = Random::auth(12);
-        }
-        $this->set('contact:authInfo/contact:pw', $pw);
-        return $pw;
+        return $this->appendAuthInfo('contact:authInfo/contact:pw', $pw);
     }
 
     public function addDisclose($value)
     {
-        $this->set('contact:disclose[@flag=\'0\']/contact:' . $value);
+        $this->appendDisclose('contact:disclose[@flag=\'0\']/contact:' . $value);
     }
 }

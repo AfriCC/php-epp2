@@ -14,6 +14,9 @@ namespace AfriCC\EPP\Extension\COZA\Update;
 use AfriCC\EPP\Frame\Command\Update\Contact as ContactUpdate;
 use AfriCC\EPP\ExtensionInterface as Extension;
 
+/**
+ * @link https://www.registry.net.za/content.php?wiki=1&contentid=18&title=EPP%20Contact%20Extensions
+ */
 class CozaContact extends ContactUpdate implements Extension
 {
     protected $extension_xmlns = 'http://co.za/epp/extensions/cozacontact-1-0';
@@ -21,5 +24,10 @@ class CozaContact extends ContactUpdate implements Extension
     public function cancelPendingAction()
     {
         $this->set('//epp:epp/epp:command/epp:extension/cozacontact:update[@cancelPendingAction=\'PendingUpdate\']');
+    }
+
+    public function getExtensionNamespace()
+    {
+        return $this->extension_xmlns;
     }
 }

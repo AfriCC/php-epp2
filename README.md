@@ -5,8 +5,6 @@ php-epp2
 
 **php-epp2** is a High Level Extensible Provisioning Protocol (EPP) TCP/SSL client written in modern PHP.
 
-It started as a "fork" of [centralnic/php-epp](https://github.com/centralnic/php-epp).
-
 Released under the GPLv3 License, feel free to contribute (fork, create
 meaningful branchname, issue pull request with thus branchname)!
 
