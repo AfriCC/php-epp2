@@ -15,6 +15,7 @@ use AfriCC\EPP\Frame\Command\Create as CreateCommand;
 use AfriCC\EPP\Validator;
 use AfriCC\EPP\Random;
 use AfriCC\EPP\PeriodTrait;
+use AfriCC\EPP\AddrTrait;
 use Exception;
 
 /**
@@ -22,9 +23,8 @@ use Exception;
  */
 class Domain extends CreateCommand
 {
-    use PeriodTrait;
+    use PeriodTrait, AddrTrait;
 
-    protected $host_attr_index = 0;
 
     public function setDomain($domain)
     {
@@ -51,26 +51,7 @@ class Domain extends CreateCommand
 
     public function addHostAttr($host, $ips = null)
     {
-        if (!Validator::isHostname($host)) {
-            throw new Exception(sprintf('%s is not a valid host name', $host));
-        }
-
-        $this->set(sprintf('domain:ns/domain:hostAttr[%d]/domain:hostName', $this->host_attr_index), $host);
-
-        if (!empty($ips) && is_array($ips)) {
-            foreach ($ips as $ip) {
-                $ip_type = Validator::getIPType($ip);
-                if ($ip_type === false) {
-                    throw new Exception(sprintf('%s is not a valid IP address', $ip));
-                } elseif ($ip_type === Validator::TYPE_IPV4) {
-                    $this->set(sprintf('domain:ns/domain:hostAttr[%d]/domain:hostAddr[@ip=\'v4\']', $this->host_attr_index), $ip);
-                } elseif ($ip_type === Validator::TYPE_IPV6) {
-                    $this->set(sprintf('domain:ns/domain:hostAttr[%d]/domain:hostAddr[@ip=\'v6\']', $this->host_attr_index), $ip);
-                }
-            }
-        }
-
-        ++$this->host_attr_index;
+        $this->appendHostAttr('domain:ns/domain:hostAttr[%d]', $host, $ips);
     }
 
     public function setRegistrant($registrant)

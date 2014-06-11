@@ -13,6 +13,7 @@ meaningful branchname, issue pull request with thus branchname)!
 - [php-epp2](#user-content-php-epp2)
     - [Requirements](#user-content-requirements)
     - [Features](#user-content-features)
+    - [Usage](#user-content-install)
     - [Usage](#user-content-usage)
         - [Basic Client Connection](#user-content-basic-client-connection)
         - [Create Frame Objects](#user-content-create-frame-objects)
@@ -45,6 +46,20 @@ Features
 * Xpath like setter to simplify the creation of complex XML structures
 * XML based responses for direct traversal via Xpath
 * [RFC 5730](http://tools.ietf.org/html/rfc5730), [RFC 5731](http://tools.ietf.org/html/rfc5731), [RFC 5732](http://tools.ietf.org/html/rfc5732), [RFC 5733](http://tools.ietf.org/html/rfc5733), [RFC 5734](http://tools.ietf.org/html/rfc5734)
+
+
+Install
+-------
+
+Via Composer
+
+```json
+{
+    "require": {
+        "africc/php-epp2": "0.1.*"
+    }
+}
+```
 
 
 Usage
