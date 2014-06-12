@@ -44,6 +44,8 @@ abstract class AbstractFrame extends DOMDocument implements FrameInterface
             foreach (ObjectSpec::$specs as $prefix => $spec) {
                 $this->xpath->registerNamespace($prefix, $spec['xmlns']);
             }
+
+            $this->registerNodeClass('\DOMElement', 'AfriCC\EPP\DOM\DOMElement');
         }
 
         $this->getStructure();

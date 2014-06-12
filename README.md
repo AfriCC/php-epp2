@@ -41,7 +41,7 @@ Features
     * [PSR-1](http://www.php-fig.org/psr/psr-1/) and [PSR-2](http://www.php-fig.org/psr/psr-2/) compliant
     * notice and warning free (find them, and I'll fix it!)
 * high-level usage (Plug & Play)
-* simplified client (auto login/logout, auto injet clTRID)
+* simplified client (auto login/logout, auto inject clTRID)
 * SSL (+local-cert)
 * Xpath like setter to simplify the creation of complex XML structures
 * XML based responses for direct traversal via Xpath
@@ -131,10 +131,39 @@ $epp_client->sendFrame($frame);
 
 ### Parse Response
 
-currently you will only get an Object for the type "response"
+You can either access nodes directly by passing through a xpath or use the data()
+Method which will return an assoc array.
 
 ```php
-// @todo
+use AfriCC\EPP\Frame\Command\Check\Domain as DomainCheck;
+use AfriCC\EPP\Frame\Response;
+
+$frame = new DomainCheck;
+$frame->addDomain('example.org');
+$frame->addDomain('example.net');
+$frame->addDomain('example.com');
+
+$response = $epp_client->request($frame);
+if (!($response instanceof Response)) {
+    echo 'response error' . PHP_EOL;
+    unset($epp_client);
+    exit(1);
+}
+
+echo $response->code() . PHP_EOL;
+echo $response->message() . PHP_EOL;
+echo $response->clientTransactionId() . PHP_EOL;
+echo $response->serverTransactionId() . PHP_EOL;
+$data = $response->data();
+if (empty($data) || !is_array($data)) {
+    echo 'empty response data' . PHP_EOL;
+    unset($epp_client);
+    exit(1);
+}
+
+foreach ($data['chkData']['cd'] as $cd) {
+    printf('Domain: %s, available: %d' . PHP_EOL, $cd['name'], $cd['@name']['avail']);
+}
 ```
 
 

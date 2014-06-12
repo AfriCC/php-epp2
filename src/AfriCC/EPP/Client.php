@@ -282,7 +282,7 @@ class Client
             }
 
             // ok now we can create an object according to the response-frame
-            $frame_type = strtolower($node->nodeName);
+            $frame_type = strtolower($node->localName);
             if ($frame_type === 'response') {
                 return new ResponseFrame($xml);
             }
