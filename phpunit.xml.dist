@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit bootstrap="src/AfriCC/autoload.php" colors="true">
+    <testsuites>
+        <testsuite name="AfriCC/EPP Test Suite">
+            <directory>tests/AfriCC/EPP</directory>
+        </testsuite>
+    </testsuites>
+    <filter>
+        <whitelist>
+            <directory suffix=".php">src/AfriCC/EPP</directory>
+        </whitelist>
+    </filter>
+</phpunit>
