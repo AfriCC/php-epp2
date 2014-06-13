@@ -193,7 +193,7 @@ class Client
         }
 
         $buffer = (string) $frame;
-        $header = pack('N', strlen($buffer) + 4);
+        $header = pack('N', mb_strlen($buffer, 'ASCII') + 4);
         return $this->send($header . $buffer);
     }
 
@@ -248,7 +248,7 @@ class Client
         if ($message === '') {
             return;
         }
-        echo sprintf("\033[%sm%s\033[0m" . PHP_EOL, $color, trim($message));
+        echo sprintf("\033[%sm%s\033[0m", $color, $message);
     }
 
     protected function generateClientTransactionId()
@@ -270,8 +270,9 @@ class Client
         $hard_time_limit = time() + $this->timeout + 2;
 
         while (!$info['timed_out'] && !feof($this->socket)) {
+
             // Try read remaining data from socket
-            $buffer = @fread($this->socket, $length - strlen($result));
+            $buffer = @fread($this->socket, $length - mb_strlen($result, 'ASCII'));
 
             // If the buffer actually contains something then add it to the result
             if ($buffer !== false) {
@@ -282,7 +283,7 @@ class Client
                 $result .= $buffer;
 
                 // break if all data received
-                if (strlen($result) === $length) {
+                if (mb_strlen($result, 'ASCII') === $length) {
                     break;
                 }
             } else {
@@ -313,7 +314,7 @@ class Client
     {
         $info = stream_get_meta_data($this->socket);
         $hard_time_limit = time() + $this->timeout + 2;
-        $length = strlen($buffer);
+        $length = mb_strlen($buffer, 'ASCII');
 
         $pos = 0;
         while (!$info['timed_out'] && !feof($this->socket)) {
@@ -325,12 +326,12 @@ class Client
             }
 
             // try write remaining data from socket
-            $written = @fwrite($this->socket, substr($buffer, $pos), $wlen);
+            $written = @fwrite($this->socket, mb_substr($buffer, $pos, $wlen, 'ASCII'), $wlen);
 
             // If we read something, bump up the position
             if ($written) {
                 if ($this->debug) {
-                    $this->log(substr($buffer, $pos), '1;31');
+                    $this->log(mb_substr($buffer, $pos, $wlen, 'ASCII'), '1;31');
                 }
                 $pos += $written;
 
