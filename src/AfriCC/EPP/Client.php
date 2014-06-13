@@ -11,11 +11,11 @@
 
 namespace AfriCC\EPP;
 
+use AfriCC\EPP\Frame\ResponseFactory;
 use AfriCC\EPP\Frame\Response as ResponseFrame;
 use AfriCC\EPP\Frame\Command\Login as LoginCommand;
 use AfriCC\EPP\Frame\Command\Logout as LogoutCommand;
 use Exception;
-use DOMDocument;
 
 /**
  * A high level TCP (SSL) based client for the Extensible Provisioning Protocol (EPP)
@@ -176,7 +176,7 @@ class Client
             throw new Exception(sprintf('Got a bad frame header length of %d bytes from peer', $length));
         } else {
             $length -= 4;
-            return $this->loadFrame($this->recv($length));
+            return ResponseFactory::build($this->recv($length));
         }
     }
 
@@ -254,41 +254,6 @@ class Client
     protected function generateClientTransactionId()
     {
         return Random::id(64, $this->username);
-    }
-
-    /**
-     * Tries to load a frame into an object. Should be overriden.
-     * @param string $buffer
-     */
-    protected function loadFrame($buffer)
-    {
-        $xml = new DOMDocument('1.0', 'UTF-8');
-        $xml->formatOutput = true;
-        $xml->loadXML($buffer);
-
-        $nodes = $xml->getElementsByTagNameNS(ObjectSpec::xmlns('epp'), 'epp');
-        if ($nodes === null || $nodes->length !== 1) {
-            return $buffer;
-        }
-
-        if (!$nodes->item(0)->hasChildNodes()) {
-            return $buffer;
-        }
-
-        foreach ($nodes->item(0)->childNodes as $node) {
-            // ignore non-nodes
-            if ($node->nodeType !== XML_ELEMENT_NODE) {
-                continue;
-            }
-
-            // ok now we can create an object according to the response-frame
-            $frame_type = strtolower($node->localName);
-            if ($frame_type === 'response') {
-                return new ResponseFrame($xml);
-            }
-        }
-
-        return $buffer;
     }
 
     /**

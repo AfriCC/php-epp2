@@ -6,6 +6,13 @@ use Exception;
 
 trait ContactTrait
 {
+    protected $force_ascii = false;
+
+    public function forceAscii()
+    {
+        $this->force_ascii = true;
+    }
+
     public function appendId($path, $id)
     {
         $this->set($path, $id);
@@ -13,37 +20,67 @@ trait ContactTrait
 
     public function appendName($path, $name)
     {
-        $this->set(sprintf($path, 'loc'), $name);
+        if ($this->force_ascii) {
+            $this->set(sprintf($path, 'loc'), Translit::transliterate($name));
+        } else {
+            $this->set(sprintf($path, 'loc'), $name);
+        }
+
         $this->set(sprintf($path, 'int'), Translit::transliterate($name));
     }
 
     public function appendOrganization($path, $org)
     {
-        $this->set(sprintf($path, 'loc'), $org);
+        if ($this->force_ascii) {
+            $this->set(sprintf($path, 'loc'), Translit::transliterate($org));
+        } else {
+            $this->set(sprintf($path, 'loc'), $org);
+        }
+
         $this->set(sprintf($path, 'int'), Translit::transliterate($org));
     }
 
     public function appendStreet($path, $street)
     {
-        $this->set(sprintf($path, 'loc'), $street);
+        if ($this->force_ascii) {
+            $this->set(sprintf($path, 'loc'), Translit::transliterate($street));
+        } else {
+            $this->set(sprintf($path, 'loc'), $street);
+        }
+
         $this->set(sprintf($path, 'int'), Translit::transliterate($street));
     }
 
     public function appendCity($path, $city)
     {
-        $this->set(sprintf($path, 'loc'), $city);
+        if ($this->force_ascii) {
+            $this->set(sprintf($path, 'loc'), Translit::transliterate($city));
+        } else {
+            $this->set(sprintf($path, 'loc'), $city);
+        }
+
         $this->set(sprintf($path, 'int'), Translit::transliterate($city));
     }
 
     public function appendProvince($path, $sp)
     {
-        $this->set(sprintf($path, 'loc'), $sp);
+        if ($this->force_ascii) {
+            $this->set(sprintf($path, 'loc'), Translit::transliterate($sp));
+        } else {
+            $this->set(sprintf($path, 'loc'), $sp);
+        }
+
         $this->set(sprintf($path, 'int'), Translit::transliterate($sp));
     }
 
     public function appendPostalCode($path, $pc)
     {
-        $this->set(sprintf($path, 'loc'), $pc);
+        if ($this->force_ascii) {
+            $this->set(sprintf($path, 'loc'), Translit::transliterate($pc));
+        } else {
+            $this->set(sprintf($path, 'loc'), $pc);
+        }
+
         $this->set(sprintf($path, 'int'), Translit::transliterate($pc));
     }
 
@@ -52,7 +89,13 @@ trait ContactTrait
         if (!Validator::isCountryCode($cc)) {
             throw new Exception(sprintf('the country-code: \'%s\' is unknown', $cc));
         }
-        $this->set(sprintf($path, 'loc'), $cc);
+
+        if ($this->force_ascii) {
+            $this->set(sprintf($path, 'loc'), Translit::transliterate($cc));
+        } else {
+            $this->set(sprintf($path, 'loc'), $cc);
+        }
+
         $this->set(sprintf($path, 'int'), Translit::transliterate($cc));
     }
 

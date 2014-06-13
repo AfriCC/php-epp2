@@ -28,7 +28,7 @@ class Contact extends UpdateCommand
 
     private function setName($mode, $name)
     {
-        $this->appendName(sprintf('contact:%s/contact:postalInfo[@type=\'%ss\']/contact:name', $mode), $name);
+        $this->appendName(sprintf('contact:%s/contact:postalInfo[@type=\'%%s\']/contact:name', $mode), $name);
     }
 
     private function setOrganization($mode, $org)

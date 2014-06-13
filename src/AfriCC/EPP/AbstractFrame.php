@@ -40,12 +40,12 @@ abstract class AbstractFrame extends DOMDocument implements FrameInterface
 
             // register namespaces
             $this->xpath = new DOMXPath($this);
-            $this->xpath->registerNamespace('epp', ObjectSpec::xmlns('epp'));
+            //$this->xpath->registerNamespace('epp', ObjectSpec::xmlns('epp'));
             foreach (ObjectSpec::$specs as $prefix => $spec) {
                 $this->xpath->registerNamespace($prefix, $spec['xmlns']);
             }
 
-            $this->registerNodeClass('\DOMElement', 'AfriCC\EPP\DOM\DOMElement');
+            $this->registerNodeClass('\DOMElement', '\AfriCC\EPP\DOM\DOMElement');
         }
 
         $this->getStructure();

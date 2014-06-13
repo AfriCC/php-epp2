@@ -20,6 +20,15 @@ use DOMNode;
  */
 class Response extends AbstractFrame
 {
+    public function success()
+    {
+        $code = $this->code();
+        if ($code >= 1000 && $code < 2000) {
+            return true;
+        }
+        return false;
+    }
+
     public function code()
     {
         return (int) $this->get('//epp:epp/epp:response/epp:result/@code');
@@ -51,11 +60,17 @@ class Response extends AbstractFrame
     public function data()
     {
         $nodes = $this->get('//epp:epp/epp:response/epp:resData');
-        if ($nodes === null || !($nodes instanceof DOMNodeList) || $nodes->length === 0 || !$nodes->item(0)->hasChildNodes()) {
+        if ($nodes === false || !($nodes instanceof DOMNodeList) || $nodes->length === 0 || !$nodes->item(0)->hasChildNodes()) {
             return;
         }
 
         $data = $this->nodeToArray($nodes->item(0));
+
+        // check for extension data
+        $nodes = $this->get('//epp:epp/epp:response/epp:extension');
+        if ($nodes !== false && $nodes instanceof DOMNodeList && $nodes->length > 0 && $nodes->item(0)->hasChildNodes()) {
+            $data = array_merge_recursive($data, $this->nodeToArray($nodes->item(0)));
+        }
 
         return $data;
     }
@@ -68,20 +83,37 @@ class Response extends AbstractFrame
                 continue;
             }
 
-            if ($each->hasChildNodes()) {
-                if (isset($tmp[$each->localName])) {
-                    if (!isset($tmp[$each->localName][0])) {
-                        $tmp[$each->localName] = [$tmp[$each->localName]];
-                    }
-                    $tmp[$each->localName][] = $this->nodeToArray($each);
-                } else {
-                    $tmp[$each->localName] = $this->nodeToArray($each);
-                }
+            if ($each->localName === 'postalInfo' && $each->hasAttribute('type')) {
+                $key = $each->localName . '@' . $each->getAttribute('type');
             } else {
-                $tmp[$each->localName] = $each->textContent;
+                $key = $each->localName;
+            }
+
+            if (isset($tmp[$key])) {
+                if (!is_array($tmp[$key]) || !isset($tmp[$key][0])) {
+                    $tmp[$key] = [$tmp[$key]];
+                }
+                $current = &$tmp[$key][];
+                $insert_key = key($tmp[$key]);
+            } else {
+                $current = &$tmp[$key];
+                $insert_key = null;
+            }
+
+            if ($each->hasChildNodes()) {
+                $current = $this->nodeToArray($each);
+            } else {
+                $current = $each->textContent;
+
                 if ($each->hasAttributes()) {
                     foreach ($each->attributes as $attr) {
-                        $tmp['@' . $each->localName][$attr->nodeName] = $attr->nodeValue;
+                        if ($insert_key) {
+                            $tmp['@' . $key][$insert_key][$attr->nodeName] = $attr->nodeValue;
+                        } elseif ($each->attributes->length === 1 && $each->textContent === '') {
+                            $current = $attr->nodeValue;
+                        } else {
+                            $tmp['@' . $key][$attr->nodeName] = $attr->nodeValue;
+                        }
                     }
                 }
             }
