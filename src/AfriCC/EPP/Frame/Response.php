@@ -20,6 +20,29 @@ use DOMNode;
  */
 class Response extends AbstractFrame
 {
+    /**
+     * nodeToArray force array values for the following tags. Usually the upper
+     * level will expect them as an array to traverse. Otherwise, if only one
+     * value exists it will be converted directly to a string
+     * @var array
+     */
+    protected $n2a_force_array = [
+        'hostAttr' => true,
+        'hostObj'  => true,
+        'street'   => true,
+        'hostAddr' => true,
+    ];
+
+    /**
+     * nodeToArray ignore conversion of following attributes. Usually because
+     * the information is redundant or useless (like the definition of IP types
+     * which should be done on the higher level)
+     * @var array
+     */
+    protected $n2a_ignore_attr = [
+        'hostAddr' => true,
+    ];
+
     public function success()
     {
         $code = $this->code();
@@ -83,19 +106,33 @@ class Response extends AbstractFrame
                 continue;
             }
 
-            if ($each->localName === 'postalInfo' && $each->hasAttribute('type')) {
+            // if node only has a type attribute lets distinguish them directly
+            // and then ignore the attribtue
+            if ($each->hasAttribute('type')) {
                 $key = $each->localName . '@' . $each->getAttribute('type');
+                $ignore_attributes = true;
             } else {
                 $key = $each->localName;
+                $ignore_attributes = false;
             }
 
-            if (isset($tmp[$key])) {
+            // in case of special keys, always create array
+            if (isset($this->n2a_force_array[$key])) {
+                $current = &$tmp[$key][];
+                end($tmp[$key]);
+                $insert_key = key($tmp[$key]);
+            }
+            // if key already exists, dynamically create an array
+            elseif (isset($tmp[$key])) {
                 if (!is_array($tmp[$key]) || !isset($tmp[$key][0])) {
                     $tmp[$key] = [$tmp[$key]];
                 }
                 $current = &$tmp[$key][];
+                end($tmp[$key]);
                 $insert_key = key($tmp[$key]);
-            } else {
+            }
+            // key was not yet set, so lets start off with a string
+            else {
                 $current = &$tmp[$key];
                 $insert_key = null;
             }
@@ -103,14 +140,22 @@ class Response extends AbstractFrame
             if ($each->hasChildNodes()) {
                 $current = $this->nodeToArray($each);
             } else {
-                $current = $each->textContent;
+                $current = $each->nodeValue;
 
-                if ($each->hasAttributes()) {
+                if (!$ignore_attributes && !isset($this->n2a_ignore_attr[$each->localName]) && $each->hasAttributes()) {
                     foreach ($each->attributes as $attr) {
-                        if ($insert_key) {
-                            $tmp['@' . $key][$insert_key][$attr->nodeName] = $attr->nodeValue;
-                        } elseif ($each->attributes->length === 1 && $each->textContent === '') {
+
+                        // single attribute with empty node, use the attr-value directly
+                        if ($each->localName === 'status' || ($each->attributes->length === 1 && $each->nodeValue === '')) {
                             $current = $attr->nodeValue;
+                            break;
+                        }
+
+                        if ($insert_key) {
+                            if (isset($tmp['@' . $key][$attr->nodeName]) && !is_array($tmp['@' . $key][$attr->nodeName])) {
+                                $tmp['@' . $key][$attr->nodeName] = [$tmp['@' . $key][$attr->nodeName]];
+                            }
+                            $tmp['@' . $key][$attr->nodeName][$insert_key] = $attr->nodeValue;
                         } else {
                             $tmp['@' . $key][$attr->nodeName] = $attr->nodeValue;
                         }
