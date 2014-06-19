@@ -118,7 +118,7 @@ class Client
 
         $target = sprintf('%s://%s:%d', $proto, $this->host, $this->port);
 
-        if (isset($contect) && is_resource($context)) {
+        if (isset($context) && is_resource($context)) {
             $this->socket = @stream_socket_client($target, $errno, $errstr, $this->connect_timeout, STREAM_CLIENT_CONNECT, $context);
         } else {
             $this->socket = @stream_socket_client($target, $errno, $errstr, $this->connect_timeout, STREAM_CLIENT_CONNECT);

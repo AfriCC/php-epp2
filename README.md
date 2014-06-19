@@ -27,9 +27,9 @@ meaningful branchname, issue pull request with thus branchname)!
 Requirements
 ------------
 
-* PHP 5.4+
-* libicu 4.8.x+
-* php-intl 3.x+
+* PHP 5.4 or higher
+* libicu 4.8 or higher
+* php-intl 3 or higher
 * php-mcrypt
 
 
