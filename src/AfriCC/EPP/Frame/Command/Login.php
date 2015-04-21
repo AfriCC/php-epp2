@@ -46,4 +46,9 @@ class Login extends CommandFrame
     {
         $this->set('svcs/objURI[]', $urn);
     }
+
+    public function addServiceExtension($uri)
+    {
+        $this->set('svcs/svcExtension/extURI[]', $uri);
+    }
 }
