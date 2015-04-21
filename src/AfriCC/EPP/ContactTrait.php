@@ -1,16 +1,44 @@
 <?php
 
+/**
+ * This file is part of the php-epp2 library.
+ *
+ * (c) Gunter Grodotzki <gunter@afri.cc>
+ *
+ * For the full copyright and license information, please view the LICENSE file
+ * that was distributed with this source code.
+ */
+
 namespace AfriCC\EPP;
 
 use Exception;
 
 trait ContactTrait
 {
+    /**
+     * this was once needed as the conversion done by COZA was faulty
+     * the bug has since been fixed but this remains to allow testing
+     * set true to force ascii usage on type=loc (which should allow UTF8)
+     *
+     * @var bool
+     */
     protected $force_ascii = false;
+
+    /**
+     * set true to skip the generation of type=int (like .MX)
+     *
+     * @var bool
+     */
+    protected $skip_int = false;
 
     public function forceAscii()
     {
         $this->force_ascii = true;
+    }
+
+    public function skipInt()
+    {
+        $this->skip_int = true;
     }
 
     public function appendId($path, $id)
@@ -26,7 +54,9 @@ trait ContactTrait
             $this->set(sprintf($path, 'loc'), $name);
         }
 
-        $this->set(sprintf($path, 'int'), Translit::transliterate($name));
+        if (!$this->skip_int) {
+            $this->set(sprintf($path, 'int'), Translit::transliterate($name));
+        }
     }
 
     public function appendOrganization($path, $org)
@@ -37,7 +67,9 @@ trait ContactTrait
             $this->set(sprintf($path, 'loc'), $org);
         }
 
-        $this->set(sprintf($path, 'int'), Translit::transliterate($org));
+        if (!$this->skip_int) {
+            $this->set(sprintf($path, 'int'), Translit::transliterate($org));
+        }
     }
 
     public function appendStreet($path, $street)
@@ -48,7 +80,9 @@ trait ContactTrait
             $this->set(sprintf($path, 'loc'), $street);
         }
 
-        $this->set(sprintf($path, 'int'), Translit::transliterate($street));
+        if (!$this->skip_int) {
+            $this->set(sprintf($path, 'int'), Translit::transliterate($street));
+        }
     }
 
     public function appendCity($path, $city)
@@ -59,7 +93,9 @@ trait ContactTrait
             $this->set(sprintf($path, 'loc'), $city);
         }
 
-        $this->set(sprintf($path, 'int'), Translit::transliterate($city));
+        if (!$this->skip_int) {
+            $this->set(sprintf($path, 'int'), Translit::transliterate($city));
+        }
     }
 
     public function appendProvince($path, $sp)
@@ -70,7 +106,9 @@ trait ContactTrait
             $this->set(sprintf($path, 'loc'), $sp);
         }
 
-        $this->set(sprintf($path, 'int'), Translit::transliterate($sp));
+        if (!$this->skip_int) {
+            $this->set(sprintf($path, 'int'), Translit::transliterate($sp));
+        }
     }
 
     public function appendPostalCode($path, $pc)
@@ -81,7 +119,9 @@ trait ContactTrait
             $this->set(sprintf($path, 'loc'), $pc);
         }
 
-        $this->set(sprintf($path, 'int'), Translit::transliterate($pc));
+        if (!$this->skip_int) {
+            $this->set(sprintf($path, 'int'), Translit::transliterate($pc));
+        }
     }
 
     public function appendCountryCode($path, $cc)
@@ -96,7 +136,9 @@ trait ContactTrait
             $this->set(sprintf($path, 'loc'), $cc);
         }
 
-        $this->set(sprintf($path, 'int'), Translit::transliterate($cc));
+        if (!$this->skip_int) {
+            $this->set(sprintf($path, 'int'), Translit::transliterate($cc));
+        }
     }
 
     public function appendVoice($path, $voice)

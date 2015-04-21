@@ -6,7 +6,7 @@ use AfriCC\EPP\Frame\Command\Login;
 
 class LoginTest extends \PHPUnit_Framework_TestCase
 {
-public function testLoginServices()
+    public function testLoginServices()
     {
         $frame = new Login;
         $frame->setClientId('gunter');
