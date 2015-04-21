@@ -81,9 +81,9 @@ class Contact extends UpdateCommand
         return $this->appendAuthInfo(sprintf('contact:%s/contact:authInfo/contact:pw', $mode), $pw);
     }
 
-    private function addDisclose($mode, $value)
+    private function addDisclose($mode, $value, $flag = 0)
     {
-        $this->appendDisclose(sprintf('contact:%s/contact:disclose[@flag=\'0\']/contact:' . $value, $mode));
+        $this->appendDisclose(sprintf('contact:%s/contact:disclose[@flag=\'%d\']/contact:%s', $mode, $flag, $value));
     }
 
     public function __call($name, $arguments)

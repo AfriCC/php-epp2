@@ -81,8 +81,8 @@ class Contact extends CreateCommand
         return $this->appendAuthInfo('contact:authInfo/contact:pw', $pw);
     }
 
-    public function addDisclose($value)
+    public function addDisclose($value, $flag = 0)
     {
-        $this->appendDisclose('contact:disclose[@flag=\'0\']/contact:' . $value);
+        $this->appendDisclose(sprintf('contact:disclose[@flag=\'%d\']/contact:%s', (int) $flag, $value));
     }
 }

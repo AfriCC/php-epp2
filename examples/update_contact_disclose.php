@@ -19,4 +19,6 @@ $frame->changeAddStreet('Long St. 15');
 $frame->changeCity('Cape Town');
 $frame->removeAddStreet('Long St. 16');
 $frame->removeCity('Durban');
+$frame->changeAddDisclose('voice', 1);
+$frame->changeAddDisclose('name[@type=\'int\']', 1);
 echo $frame;
