@@ -4,6 +4,8 @@
 error_reporting(E_ALL);
 ini_set('display_errors', true);
 
+chdir(__DIR__);
+
 require '../src/AfriCC/autoload.php';
 
 use AfriCC\EPP\Client as EPPClient;
