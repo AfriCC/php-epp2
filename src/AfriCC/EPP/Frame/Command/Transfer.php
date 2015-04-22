@@ -21,7 +21,7 @@ abstract class Transfer extends CommandFrame
 {
     public function setOperation($op)
     {
-        if (!in_array($op, ['request', 'cancel', 'approve', 'reject'])) {
+        if (!in_array($op, ['request', 'cancel', 'approve', 'reject', 'query'])) {
             throw new Exception(sprintf('%s is a unknown operation', $op));
         }
 

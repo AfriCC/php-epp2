@@ -107,8 +107,8 @@ class Contact extends UpdateCommand
             $method_name = 'set' . $method_name;
         }
 
-        if (is_callable(array($this, $method_name))) {
-            return call_user_func_array(array($this, $method_name), $arguments);
+        if (is_callable([$this, $method_name])) {
+            return call_user_func_array([$this, $method_name], $arguments);
         }
     }
 }
