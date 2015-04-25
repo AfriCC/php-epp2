@@ -155,7 +155,7 @@ class Client
     {
         if ($this->active()) {
             // send logout frame
-            $buffer = $this->request(new LogoutCommand);
+            $this->request(new LogoutCommand);
             return fclose($this->socket);
         }
         return false;
@@ -202,7 +202,7 @@ class Client
      */
     public function request(FrameInterface $frame)
     {
-        $res = $this->sendFrame($frame);
+        $this->sendFrame($frame);
 
         return $this->getFrame();
     }

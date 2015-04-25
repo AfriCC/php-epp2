@@ -20,6 +20,8 @@ trait AddrTrait
 {
     protected $host_attr_index = 0;
 
+    abstract public function set($path = null, $value = null);
+
     protected function appendAddr($path, $ip)
     {
         // validate IP

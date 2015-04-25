@@ -2,3 +2,6 @@ filter:
     excluded_paths:
         - tests/*
         - examples/*
+checks:
+    php:
+        duplication: false

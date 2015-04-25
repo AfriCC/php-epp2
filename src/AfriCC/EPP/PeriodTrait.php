@@ -18,6 +18,8 @@ use Exception;
  */
 trait PeriodTrait
 {
+    abstract public function set($path = null, $value = null);
+
     protected function appendPeriod($path, $period)
     {
         if (preg_match('/^(\d+)([a-z])$/i', $period, $matches)) {

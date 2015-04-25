@@ -31,6 +31,8 @@ trait ContactTrait
      */
     protected $skip_int = false;
 
+    abstract public function set($path = null, $value = null);
+
     public function forceAscii()
     {
         $this->force_ascii = true;
