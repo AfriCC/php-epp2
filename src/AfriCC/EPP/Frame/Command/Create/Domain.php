@@ -69,6 +69,11 @@ class Domain extends CreateCommand
         $this->set('domain:contact[@type=\'tech\']', $tech_contact);
     }
 
+    public function setBillingContact($billing_contact)
+    {
+        $this->set('domain:contact[@type=\'billing\']', $billing_contact);
+    }
+
     public function setAuthInfo($pw = null)
     {
         if ($pw === null) {

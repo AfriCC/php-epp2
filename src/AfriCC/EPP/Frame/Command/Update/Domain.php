@@ -54,6 +54,17 @@ class Domain extends UpdateCommand
         $this->set(sprintf('domain:%s/domain:contact[@type=\'tech\']', $key), $contact);
     }
 
+    public function addBillingContact($contact, $remove = false)
+    {
+        if ($remove) {
+            $key = 'rem';
+        } else {
+            $key = 'add';
+        }
+
+        $this->set(sprintf('domain:%s/domain:contact[@type=\'billing\']', $key), $contact);
+    }
+
     public function addHostObj($host, $remove = false)
     {
         if (!Validator::isHostname($host)) {
@@ -103,6 +114,11 @@ class Domain extends UpdateCommand
     public function removeTechContact($contact)
     {
         $this->addTechContact($contact, true);
+    }
+
+    public function removeBillingContact($contact)
+    {
+        $this->addBillingContact($contact, true);
     }
 
     public function removeHostObj($host)
