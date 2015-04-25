@@ -246,7 +246,7 @@ class Client
         $response = $this->request($login);
         unset($login);
 
-        // check if login was successfull
+        // check if login was successful
         if (!($response instanceof ResponseFrame)) {
             throw new Exception('there was a problem logging onto the EPP server');
         } elseif ($response->code() !== 1000) {
