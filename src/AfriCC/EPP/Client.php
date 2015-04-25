@@ -236,7 +236,7 @@ class Client
             }
 
             if (!empty($this->serviceExtensions) && is_array($this->serviceExtensions)) {
-                foreach($this->serviceExtensions as $extension) {
+                foreach ($this->serviceExtensions as $extension) {
                     $login->addServiceExtension($extension);
                 }
             }
