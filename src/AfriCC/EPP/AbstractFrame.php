@@ -75,9 +75,11 @@ abstract class AbstractFrame extends DOMDocument implements FrameInterface
         // try to figure out what type is being requested
         $last_bit = substr(strrchr($query, '/'), 1);
 
-        if ($last_bit{0} === '@' && $nodes->length === 1 && $nodes->item(0)->nodeType === XML_ATTRIBUTE_NODE) {
-            return $nodes->item(0)->value;
-        } elseif (stripos($last_bit, 'text()') === 0 && $nodes->length === 1 && $nodes->item(0)->nodeType === XML_TEXT_NODE) {
+        // @see http://stackoverflow.com/a/24730245/567193
+        if ($nodes->length === 1 && (
+                ($last_bit{0} === '@' && $nodes->item(0)->nodeType === XML_ATTRIBUTE_NODE) ||
+                (stripos($last_bit, 'text()') === 0 && $nodes->item(0)->nodeType === XML_TEXT_NODE)
+            )) {
             return $nodes->item(0)->nodeValue;
         } else {
             return $nodes;
@@ -92,6 +94,7 @@ abstract class AbstractFrame extends DOMDocument implements FrameInterface
     protected function createNodes($path)
     {
         $path_parts = explode('/', $path);
+        $node_path  = null;
 
         for ($i = 0, $limit = count($path_parts); $i < $limit; ++$i) {
 
@@ -170,13 +173,12 @@ abstract class AbstractFrame extends DOMDocument implements FrameInterface
 
     protected function realxpath($path)
     {
-        // absolute path
-        if (isset($path{1}) && $path{0} === '/' && $path{1} === '/') {
-            return substr($path, 2);
-        }
-
         if ($path === null) {
-            $path_parts = array();
+            $path_parts = [];
+        }
+        // absolute path
+        elseif (isset($path{1}) && $path{0} === '/' && $path{1} === '/') {
+            return substr($path, 2);
         } else {
             $path_parts = explode('/', $path);
         }
