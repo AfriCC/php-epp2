@@ -199,7 +199,6 @@ class Client
 
     /**
      * a wrapper around sendFrame() and getFrame()
-     * @param DOMDocument $xml the frame to send to the server
      */
     public function request(FrameInterface $frame)
     {
@@ -227,7 +226,7 @@ class Client
         $login->setLanguage('en');
 
         if (!empty($this->services) && is_array($this->services)) {
-            foreach($this->services as $urn) {
+            foreach ($this->services as $urn) {
                 $login->addService($urn);
             }
         }
@@ -308,7 +307,7 @@ class Client
 
     /**
      * send data to socket
-     * @param string $string
+     * @param string $buffer
      */
     private function send($buffer)
     {
