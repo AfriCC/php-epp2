@@ -29,6 +29,7 @@ class Client
     protected $username;
     protected $password;
     protected $services;
+    protected $serviceExtensions;
     protected $ssl;
     protected $local_cert;
     protected $debug;
@@ -57,6 +58,10 @@ class Client
 
         if (!empty($config['services']) && is_array($config['services'])) {
             $this->services = $config['services'];
+
+            if (!empty($config['serviceExtensions']) && is_array($config['serviceExtensions'])) {
+                $this->serviceExtensions = $config['serviceExtensions'];
+            }
         }
 
         if (!empty($config['ssl'])) {
@@ -229,12 +234,18 @@ class Client
             foreach ($this->services as $urn) {
                 $login->addService($urn);
             }
+
+            if (!empty($this->serviceExtensions) && is_array($this->serviceExtensions)) {
+                foreach($this->serviceExtensions as $extension) {
+                    $login->addServiceExtension($extension);
+                }
+            }
         }
 
         $response = $this->request($login);
         unset($login);
 
-        // check if login was successfull
+        // check if login was successful
         if (!($response instanceof ResponseFrame)) {
             throw new Exception('there was a problem logging onto the EPP server');
         } elseif ($response->code() !== 1000) {
