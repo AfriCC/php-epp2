@@ -225,7 +225,12 @@ abstract class AbstractFrame extends DOMDocument implements FrameInterface
         }
 
         if ($this instanceof ExtensionInterface) {
-            $this->extension = strtolower($this->className(get_class($this)));
+            //Automatically guess extension according to class name if not defined in class.
+            //I do that for nicmx-domrst extension, maybe there is a cleaner solution.
+            if (!isset($this->extension)) {
+                $this->extension = strtolower($this->className(get_class($this)));
+            }
+
             // add to object spec
             ObjectSpec::$specs[$this->extension]['xmlns'] = $this->getExtensionNamespace();
         }
