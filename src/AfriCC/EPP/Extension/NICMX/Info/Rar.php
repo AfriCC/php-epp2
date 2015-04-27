@@ -3,7 +3,7 @@
 /**
  * This file is part of the php-epp2 library.
  *
- * (c) Gunter Grodotzki <gunter@afri.cc>
+ * (c) Julien Barbedette <barbedette.julien@gmail.com>
  *
  * For the full copyright and license information, please view the LICENSE file
  * that was distributed with this source code.
@@ -15,7 +15,7 @@ use AfriCC\EPP\Frame\Command\Info as Info;
 use AfriCC\EPP\ExtensionInterface as Extension;
 
 /**
- * @link https://www.registry.net.za/content.php?wiki=1&contentid=18&title=EPP%20Contact%20Extensions
+ * @link http://www.registry.mx
  */
 class Rar extends Info implements Extension
 {
@@ -25,7 +25,7 @@ class Rar extends Info implements Extension
     {
         parent::__construct();
 
-        $this->set(null, '');
+        $this->set();
     }
 
     public function getExtensionNamespace()

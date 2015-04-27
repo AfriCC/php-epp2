@@ -225,8 +225,7 @@ abstract class AbstractFrame extends DOMDocument implements FrameInterface
         }
 
         if ($this instanceof ExtensionInterface) {
-            //Automatically guess extension according to class name if not defined in class.
-            //I do that for nicmx-domrst extension, maybe there is a cleaner solution.
+            // automatically guess extension according to class name if not defined in class
             if (!isset($this->extension)) {
                 $this->extension = strtolower($this->className(get_class($this)));
             }

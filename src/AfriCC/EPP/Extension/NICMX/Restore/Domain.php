@@ -3,7 +3,7 @@
 /**
  * This file is part of the php-epp2 library.
  *
- * (c) Gunter Grodotzki <gunter@afri.cc>
+ * (c) Julien Barbedette <barbedette.julien@gmail.com>
  *
  * For the full copyright and license information, please view the LICENSE file
  * that was distributed with this source code.
@@ -14,6 +14,9 @@ namespace AfriCC\EPP\Extension\NICMX\Restore;
 use AfriCC\EPP\Frame\Command\Renew as Renew;
 use AfriCC\EPP\ExtensionInterface as Extension;
 
+/**
+ * @link https://www.registry.mx
+ */
 class Domain extends Renew implements Extension
 {
     protected $extension = 'nicmx-domrst';
