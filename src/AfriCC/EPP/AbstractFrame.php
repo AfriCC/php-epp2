@@ -227,7 +227,11 @@ abstract class AbstractFrame extends DOMDocument implements FrameInterface
         }
 
         if ($this instanceof ExtensionInterface) {
-            $this->extension = strtolower($this->className(get_class($this)));
+            // automatically guess extension according to class name if not defined in class
+            if (!isset($this->extension)) {
+                $this->extension = strtolower($this->className(get_class($this)));
+            }
+
             // add to object spec
             ObjectSpec::$specs[$this->extension]['xmlns'] = $this->getExtensionNamespace();
         }
