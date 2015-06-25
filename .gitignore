@@ -3,6 +3,10 @@
 /.buildpath
 /.project
 
+# Intellij IDEA
+/.idea
+*.iml
+
 # configs
 /config.php
 /coza/
