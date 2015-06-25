@@ -13,5 +13,7 @@ namespace AfriCC\EPP;
 
 interface ExtensionInterface
 {
+    public function getExtensionName();
+
     public function getExtensionNamespace();
 }
