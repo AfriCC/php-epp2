@@ -32,4 +32,9 @@ class Domain extends InfoCommand
 
         $this->set(sprintf('domain:name[@hosts=\'%s\']', $return), $domain);
     }
+    
+    public function setAuthInfo($pw, $roid = null)
+    {
+        $this->set('domain:authInfo/domain:pw', $pw);
+    }
 }
