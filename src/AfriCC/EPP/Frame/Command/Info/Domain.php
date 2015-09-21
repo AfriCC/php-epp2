@@ -35,6 +35,10 @@ class Domain extends InfoCommand
     
     public function setAuthInfo($pw, $roid = null)
     {
-        $this->set('domain:authInfo/domain:pw', $pw);
+        $node = $this->set('domain:authInfo/domain:pw', $pw);
+
+        if ($roid !== null) {
+            $node->setAttribute('roid', $roid);
+        }
     }
 }
