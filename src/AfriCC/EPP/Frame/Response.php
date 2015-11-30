@@ -84,10 +84,10 @@ class Response extends AbstractFrame
     {
         $nodes = $this->get('//epp:epp/epp:response/epp:resData');
         if ($nodes === false || !($nodes instanceof DOMNodeList) || $nodes->length === 0 || !$nodes->item(0)->hasChildNodes()) {
-            return;
+            $data = [];
+        } else {
+            $data = $this->nodeToArray($nodes->item(0));
         }
-
-        $data = $this->nodeToArray($nodes->item(0));
 
         // check for extension data
         $nodes = $this->get('//epp:epp/epp:response/epp:extension');
