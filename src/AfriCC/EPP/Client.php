@@ -32,6 +32,7 @@ class Client
     protected $serviceExtensions;
     protected $ssl;
     protected $local_cert;
+    protected $pass_phrase;
     protected $debug;
     protected $connect_timeout;
     protected $timeout;
@@ -76,6 +77,9 @@ class Client
             if (!is_readable($this->local_cert)) {
                 throw new Exception(sprintf('unable to read local_cert: %s', $this->local_cert));
             }
+            if (!empty($config['pass_phrase'])) {
+                $this->pass_phrase = $config['pass_phrase'];
+            }
         }
 
         if (!empty($config['debug'])) {
@@ -116,6 +120,9 @@ class Client
 
             if ($this->local_cert !== null) {
                 stream_context_set_option($context, 'ssl', 'local_cert', $this->local_cert);
+                if($this->pass_phrase) {
+                    stream_context_set_option($context, 'ssl', 'passphrase', $this->pass_phrase);
+                }
             }
         } else {
             $proto = 'tcp';
