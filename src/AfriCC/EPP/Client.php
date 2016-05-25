@@ -122,7 +122,7 @@ class Client
             if ($this->local_cert !== null) {
                 stream_context_set_option($context, 'ssl', 'local_cert', $this->local_cert);
                 
-                if($this->passphrase) {
+                if ($this->passphrase) {
                     stream_context_set_option($context, 'ssl', 'passphrase', $this->passphrase);
                 }
             }
@@ -208,7 +208,7 @@ class Client
 
         $buffer = (string) $frame;
         $header = pack('N', mb_strlen($buffer, 'ASCII') + 4);
-        return $this->send($header . $buffer);
+        return $this->send($header.$buffer);
     }
 
     /**
