@@ -83,6 +83,84 @@ class Contact extends CreateCommand
 
     public function addDisclose($value, $flag = 0)
     {
-        $this->appendDisclose(sprintf('contact:disclose[@flag=\'%d\']/contact:%s', (int) $flag, $value));
+        $this->appendDisclose(sprintf('contact:disclose[@flag=\'%d\']/contact:%s', (int)$flag, $value));
     }
+
+    /**
+     * Expect one of following keys or values.
+     * Usage example: setContactRole(2) or setContactRole("admin')
+     *
+     * $role           -              2 => "admin",
+     *                                3 => "reseller",
+     *                                4 => "technical_contact",
+     *                                5 => "registrant_holder"
+     * @param $role
+     * @throws \Exception
+     */
+    public function setContactRole($role)
+    {
+        $this->appendRole('contact:role', $role);
+    }
+
+    /**
+     * Expect one of following keys or values.
+     * Usage example: setContactType(1) or setContactType("company')
+     *
+     * $type           -                0 => "private_person",
+     *                                  1 => "company",
+     *                                  2 => "corporation",
+     *                                  3 => "institution",
+     *                                  4 => "political_party",
+     *                                  5 => "township",
+     *                                  6 => "government",
+     *                                  7 => "public_community"
+     *
+     * @param $type
+     * @throws \Exception
+     */
+    public function setContactType($type)
+    {
+        $this->appendType('contact:type', $type);
+    }
+
+    /**
+     * For contact role 5, <contact:legalemail> is mandatory, for others <contact:email> is mandatory
+     *
+     * @param $email
+     */
+    public function setLegalEmail($email)
+    {
+        $this->appendLegalEmail('contact:legalemail', $email);
+    }
+
+    public function setFirstName($firstName)
+    {
+        $this->appendFirstName('contact:postalInfo[@type=\'%s\']/contact:firstname', $firstName);
+    }
+
+    public function setLastName($lastName)
+    {
+        $this->appendLastName('contact:postalInfo[@type=\'%s\']/contact:lastname', $lastName);
+    }
+
+    public function setRegisterNumber($number)
+    {
+        $this->appendRegisterNumber('contact:postalInfo[@type=\'%s\']/contact:registernumber', $number);
+    }
+
+    /**
+     *  $frame->setIdentity('123423A123F');
+     * $frame->birthDate('2005-04-03T22:00:00.0Z');
+     */
+    public function setIdentity($identity)
+    {
+        $this->appendIdentity('contact:postalInfo[@type=\'%s\']/contact:identity', $identity);
+    }
+
+    public function setBirthDate($date)
+    {
+        $this->appendBirthDay('contact:postalInfo[@type=\'%s\']/contact:birthDate', $date);
+    }
+
+
 }
