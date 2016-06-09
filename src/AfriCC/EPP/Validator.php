@@ -277,9 +277,9 @@ class Validator
      */
     protected static $contact_role = [
         2 => "admin",
-        3 => "reseller",
-        4 => "technical_contact",
-        5 => "registrant_holder"
+        3 => "billing",
+        4 => "tech",
+        5 => "registrant"
     ];
 
     /**
