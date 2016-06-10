@@ -329,7 +329,7 @@ class Client
      * send data to socket
      * @param string $buffer
      */
-    private function send($buffer)
+    public function send($buffer)
     {
         $info = array();
         $pos = 0;
