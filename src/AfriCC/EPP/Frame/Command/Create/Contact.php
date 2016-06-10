@@ -148,6 +148,16 @@ class Contact extends CreateCommand
         $this->appendRegisterNumber('contact:postalInfo[@type=\'%s\']/contact:registernumber', $number);
     }
 
+    public function setGender($gender)
+    {
+        $this->appendGender('contact:postalInfo[@type=\'%s\']/contact:gender', $gender);
+    }
+
+    public function setIsFinish($finish)
+    {
+        $this->appendIsFinish('contact:postalInfo[@type=\'%s\']/contact:isfinnish', $finish);
+    }
+
     /**
      *  $frame->setIdentity('123423A123F');
      * $frame->birthDate('2005-04-03T22:00:00.0Z');
@@ -161,6 +171,4 @@ class Contact extends CreateCommand
     {
         $this->appendBirthDay('contact:postalInfo[@type=\'%s\']/contact:birthDate', $date);
     }
-
-
 }

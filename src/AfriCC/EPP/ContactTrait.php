@@ -261,6 +261,19 @@ trait ContactTrait
         }
     }
 
+    private function appendIsFinish($path, $finish)
+    {
+        if ($this->force_ascii) {
+            $this->set(sprintf($path, 'loc'), Translit::transliterate($finish));
+        } else {
+            $this->set(sprintf($path, 'loc'), $finish);
+        }
+
+        if (!$this->skip_int) {
+            $this->set(sprintf($path, 'int'), Translit::transliterate($finish));
+        }
+    }
+
     public function appendBirthDay($path, $date)
     {
         if ($this->force_ascii) {
@@ -271,6 +284,19 @@ trait ContactTrait
 
         if (!$this->skip_int) {
             $this->set(sprintf($path, 'int'), Translit::transliterate($date));
+        }
+    }
+
+    public function appendGender($path, $gender)
+    {
+        if ($this->force_ascii) {
+            $this->set(sprintf($path, 'loc'), Translit::transliterate($gender));
+        } else {
+            $this->set(sprintf($path, 'loc'), $gender);
+        }
+
+        if (!$this->skip_int) {
+            $this->set(sprintf($path, 'int'), Translit::transliterate($gender));
         }
     }
 }
