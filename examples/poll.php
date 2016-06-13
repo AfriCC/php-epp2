@@ -1,4 +1,4 @@
-t<?php
+<?php
 
 // debug
 error_reporting(E_ALL);
