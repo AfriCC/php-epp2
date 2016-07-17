@@ -53,12 +53,8 @@ Install
 
 Via Composer
 
-```json
-{
-    "require": {
-        "africc/php-epp2": "0.1.*"
-    }
-}
+```
+$ composer require africc/php-epp2
 ```
 
 

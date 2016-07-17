@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.1.7 - 2016-07-17
+
+### Added
+
+- `Client` now also supports SSL passphrases (with local_cert) (thx @pavkatar)
+
 ## 0.1.6 - 2015-11-30
 
 ### Fixed
