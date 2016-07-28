@@ -273,6 +273,30 @@ class Validator
     ];
 
     /**
+     * @var array
+     */
+    protected static $contact_role = [
+        2 => "admin",
+        3 => "billing",
+        4 => "tech",
+        5 => "registrant"
+    ];
+
+    /**
+     * @var array
+     */
+    protected static $contact_type = [
+        0 => "private_person",
+        1 => "company",
+        2 => "corporation",
+        3 => "institution",
+        4 => "political_party",
+        5 => "township",
+        6 => "government",
+        7 => "public_community"
+    ];
+
+    /**
      * returns version of IP address, or false if not an IP
      * @param string $ip
      * @return bool|int
@@ -335,6 +359,42 @@ class Validator
 
         if (isset(self::$countries[$country_code])) {
             return self::$countries[$country_code];
+        }
+
+        return false;
+    }
+
+    /**
+     * Returns value of key from self::$contact_role
+     * @param $role
+     * @return bool
+     */
+    public static function isValidContactRole($role)
+    {
+        if (is_int($role) && array_key_exists($role, self::$contact_role)) {
+            return $role;
+        }
+
+        if (is_string($role) && array_key_exists($role, array_flip(self::$contact_role))) {
+            return array_flip(self::$contact_role)[$role];
+        }
+
+        return false;
+    }
+
+    /**
+     * Returns value of key from: self::$contact_type
+     * @param $type
+     * @return bool
+     */
+    public static function isValidContactType($type)
+    {
+        if (is_int($type) && array_key_exists($type, self::$contact_type)) {
+            return $type;
+        }
+
+        if (is_string($type) && array_key_exists($type, array_flip(self::$contact_type))) {
+            return array_flip(self::$contact_type)[$type];
         }
 
         return false;

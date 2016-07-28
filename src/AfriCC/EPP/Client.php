@@ -40,21 +40,21 @@ class Client
     public function __construct(array $config)
     {
         if (!empty($config['host'])) {
-            $this->host = (string) $config['host'];
+            $this->host = (string)$config['host'];
         }
 
         if (!empty($config['port'])) {
-            $this->port = (int) $config['port'];
+            $this->port = (int)$config['port'];
         } else {
             $this->port = 700;
         }
 
         if (!empty($config['username'])) {
-            $this->username = (string) $config['username'];
+            $this->username = (string)$config['username'];
         }
 
         if (!empty($config['password'])) {
-            $this->password = (string) $config['password'];
+            $this->password = (string)$config['password'];
         }
 
         if (!empty($config['services']) && is_array($config['services'])) {
@@ -72,12 +72,12 @@ class Client
         }
 
         if (!empty($config['local_cert'])) {
-            $this->local_cert = (string) $config['local_cert'];
+            $this->local_cert = (string)$config['local_cert'];
 
             if (!is_readable($this->local_cert)) {
                 throw new Exception(sprintf('unable to read local_cert: %s', $this->local_cert));
             }
-            
+
             if (!empty($config['passphrase'])) {
                 $this->passphrase = $config['passphrase'];
             }
@@ -90,13 +90,13 @@ class Client
         }
 
         if (!empty($config['connect_timeout'])) {
-            $this->connect_timeout = (int) $config['connect_timeout'];
+            $this->connect_timeout = (int)$config['connect_timeout'];
         } else {
             $this->connect_timeout = 4;
         }
 
         if (!empty($config['timeout'])) {
-            $this->timeout = (int) $config['timeout'];
+            $this->timeout = (int)$config['timeout'];
         } else {
             $this->timeout = 8;
         }
@@ -121,7 +121,7 @@ class Client
 
             if ($this->local_cert !== null) {
                 stream_context_set_option($context, 'ssl', 'local_cert', $this->local_cert);
-                
+
                 if ($this->passphrase) {
                     stream_context_set_option($context, 'ssl', 'passphrase', $this->passphrase);
                 }
@@ -206,9 +206,9 @@ class Client
             $frame->setClientTransactionId($this->generateClientTransactionId());
         }
 
-        $buffer = (string) $frame;
+        $buffer = (string)$frame;
         $header = pack('N', mb_strlen($buffer, 'ASCII') + 4);
-        return $this->send($header.$buffer);
+        return $this->send($header . $buffer);
     }
 
     /**
@@ -331,47 +331,53 @@ class Client
      */
     private function send($buffer)
     {
-        $info = stream_get_meta_data($this->socket);
-        $hard_time_limit = time() + $this->timeout + 2;
-        $length = mb_strlen($buffer, 'ASCII');
-
+        $info = array();
         $pos = 0;
-        while (!$info['timed_out'] && !feof($this->socket)) {
-            // Some servers don't like alot of data, so keep it small per chunk
-            $wlen = $length - $pos;
+        $length = null;
 
-            if ($wlen > 1024) {
-                $wlen = 1024;
-            }
-
-            // try write remaining data from socket
-            $written = @fwrite($this->socket, mb_substr($buffer, $pos, $wlen, 'ASCII'), $wlen);
-
-            // If we read something, bump up the position
-            if ($written) {
-                if ($this->debug) {
-                    $this->log(mb_substr($buffer, $pos, $wlen, 'ASCII'), '1;31');
-                }
-                $pos += $written;
-
-                // break if all written
-                if ($pos === $length) {
-                    break;
-                }
-            } else {
-                // sleep 0.25s
-                usleep(250000);
-            }
-
-            // update metadata
+        if (is_resource($this->socket)) {
             $info = stream_get_meta_data($this->socket);
-            if (time() >= $hard_time_limit) {
-                throw new Exception('Timeout while writing to EPP Server');
+            $hard_time_limit = time() + $this->timeout + 2;
+            $length = mb_strlen($buffer, 'ASCII');
+
+
+            while (!$info['timed_out'] && !feof($this->socket)) {
+                // Some servers don't like alot of data, so keep it small per chunk
+                $wlen = $length - $pos;
+
+                if ($wlen > 1024) {
+                    $wlen = 1024;
+                }
+
+                // try write remaining data from socket
+                $written = @fwrite($this->socket, mb_substr($buffer, $pos, $wlen, 'ASCII'), $wlen);
+
+                // If we read something, bump up the position
+                if ($written) {
+                    if ($this->debug) {
+                        $this->log(mb_substr($buffer, $pos, $wlen, 'ASCII'), '1;31');
+                    }
+                    $pos += $written;
+
+                    // break if all written
+                    if ($pos === $length) {
+                        break;
+                    }
+                } else {
+                    // sleep 0.25s
+                    usleep(250000);
+                }
+
+                // update metadata
+                $info = stream_get_meta_data($this->socket);
+                if (time() >= $hard_time_limit) {
+                    throw new Exception('Timeout while writing to EPP Server');
+                }
             }
         }
 
         // check for timeout
-        if ($info['timed_out']) {
+        if (!array_key_exists('timed_out', $info) || $info['timed_out']) {
             throw new Exception('Timeout while writing data to socket');
         }
 

@@ -175,4 +175,128 @@ trait ContactTrait
     {
         $this->set($path);
     }
+
+    public function appendRole($path, $role)
+    {
+        $role = Validator::isValidContactRole($role);
+
+        if ($role === false) {
+            throw new Exception(sprintf('%s is not a valid contact role', $role));
+        }
+
+        $this->set($path, $role);
+    }
+
+    public function appendType($path, $type)
+    {
+        $type = Validator::isValidContactType($type);
+
+        if ($type === false) {
+            throw new Exception(sprintf('%s is not a valid contact type', $type));
+        }
+
+        $this->set($path, $type);
+    }
+
+    public function appendLegalEmail($path, $email)
+    {
+        $email = Validator::isEmail($email);
+
+        if (!$email) {
+            throw new Exception(sprintf('%s is not a valid contact type', $email));
+        }
+
+        $this->set($path, $email);
+    }
+
+    public function appendFirstName($path, $firstName)
+    {
+        if ($this->force_ascii) {
+            $this->set(sprintf($path, 'loc'), Translit::transliterate($firstName));
+        } else {
+            $this->set(sprintf($path, 'loc'), $firstName);
+        }
+
+        if (!$this->skip_int) {
+            $this->set(sprintf($path, 'int'), Translit::transliterate($firstName));
+        }
+    }
+
+    public function appendLastName($path, $lastName)
+    {
+        if ($this->force_ascii) {
+            $this->set(sprintf($path, 'loc'), Translit::transliterate($lastName));
+        } else {
+            $this->set(sprintf($path, 'loc'), $lastName);
+        }
+
+        if (!$this->skip_int) {
+            $this->set(sprintf($path, 'int'), Translit::transliterate($lastName));
+        }
+    }
+
+    public function appendRegisterNumber($path, $number)
+    {
+        if ($this->force_ascii) {
+            $this->set(sprintf($path, 'loc'), Translit::transliterate($number));
+        } else {
+            $this->set(sprintf($path, 'loc'), $number);
+        }
+
+        if (!$this->skip_int) {
+            $this->set(sprintf($path, 'int'), Translit::transliterate($number));
+        }
+    }
+
+    public function appendIdentity($path, $identity)
+    {
+        if ($this->force_ascii) {
+            $this->set(sprintf($path, 'loc'), Translit::transliterate($identity));
+        } else {
+            $this->set(sprintf($path, 'loc'), $identity);
+        }
+
+        if (!$this->skip_int) {
+            $this->set(sprintf($path, 'int'), Translit::transliterate($identity));
+        }
+    }
+
+    private function appendIsFinish($path, $finish)
+    {
+        if ($this->force_ascii) {
+            $this->set(sprintf($path, 'loc'), Translit::transliterate($finish));
+        } else {
+            $this->set(sprintf($path, 'loc'), $finish);
+        }
+
+        if (!$this->skip_int) {
+            $this->set(sprintf($path, 'int'), Translit::transliterate($finish));
+        }
+    }
+
+    public function appendBirthDay($path, $date)
+    {
+        if ($this->force_ascii) {
+            $this->set(sprintf($path, 'loc'), Translit::transliterate($date));
+        } else {
+            $this->set(sprintf($path, 'loc'), $date);
+        }
+
+        if (!$this->skip_int) {
+            $this->set(sprintf($path, 'int'), Translit::transliterate($date));
+        }
+    }
+
+    public function appendGender($path, $gender)
+    {
+        if ($this->force_ascii) {
+            $this->set(sprintf($path, 'loc'), Translit::transliterate($gender));
+        } else {
+            $this->set(sprintf($path, 'loc'), $gender);
+        }
+
+        if (!$this->skip_int) {
+            $this->set(sprintf($path, 'int'), Translit::transliterate($gender));
+        }
+    }
 }
