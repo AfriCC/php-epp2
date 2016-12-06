@@ -15,4 +15,9 @@ use AfriCC\EPP\AbstractFrame;
 
 class Hello extends AbstractFrame
 {
+    public function __construct()
+    {
+    	parent::__construct();
+        $this->set('//epp:epp/epp:hello');
+    }
 }
