@@ -1,5 +1,5 @@
 {
-    "name": "africc/php-epp2",
+    "name": "apihawk/php-epp2",
     "type": "library",
     "description": "A High Level EPP (Extensible Provisioning Protocol) TCP/SSL Client for PHP",
     "keywords": ["epp", "domains", "registrar", "registry", "client", "tcp"],
