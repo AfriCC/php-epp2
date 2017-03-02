@@ -11,6 +11,7 @@
 
 namespace AfriCC\EPP\Frame\Command\Transfer;
 
+use AfriCC\EPP\AddrTrait;
 use AfriCC\EPP\Frame\Command\Transfer as TransferCommand;
 use AfriCC\EPP\Validator;
 use AfriCC\EPP\PeriodTrait;
@@ -21,7 +22,7 @@ use Exception;
  */
 class Domain extends TransferCommand
 {
-    use PeriodTrait;
+    use PeriodTrait , AddrTrait;
 
     public function setDomain($domain)
     {
@@ -35,6 +36,20 @@ class Domain extends TransferCommand
     public function setPeriod($period)
     {
         $this->appendPeriod('domain:period[@unit=\'%s\']', $period);
+    }
+
+    public function setNs($host)
+    {
+        if (!Validator::isHostname($host)) {
+            throw new Exception(sprintf('%s is not a valid host name', $host));
+        }
+
+        $this->set('domain:ns/domain:hostObj[]', $host);
+    }
+
+    public function addHostAttr($host, $ips = null)
+    {
+        $this->appendHostAttr('domain:hostAttr[%d]', $host, $ips);
     }
 
     public function setAuthInfo($pw, $roid = null)
