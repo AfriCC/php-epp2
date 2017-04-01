@@ -3,8 +3,9 @@
 namespace AfriCC\EPP\Frame\Command;
 
 use AfriCC\EPP\Frame\Command\Update\Contact as UpdateContact;
+use PHPUnit\Framework\TestCase;
 
-class ContactUpdateTest extends \PHPUnit_Framework_TestCase
+class ContactUpdateTest extends TestCase
 {
     public function testContactUpdate()
     {

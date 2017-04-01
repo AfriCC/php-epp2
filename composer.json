@@ -22,5 +22,8 @@
         "psr-4": {
             "AfriCC\\": "src/AfriCC"
         }
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^6.0"
     }
 }

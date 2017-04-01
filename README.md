@@ -37,8 +37,7 @@ Features
 --------
 
 * modern PHP standards
-    * autoloader (e.g. lazy loading, we don't want to load XXX php files, if we only need few operations)
-    * [PSR-1](http://www.php-fig.org/psr/psr-1/) and [PSR-2](http://www.php-fig.org/psr/psr-2/) compliant
+    * [PSR-1](http://www.php-fig.org/psr/psr-1/), [PSR-2](http://www.php-fig.org/psr/psr-2/) & [PSR-4](http://www.php-fig.org/psr/psr-4/)
     * notice and warning free (find them, and I'll fix it!)
 * high-level usage (Plug & Play)
 * simplified client (auto login/logout, auto inject clTRID)
@@ -74,7 +73,7 @@ this will automatically login on connect() and logout on close()
 
 ```php
 <?php
-require 'src/AfriCC/autoload.php';
+require 'vendor/autoload.php';
 
 use AfriCC\EPP\Client as EPPClient;
 
@@ -111,7 +110,7 @@ add values.
 
 ```php
 <?php
-require 'src/AfriCC/autoload.php';
+require 'vendor/autoload.php';
 
 use AfriCC\EPP\Frame\Command\Create\Host as CreateHost;
 

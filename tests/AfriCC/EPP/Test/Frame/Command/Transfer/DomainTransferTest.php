@@ -3,8 +3,9 @@
 namespace AfriCC\EPP\Frame\Command;
 
 use AfriCC\EPP\Frame\Command\Transfer\Domain as TransferDomain;
+use PHPUnit\Framework\TestCase;
 
-class DomainTransferTest extends \PHPUnit_Framework_TestCase
+class DomainTransferTest extends TestCase
 {
     public function testContactCreate()
     {

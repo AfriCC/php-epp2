@@ -3,8 +3,9 @@
 namespace AfriCC\EPP\Test;
 
 use AfriCC\EPP\Translit;
+use PHPUnit\Framework\TestCase;
 
-class TranslitTest extends \PHPUnit_Framework_TestCase
+class TranslitTest extends TestCase
 {
     public function testUmlaut()
     {

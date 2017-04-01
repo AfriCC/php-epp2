@@ -1,7 +1,13 @@
-# Eclipse + PDT
+# osx specific
+.DS_Store
+
+# ignore-ide
 /.settings/
 /.buildpath
 /.project
+
+# composer
+/vendor/
 
 # configs
 /config.php
