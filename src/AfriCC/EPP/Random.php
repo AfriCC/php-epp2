@@ -12,13 +12,14 @@
 namespace AfriCC\EPP;
 
 /**
- * pseudo random helpers
+ * Pseudo random helpers.
  */
 class Random
 {
     /**
-     * not so secure, but good enough for client transaction ids
-     * @param int $max_length
+     * Not so secure, but good enough for client transaction ids.
+     *
+     * @param int    $max_length
      * @param string $prefix
      */
     public static function id($max_length = 64, $prefix = '')
@@ -27,13 +28,31 @@ class Random
         if ($prefix !== '') {
             $prefix .= '-';
         }
-        return substr(uniqid($prefix), -$max_length);
+
+        return substr(uniqid($prefix), 0, $max_length);
     }
 
+    /**
+     * Generate random auth key.
+     *
+     * @todo this should be based on templates according to registry requirements!
+     *
+     * @param int $len
+     *
+     * @return string
+     */
     public static function auth($len)
     {
-        $rand = mcrypt_create_iv($len, MCRYPT_DEV_URANDOM);
-        $rand = base64_encode($rand);
-        return substr(rtrim($rand, '='), 0, $len);
+        if (function_exists('random_bytes')) {
+            $randomBytes = random_bytes($len);
+        } elseif (function_exists('openssl_random_pseudo_bytes')) {
+            $randomBytes = openssl_random_pseudo_bytes($len);
+        } else {
+            $randomBytes = mcrypt_create_iv($len, MCRYPT_DEV_URANDOM);
+        }
+
+        $randomBytes = base64_encode($randomBytes);
+
+        return substr(rtrim($randomBytes, '='), 0, $len);
     }
 }
