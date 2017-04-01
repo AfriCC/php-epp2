@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.2.0 - 2017-04-01
+
+### Added
+
+- `Client` configurable buffer chunk size (thx @nidzho)
+- `Frame/Hello` proper hello frame implementation (thx @bgentil)
+- php7.1 support
+
+### Fixed
+
+- travis
+- autoloader / phpunit
+
 ## 0.1.7 - 2016-07-17
 
 ### Added
