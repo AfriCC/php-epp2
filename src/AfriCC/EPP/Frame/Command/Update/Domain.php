@@ -11,14 +11,14 @@
 
 namespace AfriCC\EPP\Frame\Command\Update;
 
-use AfriCC\EPP\Frame\Command\Update as UpdateCommand;
-use AfriCC\EPP\Validator;
-use AfriCC\EPP\Random;
 use AfriCC\EPP\AddrTrait;
+use AfriCC\EPP\Frame\Command\Update as UpdateCommand;
+use AfriCC\EPP\Random;
+use AfriCC\EPP\Validator;
 use Exception;
 
 /**
- * @link http://tools.ietf.org/html/rfc5731#section-3.2.5
+ * @see http://tools.ietf.org/html/rfc5731#section-3.2.5
  */
 class Domain extends UpdateCommand
 {

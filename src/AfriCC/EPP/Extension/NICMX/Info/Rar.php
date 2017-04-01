@@ -11,11 +11,11 @@
 
 namespace AfriCC\EPP\Extension\NICMX\Info;
 
-use AfriCC\EPP\Frame\Command\Info as Info;
 use AfriCC\EPP\ExtensionInterface as Extension;
+use AfriCC\EPP\Frame\Command\Info as Info;
 
 /**
- * @link http://www.registry.mx
+ * @see http://www.registry.mx
  */
 class Rar extends Info implements Extension
 {

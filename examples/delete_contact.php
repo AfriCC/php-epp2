@@ -10,6 +10,6 @@ require '../vendor/autoload.php';
 
 use AfriCC\EPP\Frame\Command\Delete\Contact as DeleteContact;
 
-$frame = new DeleteContact;
+$frame = new DeleteContact();
 $frame->setId('C001');
 echo $frame;

@@ -14,7 +14,7 @@ namespace AfriCC\EPP\Frame\Command\Transfer;
 use AfriCC\EPP\Frame\Command\Transfer as TransferCommand;
 
 /**
- * @link http://tools.ietf.org/html/rfc5733#section-3.2.1
+ * @see http://tools.ietf.org/html/rfc5733#section-3.2.1
  */
 class Contact extends TransferCommand
 {

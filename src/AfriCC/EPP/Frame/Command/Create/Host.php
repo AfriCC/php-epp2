@@ -11,13 +11,13 @@
 
 namespace AfriCC\EPP\Frame\Command\Create;
 
+use AfriCC\EPP\AddrTrait;
 use AfriCC\EPP\Frame\Command\Create as CreateCommand;
 use AfriCC\EPP\Validator;
-use AfriCC\EPP\AddrTrait;
 use Exception;
 
 /**
- * @link http://tools.ietf.org/html/rfc5732#section-3.2.1
+ * @see http://tools.ietf.org/html/rfc5732#section-3.2.1
  */
 class Host extends CreateCommand
 {

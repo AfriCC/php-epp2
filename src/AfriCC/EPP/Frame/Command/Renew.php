@@ -14,7 +14,7 @@ namespace AfriCC\EPP\Frame\Command;
 use AfriCC\EPP\Frame\Command as CommandFrame;
 
 /**
- * @link http://tools.ietf.org/html/rfc5730#section-2.9.3.3
+ * @see http://tools.ietf.org/html/rfc5730#section-2.9.3.3
  */
 abstract class Renew extends CommandFrame
 {

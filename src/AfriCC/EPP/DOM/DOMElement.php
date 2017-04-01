@@ -11,8 +11,8 @@
 
 namespace AfriCC\EPP\DOM;
 
-use DOMNodeList;
 use DOMElement as DOMElementLegacy;
+use DOMNodeList;
 
 class DOMElement extends DOMElementLegacy
 {

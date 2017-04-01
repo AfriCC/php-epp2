@@ -16,7 +16,7 @@ use AfriCC\EPP\Validator;
 use Exception;
 
 /**
- * @link http://tools.ietf.org/html/rfc5731#section-3.1.1
+ * @see http://tools.ietf.org/html/rfc5731#section-3.1.1
  */
 class Domain extends CheckCommand
 {

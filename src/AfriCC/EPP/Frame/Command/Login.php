@@ -14,7 +14,7 @@ namespace AfriCC\EPP\Frame\Command;
 use AfriCC\EPP\Frame\Command as CommandFrame;
 
 /**
- * @link http://tools.ietf.org/html/rfc5730#section-2.9.1.1
+ * @see http://tools.ietf.org/html/rfc5730#section-2.9.1.1
  */
 class Login extends CommandFrame
 {
@@ -28,7 +28,8 @@ class Login extends CommandFrame
         $this->set('pw', $pw);
     }
 
-    public function setNewPassword($newPW) {
+    public function setNewPassword($newPW)
+    {
         $this->set('newPW', $newPW);
     }
 

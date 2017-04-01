@@ -14,7 +14,7 @@ namespace AfriCC\EPP\Frame\Command\Info;
 use AfriCC\EPP\Frame\Command\Info as InfoCommand;
 
 /**
- * @link http://tools.ietf.org/html/rfc5733#section-3.1.2
+ * @see http://tools.ietf.org/html/rfc5733#section-3.1.2
  */
 class Contact extends InfoCommand
 {

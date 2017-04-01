@@ -10,7 +10,7 @@ require '../vendor/autoload.php';
 
 use AfriCC\EPP\Frame\Command\Renew\Domain as RenewDomain;
 
-$frame = new RenewDomain;
+$frame = new RenewDomain();
 $frame->setDomain('google.com');
 $frame->setCurrentExpirationDate(date('Y-m-d'));
 $frame->setPeriod('6m');

@@ -14,7 +14,7 @@ namespace AfriCC\EPP\Frame\Command\Check;
 use AfriCC\EPP\Frame\Command\Check as CheckCommand;
 
 /**
- * @link http://tools.ietf.org/html/rfc5733#section-3.1.1
+ * @see http://tools.ietf.org/html/rfc5733#section-3.1.1
  */
 class Contact extends CheckCommand
 {
