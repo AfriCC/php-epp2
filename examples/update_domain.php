@@ -10,7 +10,7 @@ require '../vendor/autoload.php';
 
 use AfriCC\EPP\Frame\Command\Update\Domain as UpdateDomain;
 
-$frame = new UpdateDomain;
+$frame = new UpdateDomain();
 $frame->setDomain('google.com');
 $frame->addAdminContact('ADMIN-1');
 $frame->addTechContact('TECH-2');

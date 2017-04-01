@@ -11,10 +11,10 @@
 
 namespace AfriCC\EPP\Frame\Command\Update;
 
-use AfriCC\EPP\Frame\Command\Update as UpdateCommand;
-use AfriCC\EPP\Validator;
-use AfriCC\EPP\Random;
 use AfriCC\EPP\AddrTrait;
+use AfriCC\EPP\Frame\Command\Update as UpdateCommand;
+use AfriCC\EPP\Random;
+use AfriCC\EPP\Validator;
 use Exception;
 
 /**

@@ -12,7 +12,7 @@
 namespace AfriCC\EPP;
 
 /**
- * Describes a transaction-aware instance, e.g. one that SHOULD handle clTRID
+ * Describes a transaction-aware instance, e.g. one that SHOULD handle clTRID.
  */
 interface TransactionAwareInterface
 {

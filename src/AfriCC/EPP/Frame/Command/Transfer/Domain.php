@@ -12,8 +12,8 @@
 namespace AfriCC\EPP\Frame\Command\Transfer;
 
 use AfriCC\EPP\Frame\Command\Transfer as TransferCommand;
-use AfriCC\EPP\Validator;
 use AfriCC\EPP\PeriodTrait;
+use AfriCC\EPP\Validator;
 use Exception;
 
 /**

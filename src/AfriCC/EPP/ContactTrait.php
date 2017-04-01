@@ -18,14 +18,14 @@ trait ContactTrait
     /**
      * this was once needed as the conversion done by COZA was faulty
      * the bug has since been fixed but this remains to allow testing
-     * set true to force ascii usage on type=loc (which should allow UTF8)
+     * set true to force ascii usage on type=loc (which should allow UTF8).
      *
      * @var bool
      */
     protected $force_ascii = false;
 
     /**
-     * set true to skip the generation of type=int (like .MX)
+     * set true to skip the generation of type=int (like .MX).
      *
      * @var bool
      */
@@ -168,6 +168,7 @@ trait ContactTrait
             $pw = Random::auth(12);
         }
         $this->set($path, $pw);
+
         return $pw;
     }
 

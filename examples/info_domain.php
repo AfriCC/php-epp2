@@ -10,6 +10,6 @@ require '../vendor/autoload.php';
 
 use AfriCC\EPP\Frame\Command\Info\Domain as InfoDomain;
 
-$frame = new InfoDomain;
+$frame = new InfoDomain();
 $frame->setDomain('example.com', 'all');
 echo $frame;

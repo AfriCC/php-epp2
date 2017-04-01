@@ -12,7 +12,6 @@
 namespace AfriCC\EPP\Frame;
 
 use AfriCC\EPP\ObjectSpec;
-use AfriCC\EPP\Frame\Response;
 use DOMDocument;
 use DOMXPath;
 

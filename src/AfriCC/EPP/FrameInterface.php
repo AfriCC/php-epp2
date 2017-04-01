@@ -13,7 +13,7 @@ namespace AfriCC\EPP;
 
 /**
  * every frame should at least provide the following signature to be able to
- * work with a client
+ * work with a client.
  */
 interface FrameInterface
 {

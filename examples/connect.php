@@ -11,20 +11,20 @@ require '../vendor/autoload.php';
 use AfriCC\EPP\Client as EPPClient;
 
 $epp_client = new EPPClient([
-    'host' => 'epptest.org',
+    'host'     => 'epptest.org',
     'username' => 'gunter',
     'password' => 'grodotzki',
     'services' => [
         'urn:ietf:params:xml:ns:domain-1.0',
-        'urn:ietf:params:xml:ns:contact-1.0'
+        'urn:ietf:params:xml:ns:contact-1.0',
     ],
     'debug' => true,
 ]);
 
 try {
     $greeting = $epp_client->connect();
-} catch(Exception $e) {
-    echo $e->getMessage() . PHP_EOL;
+} catch (Exception $e) {
+    echo $e->getMessage().PHP_EOL;
     unset($epp_client);
     exit(1);
 }

@@ -11,9 +11,9 @@
 
 namespace AfriCC\EPP\Frame\Command\Update;
 
+use AfriCC\EPP\AddrTrait;
 use AfriCC\EPP\Frame\Command\Update as UpdateCommand;
 use AfriCC\EPP\Validator;
-use AfriCC\EPP\AddrTrait;
 use Exception;
 
 /**

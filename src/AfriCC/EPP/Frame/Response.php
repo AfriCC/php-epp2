@@ -12,8 +12,8 @@
 namespace AfriCC\EPP\Frame;
 
 use AfriCC\EPP\AbstractFrame;
-use DOMNodeList;
 use DOMNode;
+use DOMNodeList;
 
 /**
  * @link http://tools.ietf.org/html/rfc5730#section-2.6
@@ -23,7 +23,8 @@ class Response extends AbstractFrame
     /**
      * nodeToArray force array values for the following tags. Usually the upper
      * level will expect them as an array to traverse. Otherwise, if only one
-     * value exists it will be converted directly to a string
+     * value exists it will be converted directly to a string.
+     *
      * @var array
      */
     protected $n2a_force_array = [
@@ -36,7 +37,8 @@ class Response extends AbstractFrame
     /**
      * nodeToArray ignore conversion of following attributes. Usually because
      * the information is redundant or useless (like the definition of IP types
-     * which should be done on the higher level)
+     * which should be done on the higher level).
+     *
      * @var array
      */
     protected $n2a_ignore_attr = [
@@ -49,6 +51,7 @@ class Response extends AbstractFrame
         if ($code >= 1000 && $code < 2000) {
             return true;
         }
+
         return false;
     }
 
@@ -68,6 +71,7 @@ class Response extends AbstractFrame
         if ($value === false) {
             return;
         }
+
         return (string) $value;
     }
 
@@ -77,6 +81,7 @@ class Response extends AbstractFrame
         if ($value === false) {
             return;
         }
+
         return (string) $value;
     }
 
@@ -109,7 +114,7 @@ class Response extends AbstractFrame
             // if node only has a type attribute lets distinguish them directly
             // and then ignore the attribtue
             if ($each->hasAttribute('type')) {
-                $key = $each->localName . '@' . $each->getAttribute('type');
+                $key = $each->localName.'@'.$each->getAttribute('type');
                 $ignore_attributes = true;
             } else {
                 $key = $each->localName;
@@ -152,12 +157,12 @@ class Response extends AbstractFrame
                         }
 
                         if ($insert_key) {
-                            if (isset($tmp['@' . $key][$attr->nodeName]) && !is_array($tmp['@' . $key][$attr->nodeName])) {
-                                $tmp['@' . $key][$attr->nodeName] = [$tmp['@' . $key][$attr->nodeName]];
+                            if (isset($tmp['@'.$key][$attr->nodeName]) && !is_array($tmp['@'.$key][$attr->nodeName])) {
+                                $tmp['@'.$key][$attr->nodeName] = [$tmp['@'.$key][$attr->nodeName]];
                             }
-                            $tmp['@' . $key][$attr->nodeName][$insert_key] = $attr->nodeValue;
+                            $tmp['@'.$key][$attr->nodeName][$insert_key] = $attr->nodeValue;
                         } else {
-                            $tmp['@' . $key][$attr->nodeName] = $attr->nodeValue;
+                            $tmp['@'.$key][$attr->nodeName] = $attr->nodeValue;
                         }
                     }
                 }

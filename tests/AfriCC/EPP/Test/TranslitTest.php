@@ -10,7 +10,7 @@ class TranslitTest extends TestCase
     public function testUmlaut()
     {
         $umlaut = 'Günter';
-        $ascii  = 'Gunter';
+        $ascii = 'Gunter';
 
         $this->assertEquals($ascii, Translit::transliterate($umlaut));
     }

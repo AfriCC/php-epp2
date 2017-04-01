@@ -10,7 +10,7 @@ require '../vendor/autoload.php';
 
 use AfriCC\EPP\Frame\Command\Info\Contact as InfoContact;
 
-$frame = new InfoContact;
+$frame = new InfoContact();
 $frame->setId('C001');
 $frame->setAuthInfo('password');
 echo $frame;

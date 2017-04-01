@@ -28,7 +28,8 @@ class Login extends CommandFrame
         $this->set('pw', $pw);
     }
 
-    public function setNewPassword($newPW) {
+    public function setNewPassword($newPW)
+    {
         $this->set('newPW', $newPW);
     }
 
