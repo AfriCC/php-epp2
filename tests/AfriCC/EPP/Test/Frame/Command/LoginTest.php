@@ -2,14 +2,13 @@
 
 namespace AfriCC\EPP\Frame\Command;
 
-use AfriCC\EPP\Frame\Command\Login;
 use PHPUnit\Framework\TestCase;
 
 class LoginTest extends TestCase
 {
     public function testLoginServices()
     {
-        $frame = new Login;
+        $frame = new Login();
         $frame->setClientId('gunter');
         $frame->setPassword('grodotzki');
         $frame->setNewPassword('grodotzki2');
@@ -41,7 +40,7 @@ class LoginTest extends TestCase
 
     public function testLoginServicesExtensions()
     {
-        $frame = new Login;
+        $frame = new Login();
         $frame->setClientId('gunter');
         $frame->setPassword('grodotzki');
         $frame->setNewPassword('grodotzki2');

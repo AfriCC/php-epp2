@@ -12,7 +12,7 @@
 namespace AfriCC\EPP;
 
 /**
- * EPP object definitions and xml namespaces
+ * EPP object definitions and xml namespaces.
  */
 class ObjectSpec
 {
@@ -40,6 +40,7 @@ class ObjectSpec
         if (!isset(self::$specs[$object]['xmlns'])) {
             return false;
         }
+
         return self::$specs[$object]['xmlns'];
     }
 }

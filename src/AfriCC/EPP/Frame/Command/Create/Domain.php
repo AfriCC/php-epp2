@@ -11,11 +11,11 @@
 
 namespace AfriCC\EPP\Frame\Command\Create;
 
-use AfriCC\EPP\Frame\Command\Create as CreateCommand;
-use AfriCC\EPP\Validator;
-use AfriCC\EPP\Random;
-use AfriCC\EPP\PeriodTrait;
 use AfriCC\EPP\AddrTrait;
+use AfriCC\EPP\Frame\Command\Create as CreateCommand;
+use AfriCC\EPP\PeriodTrait;
+use AfriCC\EPP\Random;
+use AfriCC\EPP\Validator;
 use Exception;
 
 /**
@@ -24,7 +24,6 @@ use Exception;
 class Domain extends CreateCommand
 {
     use PeriodTrait, AddrTrait;
-
 
     public function setDomain($domain)
     {

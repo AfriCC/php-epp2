@@ -10,7 +10,7 @@ require '../vendor/autoload.php';
 
 use AfriCC\EPP\Frame\Command\Login;
 
-$frame = new Login;
+$frame = new Login();
 $frame->setClientId('gunter');
 $frame->setPassword('grodotzki');
 $frame->setNewPassword('grodotzki2');

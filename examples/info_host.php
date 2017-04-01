@@ -10,6 +10,6 @@ require '../vendor/autoload.php';
 
 use AfriCC\EPP\Frame\Command\Info\Host as InfoHost;
 
-$frame = new InfoHost;
+$frame = new InfoHost();
 $frame->setHost('ns1.google.com');
 echo $frame;

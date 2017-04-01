@@ -11,14 +11,15 @@
 
 namespace AfriCC\EPP;
 
-use AfriCC\EPP\Frame\ResponseFactory;
-use AfriCC\EPP\Frame\Response as ResponseFrame;
 use AfriCC\EPP\Frame\Command\Login as LoginCommand;
 use AfriCC\EPP\Frame\Command\Logout as LogoutCommand;
+use AfriCC\EPP\Frame\Response as ResponseFrame;
+use AfriCC\EPP\Frame\ResponseFactory;
 use Exception;
 
 /**
- * A high level TCP (SSL) based client for the Extensible Provisioning Protocol (EPP)
+ * A high level TCP (SSL) based client for the Extensible Provisioning Protocol (EPP).
+ *
  * @link http://tools.ietf.org/html/rfc5734
  */
 class Client
@@ -78,7 +79,7 @@ class Client
             if (!is_readable($this->local_cert)) {
                 throw new Exception(sprintf('unable to read local_cert: %s', $this->local_cert));
             }
-            
+
             if (!empty($config['passphrase'])) {
                 $this->passphrase = $config['passphrase'];
             }
@@ -101,7 +102,7 @@ class Client
         } else {
             $this->timeout = 8;
         }
-        
+
         if (!empty($config['chunk_size'])) {
             $this->chunk_size = (int) $config['chunk_size'];
         } else {
@@ -115,7 +116,7 @@ class Client
     }
 
     /**
-     * Open a new connection to the EPP server
+     * Open a new connection to the EPP server.
      */
     public function connect()
     {
@@ -128,7 +129,7 @@ class Client
 
             if ($this->local_cert !== null) {
                 stream_context_set_option($context, 'ssl', 'local_cert', $this->local_cert);
-                
+
                 if ($this->passphrase) {
                     stream_context_set_option($context, 'ssl', 'passphrase', $this->passphrase);
                 }
@@ -170,15 +171,17 @@ class Client
     }
 
     /**
-     * Closes a previously opened EPP connection
+     * Closes a previously opened EPP connection.
      */
     public function close()
     {
         if ($this->active()) {
             // send logout frame
-            $this->request(new LogoutCommand);
+            $this->request(new LogoutCommand());
+
             return fclose($this->socket);
         }
+
         return false;
     }
 
@@ -197,12 +200,14 @@ class Client
             throw new Exception(sprintf('Got a bad frame header length of %d bytes from peer', $length));
         } else {
             $length -= 4;
+
             return ResponseFactory::build($this->recv($length));
         }
     }
 
     /**
-     * sends a XML-based frame to the server
+     * sends a XML-based frame to the server.
+     *
      * @param FrameInterface $frame the frame to send to the server
      */
     public function sendFrame(FrameInterface $frame)
@@ -215,11 +220,12 @@ class Client
 
         $buffer = (string) $frame;
         $header = pack('N', mb_strlen($buffer, 'ASCII') + 4);
+
         return $this->send($header.$buffer);
     }
 
     /**
-     * a wrapper around sendFrame() and getFrame()
+     * a wrapper around sendFrame() and getFrame().
      */
     public function request(FrameInterface $frame)
     {
@@ -229,18 +235,19 @@ class Client
     }
 
     /**
-     * check if socket is still active
-     * @return boolean
+     * check if socket is still active.
+     *
+     * @return bool
      */
     public function active()
     {
-        return (!is_resource($this->socket) || feof($this->socket) ? false : true);
+        return !is_resource($this->socket) || feof($this->socket) ? false : true;
     }
 
     protected function login()
     {
         // send login command
-        $login = new LoginCommand;
+        $login = new LoginCommand();
         $login->setClientId($this->username);
         $login->setPassword($this->password);
         $login->setVersion('1.0');
@@ -283,9 +290,12 @@ class Client
     }
 
     /**
-     * receive socket data
+     * receive socket data.
+     *
      * @param int $length
+     *
      * @throws Exception
+     *
      * @return string
      */
     private function recv($length)
@@ -333,7 +343,8 @@ class Client
     }
 
     /**
-     * send data to socket
+     * send data to socket.
+     *
      * @param string $buffer
      */
     private function send($buffer)

@@ -14,7 +14,7 @@ namespace AfriCC\EPP;
 use Exception;
 
 /**
- * a IP address trait to give common functionality needed to for addr elements
+ * a IP address trait to give common functionality needed to for addr elements.
  */
 trait AddrTrait
 {
@@ -47,7 +47,7 @@ trait AddrTrait
 
         $base_path = sprintf($base_path, $this->host_attr_index);
 
-        $this->set($base_path . '/domain:hostName', $host);
+        $this->set($base_path.'/domain:hostName', $host);
 
         if (!empty($ips) && is_array($ips)) {
             foreach ($ips as $ip) {
@@ -55,9 +55,9 @@ trait AddrTrait
                 if ($ip_type === false) {
                     throw new Exception(sprintf('%s is not a valid IP address', $ip));
                 } elseif ($ip_type === Validator::TYPE_IPV4) {
-                    $this->set($base_path . '/domain:hostAddr[@ip=\'v4\']', $ip);
+                    $this->set($base_path.'/domain:hostAddr[@ip=\'v4\']', $ip);
                 } elseif ($ip_type === Validator::TYPE_IPV6) {
-                    $this->set($base_path . '/domain:hostAddr[@ip=\'v6\']', $ip);
+                    $this->set($base_path.'/domain:hostAddr[@ip=\'v6\']', $ip);
                 }
             }
         }

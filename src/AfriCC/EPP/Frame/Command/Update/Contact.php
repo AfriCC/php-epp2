@@ -11,8 +11,8 @@
 
 namespace AfriCC\EPP\Frame\Command\Update;
 
-use AfriCC\EPP\Frame\Command\Update as UpdateCommand;
 use AfriCC\EPP\ContactTrait;
+use AfriCC\EPP\Frame\Command\Update as UpdateCommand;
 
 /**
  * @link http://tools.ietf.org/html/rfc5733#section-3.2.5
@@ -104,7 +104,7 @@ class Contact extends UpdateCommand
         if (strpos($method_name, 'Add') === 0) {
             $method_name = lcfirst($method_name);
         } else {
-            $method_name = 'set' . $method_name;
+            $method_name = 'set'.$method_name;
         }
 
         if (is_callable([$this, $method_name])) {

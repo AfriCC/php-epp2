@@ -11,8 +11,8 @@
 
 namespace AfriCC\EPP\Extension\NICMX\Restore;
 
-use AfriCC\EPP\Frame\Command\Renew as Renew;
 use AfriCC\EPP\ExtensionInterface as Extension;
+use AfriCC\EPP\Frame\Command\Renew as Renew;
 
 /**
  * @link https://www.registry.mx

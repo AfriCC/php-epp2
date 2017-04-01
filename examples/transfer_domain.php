@@ -10,7 +10,7 @@ require '../vendor/autoload.php';
 
 use AfriCC\EPP\Frame\Command\Transfer\Domain as TransferDomain;
 
-$frame = new TransferDomain;
+$frame = new TransferDomain();
 $frame->setOperation('cancel');
 $frame->setDomain('google.com');
 $frame->setPeriod('6y');

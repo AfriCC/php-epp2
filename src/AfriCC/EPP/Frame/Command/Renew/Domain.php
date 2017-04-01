@@ -12,8 +12,8 @@
 namespace AfriCC\EPP\Frame\Command\Renew;
 
 use AfriCC\EPP\Frame\Command\Renew as RenewCommand;
-use AfriCC\EPP\Validator;
 use AfriCC\EPP\PeriodTrait;
+use AfriCC\EPP\Validator;
 use Exception;
 
 /**

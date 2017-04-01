@@ -9,7 +9,7 @@ class ContactUpdateTest extends TestCase
 {
     public function testContactUpdate()
     {
-        $frame = new UpdateContact;
+        $frame = new UpdateContact();
         $frame->setId('C0054');
         $frame->addCity('Voerde');
         $frame->addAddStreet('Long St. 14');
@@ -79,7 +79,7 @@ class ContactUpdateTest extends TestCase
 
     public function testContactUpdateDisclose()
     {
-        $frame = new UpdateContact;
+        $frame = new UpdateContact();
         $frame->setId('C0054');
         $frame->addCity('Voerde');
         $frame->addAddStreet('Long St. 14');

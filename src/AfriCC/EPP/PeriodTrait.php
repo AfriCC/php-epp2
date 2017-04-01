@@ -14,7 +14,7 @@ namespace AfriCC\EPP;
 use Exception;
 
 /**
- * a IP address trait to give common functionality needed to for addr elements
+ * a IP address trait to give common functionality needed to for addr elements.
  */
 trait PeriodTrait
 {
