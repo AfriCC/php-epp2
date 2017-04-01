@@ -13,6 +13,7 @@ namespace AfriCC\EPP;
 
 use AfriCC\EPP\Frame\ResponseFactory;
 use AfriCC\EPP\Frame\Response as ResponseFrame;
+use AfriCC\EPP\Frame\Hello as HelloFrame;
 use AfriCC\EPP\Frame\Command\Login as LoginCommand;
 use AfriCC\EPP\Frame\Command\Logout as LogoutCommand;
 use Exception;
@@ -30,13 +31,14 @@ class Client
     protected $password;
     protected $services;
     protected $serviceExtensions;
-    protected $ssl;
+    protected $protocol;
     protected $local_cert;
     protected $passphrase;
     protected $debug;
     protected $connect_timeout;
     protected $timeout;
     protected $chunk_size;
+    protected $curl_cookie;
 
     public function __construct(array $config)
     {
@@ -66,10 +68,8 @@ class Client
             }
         }
 
-        if (!empty($config['ssl'])) {
-            $this->ssl = true;
-        } else {
-            $this->ssl = false;
+        if (!empty($config['protocol'])) {
+            $this->protocol = (string) $config['protocol'];
         }
 
         if (!empty($config['local_cert'])) {
@@ -78,7 +78,7 @@ class Client
             if (!is_readable($this->local_cert)) {
                 throw new Exception(sprintf('unable to read local_cert: %s', $this->local_cert));
             }
-            
+
             if (!empty($config['passphrase'])) {
                 $this->passphrase = $config['passphrase'];
             }
@@ -101,7 +101,7 @@ class Client
         } else {
             $this->timeout = 8;
         }
-        
+
         if (!empty($config['chunk_size'])) {
             $this->chunk_size = (int) $config['chunk_size'];
         } else {
@@ -119,8 +119,10 @@ class Client
      */
     public function connect()
     {
-        if ($this->ssl) {
-            $proto = 'ssl';
+        if ($this->protocol == 'http' || $this->protocol == 'https') {
+            $proto = $this->protocol;
+        } elseif ($this->protocol == 'ssl' || $this->protocol == 'tls') {
+            $proto = $this->protocol;
 
             $context = stream_context_create();
             stream_context_set_option($context, 'ssl', 'verify_peer', false);
@@ -128,7 +130,7 @@ class Client
 
             if ($this->local_cert !== null) {
                 stream_context_set_option($context, 'ssl', 'local_cert', $this->local_cert);
-                
+
                 if ($this->passphrase) {
                     stream_context_set_option($context, 'ssl', 'passphrase', $this->passphrase);
                 }
@@ -137,30 +139,37 @@ class Client
             $proto = 'tcp';
         }
 
-        $target = sprintf('%s://%s:%d', $proto, $this->host, $this->port);
+        if ($this->protocol != 'http' && $this->protocol != 'https') {
+            $target = sprintf('%s://%s:%d', $proto, $this->host, $this->port);
 
-        if (isset($context) && is_resource($context)) {
-            $this->socket = @stream_socket_client($target, $errno, $errstr, $this->connect_timeout, STREAM_CLIENT_CONNECT, $context);
-        } else {
-            $this->socket = @stream_socket_client($target, $errno, $errstr, $this->connect_timeout, STREAM_CLIENT_CONNECT);
-        }
+            if (isset($context) && is_resource($context)) {
+                $this->socket = @stream_socket_client($target, $errno, $errstr, $this->connect_timeout, STREAM_CLIENT_CONNECT, $context);
+            } else {
+                $this->socket = @stream_socket_client($target, $errno, $errstr, $this->connect_timeout, STREAM_CLIENT_CONNECT);
+            }
 
-        if ($this->socket === false) {
-            throw new Exception($errstr, $errno);
-        }
+            if ($this->socket === false) {
+                throw new Exception($errstr, $errno);
+            }
 
-        // set stream time out
-        if (!stream_set_timeout($this->socket, $this->timeout)) {
-            throw new Exception('unable to set stream timeout');
-        }
+            // set stream time out
+            if (!stream_set_timeout($this->socket, $this->timeout)) {
+                throw new Exception('unable to set stream timeout');
+            }
 
-        // set to non-blocking
-        if (!stream_set_blocking($this->socket, 0)) {
-            throw new Exception('unable to set blocking');
+            // set to non-blocking
+            if (!stream_set_blocking($this->socket, 0)) {
+                throw new Exception('unable to set blocking');
+            }
         }
 
         // get greeting
-        $greeting = $this->getFrame();
+        if ($this->protocol == 'http' || $this->protocol == 'https') {
+            $frame = new HelloFrame;
+            $greeting = $this->request($frame);
+        } else {
+            $greeting = $this->getFrame();
+        }
 
         // login
         $this->login();
@@ -174,12 +183,18 @@ class Client
      */
     public function close()
     {
-        if ($this->active()) {
+        if ($this->protocol == 'http' || $this->protocol == 'https') {
             // send logout frame
             $this->request(new LogoutCommand);
-            return fclose($this->socket);
+            return true;
+        } else {
+            if ($this->active()) {
+                // send logout frame
+                $this->request(new LogoutCommand);
+                return fclose($this->socket);
+            }
+            return false;
         }
-        return false;
     }
 
     /**
@@ -213,9 +228,62 @@ class Client
             $frame->setClientTransactionId($this->generateClientTransactionId());
         }
 
-        $buffer = (string) $frame;
-        $header = pack('N', mb_strlen($buffer, 'ASCII') + 4);
-        return $this->send($header.$buffer);
+        if ($this->protocol == 'http' || $this->protocol == 'https') {
+            if ($this->port == 80 || $this->port == 443) {
+                $target = sprintf('%s://%s', $this->protocol, $this->host);
+            } else {
+                $target = sprintf('%s://%s:%d', $this->protocol, $this->host, $this->port);
+            }
+
+            $curlHandle = curl_init();
+
+            curl_setopt($curlHandle, CURLOPT_URL, $target);
+            curl_setopt($curlHandle, CURLOPT_SSL_VERIFYHOST, 0);
+            curl_setopt($curlHandle, CURLOPT_SSL_VERIFYPEER, 0);
+            curl_setopt($curlHandle, CURLOPT_POST, 1);
+            curl_setopt($curlHandle, CURLOPT_POSTFIELDS, trim($frame));
+            curl_setopt($curlHandle, CURLOPT_HTTPHEADER, array('Content-Type: text/xml'));
+            curl_setopt($curlHandle, CURLOPT_RETURNTRANSFER, 1);
+
+            if ($this->local_cert !== null) {
+                curl_setopt($curlHandle, CURLOPT_SSLCERT, $this->local_cert);
+                if ($this->passphrase) {
+                    curl_setopt($curlHandle, CURLOPT_SSLCERTPASSWD, $this->passphrase);
+                }
+            }
+
+            if ($this->curl_cookie !== null) {
+                curl_setopt($curlHandle, CURLOPT_COOKIE, $this->curl_cookie);
+            }
+
+            curl_setopt($curlHandle, CURLINFO_HEADER_OUT, 1);
+            curl_setopt($curlHandle, CURLOPT_HEADER, 1);
+
+            $response = curl_exec($curlHandle);
+
+            if ($response === false) {
+                $curlerror = curl_error($curlHandle);
+                curl_close($curlHandle);
+                throw new Exception($curlerror.' ('.$target.')');
+            } else {
+                $header_size = curl_getinfo($curlHandle, CURLINFO_HEADER_SIZE);
+                $curlHeader = substr($response, 0, $header_size);
+                $res = substr($response, $header_size);
+                curl_close($curlHandle);
+            }
+
+            $curlHeader = $this->httpParseHeaders($curlHeader);
+
+            if (!empty($curlHeader['Set-Cookie'])) {
+                $this->curl_cookie = $curlHeader['Set-Cookie'];
+            }
+
+            return $res;
+        } else {
+            $buffer = (string) $frame;
+            $header = pack('N', mb_strlen($buffer, 'ASCII') + 4);
+            return $this->send($header.$buffer);
+        }
     }
 
     /**
@@ -223,9 +291,13 @@ class Client
      */
     public function request(FrameInterface $frame)
     {
-        $this->sendFrame($frame);
+        if ($this->protocol == 'http' || $this->protocol == 'https') {
+            return $this->sendFrame($frame);
+        } else {
+            $this->sendFrame($frame);
 
-        return $this->getFrame();
+            return $this->getFrame();
+        }
     }
 
     /**
@@ -387,5 +459,27 @@ class Client
         }
 
         return $pos;
+    }
+
+    private function httpParseHeaders($header) {
+        $retVal = array();
+        $fields = explode("\r\n", preg_replace('/\x0D\x0A[\x09\x20]+/', ' ', $header));
+        foreach( $fields as $field ) {
+            if( preg_match('/([^:]+): (.+)/m', $field, $match) ) {
+                $match[1] = preg_replace('/(?<=^|[\x09\x20\x2D])./e', 'strtoupper("\0")', strtolower(trim($match[1])));
+                if( isset($retVal[$match[1]]) ) {
+                    if ( is_array( $retVal[$match[1]] ) ) {
+                        $i = count($retVal[$match[1]]);
+                        $retVal[$match[1]][$i] = $match[2];
+                    }
+                    else {
+                        $retVal[$match[1]] = array($retVal[$match[1]], $match[2]);
+                    }
+                } else {
+                    $retVal[$match[1]] = trim($match[2]);
+                }
+            }
+        }
+        return $retVal;
     }
 }
