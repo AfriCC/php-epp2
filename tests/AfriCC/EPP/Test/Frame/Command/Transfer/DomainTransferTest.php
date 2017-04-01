@@ -9,7 +9,7 @@ class DomainTransferTest extends TestCase
 {
     public function testContactCreate()
     {
-        $frame = new TransferDomain;
+        $frame = new TransferDomain();
         $frame->setOperation('cancel');
         $frame->setDomain('google.com');
         $frame->setPeriod('6y');
@@ -35,7 +35,7 @@ class DomainTransferTest extends TestCase
 
     public function testDomainTransferQuery()
     {
-        $frame = new TransferDomain;
+        $frame = new TransferDomain();
         $frame->setOperation('query');
         $frame->setDomain('google.com');
         $frame->setAuthInfo('password');

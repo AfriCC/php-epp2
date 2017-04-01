@@ -16,7 +16,7 @@ use AfriCC\EPP\Validator;
 use Exception;
 
 /**
- * @link http://tools.ietf.org/html/rfc5731#section-3.1.2
+ * @see http://tools.ietf.org/html/rfc5731#section-3.1.2
  */
 class Domain extends InfoCommand
 {
@@ -32,7 +32,7 @@ class Domain extends InfoCommand
 
         $this->set(sprintf('domain:name[@hosts=\'%s\']', $return), $domain);
     }
-    
+
     public function setAuthInfo($pw, $roid = null)
     {
         $node = $this->set('domain:authInfo/domain:pw', $pw);

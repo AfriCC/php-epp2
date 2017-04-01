@@ -12,12 +12,12 @@
 namespace AfriCC\EPP\Frame\Command\Renew;
 
 use AfriCC\EPP\Frame\Command\Renew as RenewCommand;
-use AfriCC\EPP\Validator;
 use AfriCC\EPP\PeriodTrait;
+use AfriCC\EPP\Validator;
 use Exception;
 
 /**
- * @link http://tools.ietf.org/html/rfc5731#section-3.2.3
+ * @see http://tools.ietf.org/html/rfc5731#section-3.2.3
  */
 class Domain extends RenewCommand
 {

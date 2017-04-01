@@ -11,8 +11,8 @@
 
 namespace AfriCC\EPP\Frame;
 
-use AfriCC\EPP\TransactionAwareInterface;
 use AfriCC\EPP\AbstractFrame;
+use AfriCC\EPP\TransactionAwareInterface;
 
 abstract class Command extends AbstractFrame implements TransactionAwareInterface
 {

@@ -168,6 +168,7 @@ trait ContactTrait
             $pw = Random::auth(12);
         }
         $this->set($path, $pw);
+
         return $pw;
     }
 

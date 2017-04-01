@@ -14,7 +14,7 @@ namespace AfriCC\EPP\Frame\Command\Delete;
 use AfriCC\EPP\Frame\Command\Delete as DeleteCommand;
 
 /**
- * @link http://tools.ietf.org/html/rfc5733#section-3.2.2
+ * @see http://tools.ietf.org/html/rfc5733#section-3.2.2
  */
 class Contact extends DeleteCommand
 {

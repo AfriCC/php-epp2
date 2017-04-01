@@ -9,7 +9,7 @@ class ContactCreateTest extends TestCase
 {
     public function testContactCreate()
     {
-        $frame = new CreateContact;
+        $frame = new CreateContact();
         $frame->setId('CONTACT1');
         $frame->setName('Günter Grodotzki');
         $frame->setName('Jun Grodotzki');
@@ -77,7 +77,7 @@ class ContactCreateTest extends TestCase
 
     public function testContactCreateSkipInt()
     {
-        $frame = new CreateContact;
+        $frame = new CreateContact();
         $frame->skipInt();
         $frame->setId('CONTACT1');
         $frame->setName('Günter Grodotzki');
@@ -134,7 +134,7 @@ class ContactCreateTest extends TestCase
 
     public function testContactCreateDisclose()
     {
-        $frame = new CreateContact;
+        $frame = new CreateContact();
         $frame->skipInt();
         $frame->setId('CONTACT1');
         $frame->setName('Günter Grodotzki');

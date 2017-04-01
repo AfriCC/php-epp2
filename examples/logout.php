@@ -10,5 +10,5 @@ require '../vendor/autoload.php';
 
 use AfriCC\EPP\Frame\Command\Logout;
 
-$frame = new Logout;
+$frame = new Logout();
 echo $frame;

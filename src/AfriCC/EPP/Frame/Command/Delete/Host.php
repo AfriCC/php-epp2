@@ -16,7 +16,7 @@ use AfriCC\EPP\Validator;
 use Exception;
 
 /**
- * @link http://tools.ietf.org/html/rfc5732#section-3.2.2
+ * @see http://tools.ietf.org/html/rfc5732#section-3.2.2
  */
 class Host extends DeleteCommand
 {

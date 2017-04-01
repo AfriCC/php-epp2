@@ -12,11 +12,11 @@
 namespace AfriCC\EPP\Frame;
 
 use AfriCC\EPP\AbstractFrame;
-use DOMNodeList;
 use DOMNode;
+use DOMNodeList;
 
 /**
- * @link http://tools.ietf.org/html/rfc5730#section-2.6
+ * @see http://tools.ietf.org/html/rfc5730#section-2.6
  */
 class Response extends AbstractFrame
 {
@@ -24,12 +24,13 @@ class Response extends AbstractFrame
      * nodeToArray force array values for the following tags. Usually the upper
      * level will expect them as an array to traverse. Otherwise, if only one
      * value exists it will be converted directly to a string
+     *
      * @var array
      */
     protected $n2a_force_array = [
         'hostAttr' => true,
-        'hostObj'  => true,
-        'street'   => true,
+        'hostObj' => true,
+        'street' => true,
         'hostAddr' => true,
     ];
 
@@ -37,6 +38,7 @@ class Response extends AbstractFrame
      * nodeToArray ignore conversion of following attributes. Usually because
      * the information is redundant or useless (like the definition of IP types
      * which should be done on the higher level)
+     *
      * @var array
      */
     protected $n2a_ignore_attr = [
@@ -49,6 +51,7 @@ class Response extends AbstractFrame
         if ($code >= 1000 && $code < 2000) {
             return true;
         }
+
         return false;
     }
 
@@ -68,6 +71,7 @@ class Response extends AbstractFrame
         if ($value === false) {
             return;
         }
+
         return (string) $value;
     }
 
@@ -77,6 +81,7 @@ class Response extends AbstractFrame
         if ($value === false) {
             return;
         }
+
         return (string) $value;
     }
 

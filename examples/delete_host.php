@@ -10,6 +10,6 @@ require '../vendor/autoload.php';
 
 use AfriCC\EPP\Frame\Command\Delete\Host as DeleteHost;
 
-$frame = new DeleteHost;
+$frame = new DeleteHost();
 $frame->setHost('ns1.google.com');
 echo $frame;
