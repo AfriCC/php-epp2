@@ -8,18 +8,27 @@ source "${__DIR__}/.bash/functions.shlib"
 set -E
 trap 'throw_exception' ERR
 
-composer install \
-  --no-interaction \
-  --prefer-dist \
-  --no-suggest
-
 php_version="$(php --version | head -n1 | cut -d' ' -f2)"
 
 # switch phpunit version depending on php version
 if [[ "${php_version}" == 7.* ]]; then
-  composer require --dev phpunit/phpunit
+  composer require \
+    --dev \
+    --update-with-dependencies \
+    phpunit/phpunit
 elif [[ "${php_version}" == 5.6.* ]]; then
-  composer require --dev phpunit/phpunit '5.7.*'
+  composer require \
+    --dev \
+    --update-with-dependencies \
+    phpunit/phpunit '5.7.*'
 else
-  composer require --dev phpunit/phpunit '4.8.*'
+  composer require \
+    --dev \
+    --update-with-dependencies \
+    phpunit/phpunit '4.8.*'
 fi
+
+composer install \
+  --no-interaction \
+  --prefer-dist \
+  --no-suggest
