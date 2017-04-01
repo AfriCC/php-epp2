@@ -36,6 +36,7 @@ class Client
     protected $debug;
     protected $connect_timeout;
     protected $timeout;
+    protected $chunk_size;
 
     public function __construct(array $config)
     {
@@ -99,6 +100,12 @@ class Client
             $this->timeout = (int) $config['timeout'];
         } else {
             $this->timeout = 8;
+        }
+        
+        if (!empty($config['chunk_size'])) {
+            $this->chunk_size = (int) $config['chunk_size'];
+        } else {
+            $this->chunk_size = 1024;
         }
     }
 
@@ -340,8 +347,8 @@ class Client
             // Some servers don't like alot of data, so keep it small per chunk
             $wlen = $length - $pos;
 
-            if ($wlen > 1024) {
-                $wlen = 1024;
+            if ($wlen > $this->chunk_size) {
+                $wlen = $this->chunk_size;
             }
 
             // try write remaining data from socket
