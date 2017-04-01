@@ -7,6 +7,4 @@ php:
   - 5.5
   - hhvm
 
-install: ./build.sh
-
-script: vendor/bin/phpunit --coverage-text
+script: ./build.sh
