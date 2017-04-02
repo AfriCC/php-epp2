@@ -44,7 +44,7 @@ Features
 * SSL (+local-cert)
 * Xpath like setter to simplify the creation of complex XML structures
 * XML based responses for direct traversal via Xpath
-* [RFC 5730](http://tools.ietf.org/html/rfc5730), [RFC 5731](http://tools.ietf.org/html/rfc5731), [RFC 5732](http://tools.ietf.org/html/rfc5732), [RFC 5733](http://tools.ietf.org/html/rfc5733), [RFC 5734](http://tools.ietf.org/html/rfc5734)
+* [RFC 5730](http://tools.ietf.org/html/rfc5730), [RFC 5731](http://tools.ietf.org/html/rfc5731), [RFC 5732](http://tools.ietf.org/html/rfc5732), [RFC 5733](http://tools.ietf.org/html/rfc5733), [RFC 5734](http://tools.ietf.org/html/rfc5734) & [RFC 3915](http://tools.ietf.org/html/rfc3915)
 
 
 Install

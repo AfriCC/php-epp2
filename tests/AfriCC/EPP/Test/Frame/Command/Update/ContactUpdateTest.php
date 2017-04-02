@@ -19,7 +19,7 @@ class ContactUpdateTest extends TestCase
         $frame->removeAddStreet('Long St. 16');
         $frame->removeCity('Durban');
 
-        $this->assertXmlStringEqualsXmlString((string) $frame,
+        $this->assertXmlStringEqualsXmlString(
             '<?xml version="1.0" encoding="UTF-8" standalone="no"?>
             <epp xmlns="urn:ietf:params:xml:ns:epp-1.0">
               <command>
@@ -73,7 +73,9 @@ class ContactUpdateTest extends TestCase
                   </contact:update>
                 </update>
               </command>
-            </epp>'
+            </epp>
+            ',
+            (string) $frame
         );
     }
 
@@ -91,7 +93,7 @@ class ContactUpdateTest extends TestCase
         $frame->changeAddDisclose('voice', 1);
         $frame->changeAddDisclose('name[@type=\'int\']', 1);
 
-        $this->assertXmlStringEqualsXmlString((string) $frame,
+        $this->assertXmlStringEqualsXmlString(
             '<?xml version="1.0" encoding="UTF-8" standalone="no"?>
             <epp xmlns="urn:ietf:params:xml:ns:epp-1.0">
               <command>
@@ -149,7 +151,9 @@ class ContactUpdateTest extends TestCase
                   </contact:update>
                 </update>
               </command>
-            </epp>'
+            </epp>
+            ',
+            (string) $frame
         );
     }
 }
