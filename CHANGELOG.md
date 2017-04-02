@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.3.0 - 2017-04-02
+
+### Added
+
+- Implemented RFC3915 (thx @naja7host)
+- `ContactTrait::skipLoc()` analogue to `ContactTrait::skipInt()` (thx @naja7host)
+
 ## 0.2.0 - 2017-04-01
 
 ### Added
