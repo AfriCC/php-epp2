@@ -27,7 +27,7 @@ class ContactCreateTest extends TestCase
         $frame->addDisclose('voice');
         $frame->addDisclose('email');
 
-        $this->assertXmlStringEqualsXmlString((string) $frame,
+        $this->assertXmlStringEqualsXmlString(
             '<?xml version="1.0" encoding="UTF-8" standalone="no"?>
             <epp xmlns="urn:ietf:params:xml:ns:epp-1.0">
               <command>
@@ -71,7 +71,9 @@ class ContactCreateTest extends TestCase
                   </contact:create>
                 </create>
               </command>
-            </epp>'
+            </epp>
+            ',
+            (string) $frame
         );
     }
 
@@ -96,7 +98,7 @@ class ContactCreateTest extends TestCase
         $frame->addDisclose('voice');
         $frame->addDisclose('email');
 
-        $this->assertXmlStringEqualsXmlString((string) $frame,
+        $this->assertXmlStringEqualsXmlString(
             '<?xml version="1.0" encoding="UTF-8" standalone="no"?>
             <epp xmlns="urn:ietf:params:xml:ns:epp-1.0">
               <command>
@@ -128,7 +130,9 @@ class ContactCreateTest extends TestCase
                   </contact:create>
                 </create>
               </command>
-            </epp>'
+            </epp>
+            ',
+            (string) $frame
         );
     }
 
@@ -152,7 +156,7 @@ class ContactCreateTest extends TestCase
         $frame->addDisclose('voice', 1);
         $frame->addDisclose('email', 0);
 
-        $this->assertXmlStringEqualsXmlString((string) $frame,
+        $this->assertXmlStringEqualsXmlString(
             '<?xml version="1.0" encoding="UTF-8" standalone="no"?>
             <epp xmlns="urn:ietf:params:xml:ns:epp-1.0">
               <command>
@@ -186,7 +190,9 @@ class ContactCreateTest extends TestCase
                   </contact:create>
                 </create>
               </command>
-            </epp>'
+            </epp>
+            ',
+            (string) $frame
         );
     }
 }

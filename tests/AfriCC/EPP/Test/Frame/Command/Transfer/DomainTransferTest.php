@@ -11,17 +11,17 @@ class DomainTransferTest extends TestCase
     {
         $frame = new TransferDomain();
         $frame->setOperation('cancel');
-        $frame->setDomain('google.com');
+        $frame->setDomain(TEST_DOMAIN);
         $frame->setPeriod('6y');
         $frame->setAuthInfo('password', 'REP-REP-YEP');
 
-        $this->assertXmlStringEqualsXmlString((string) $frame,
+        $this->assertXmlStringEqualsXmlString(
             '<?xml version="1.0" encoding="UTF-8" standalone="no"?>
             <epp xmlns="urn:ietf:params:xml:ns:epp-1.0">
               <command>
                 <transfer op="cancel">
                   <domain:transfer xmlns:domain="urn:ietf:params:xml:ns:domain-1.0">
-                    <domain:name>google.com</domain:name>
+                    <domain:name>' . TEST_DOMAIN . '</domain:name>
                     <domain:period unit="y">6</domain:period>
                     <domain:authInfo>
                       <domain:pw roid="REP-REP-YEP">password</domain:pw>
@@ -29,7 +29,9 @@ class DomainTransferTest extends TestCase
                   </domain:transfer>
                 </transfer>
               </command>
-            </epp>'
+            </epp>
+            ',
+            (string) $frame
         );
     }
 
@@ -37,23 +39,25 @@ class DomainTransferTest extends TestCase
     {
         $frame = new TransferDomain();
         $frame->setOperation('query');
-        $frame->setDomain('google.com');
+        $frame->setDomain(TEST_DOMAIN);
         $frame->setAuthInfo('password');
 
-        $this->assertXmlStringEqualsXmlString((string) $frame,
+        $this->assertXmlStringEqualsXmlString(
             '<?xml version="1.0" encoding="UTF-8" standalone="no"?>
             <epp xmlns="urn:ietf:params:xml:ns:epp-1.0">
               <command>
                 <transfer op="query">
                   <domain:transfer xmlns:domain="urn:ietf:params:xml:ns:domain-1.0">
-                    <domain:name>google.com</domain:name>
+                    <domain:name>' . TEST_DOMAIN . '</domain:name>
                     <domain:authInfo>
                       <domain:pw>password</domain:pw>
                     </domain:authInfo>
                   </domain:transfer>
                 </transfer>
               </command>
-            </epp>'
+            </epp>
+            ',
+            (string) $frame
         );
     }
 }
