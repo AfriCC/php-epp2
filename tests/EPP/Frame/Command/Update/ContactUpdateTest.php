@@ -1,15 +1,15 @@
 <?php
 
-namespace AfriCC\EPP\Frame\Command;
+namespace AfriCC\Tests\EPP\Frame\Command\Update;
 
-use AfriCC\EPP\Frame\Command\Update\Contact as UpdateContact;
 use PHPUnit\Framework\TestCase;
+use AfriCC\EPP\Frame\Command\Update\Contact;
 
-class ContactUpdateTest extends TestCase
+class UpdateContactTest extends TestCase
 {
-    public function testContactUpdate()
+    public function testUpdateContactFrame()
     {
-        $frame = new UpdateContact();
+        $frame = new Contact();
         $frame->setId('C0054');
         $frame->addCity('Voerde');
         $frame->addAddStreet('Long St. 14');
@@ -79,9 +79,9 @@ class ContactUpdateTest extends TestCase
         );
     }
 
-    public function testContactUpdateDisclose()
+    public function testUpdateContactDiscloseFrame()
     {
-        $frame = new UpdateContact();
+        $frame = new Contact();
         $frame->setId('C0054');
         $frame->addCity('Voerde');
         $frame->addAddStreet('Long St. 14');

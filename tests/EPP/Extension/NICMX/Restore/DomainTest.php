@@ -1,10 +1,11 @@
 <?php
 
-namespace AfriCC\EPP\Extension\NICMX\Restore;
+namespace AfriCC\Tests\EPP\Extension\NICMX\Restore;
 
 use PHPUnit\Framework\TestCase;
+use AfriCC\EPP\Extension\NICMX\Restore\Domain;
 
-class DomainTest extends TestCase
+class DomainRestoreTest extends TestCase
 {
     public function testNicMxRestoreDomainFrame()
     {

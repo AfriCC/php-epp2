@@ -1,15 +1,15 @@
 <?php
 
-namespace AfriCC\EPP\Frame\Command;
+namespace AfriCC\Tests\EPP\Frame\Command\Transfer;
 
-use AfriCC\EPP\Frame\Command\Transfer\Domain as TransferDomain;
 use PHPUnit\Framework\TestCase;
+use AfriCC\EPP\Frame\Command\Transfer\Domain;
 
 class DomainTransferTest extends TestCase
 {
-    public function testContactCreate()
+    public function testTransferDomainFrame()
     {
-        $frame = new TransferDomain();
+        $frame = new Domain();
         $frame->setOperation('cancel');
         $frame->setDomain(TEST_DOMAIN);
         $frame->setPeriod('6y');
@@ -35,9 +35,9 @@ class DomainTransferTest extends TestCase
         );
     }
 
-    public function testDomainTransferQuery()
+    public function testTransferDomainQueryFrame()
     {
-        $frame = new TransferDomain();
+        $frame = new Domain();
         $frame->setOperation('query');
         $frame->setDomain(TEST_DOMAIN);
         $frame->setAuthInfo('password');

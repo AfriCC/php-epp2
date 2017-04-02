@@ -1,9 +1,9 @@
 <?php
 
-namespace AfriCC\EPP\Test;
+namespace AfriCC\Tests\EPP;
 
-use AfriCC\EPP\Translit;
 use PHPUnit\Framework\TestCase;
+use AfriCC\EPP\Translit;
 
 class TranslitTest extends TestCase
 {
