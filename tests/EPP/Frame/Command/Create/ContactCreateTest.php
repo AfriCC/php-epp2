@@ -2,8 +2,8 @@
 
 namespace AfriCC\Tests\EPP\Frame\Command\Create;
 
-use PHPUnit\Framework\TestCase;
 use AfriCC\EPP\Frame\Command\Create\Contact;
+use PHPUnit\Framework\TestCase;
 
 class CreateContactTest extends TestCase
 {

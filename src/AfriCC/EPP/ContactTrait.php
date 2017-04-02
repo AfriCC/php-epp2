@@ -181,4 +181,3 @@ trait ContactTrait
         $this->set($path);
     }
 }
-

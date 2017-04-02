@@ -2,8 +2,8 @@
 
 namespace AfriCC\Tests\EPP\Frame;
 
-use PHPUnit\Framework\TestCase;
 use AfriCC\EPP\Frame\Hello;
+use PHPUnit\Framework\TestCase;
 
 class HelloTest extends TestCase
 {

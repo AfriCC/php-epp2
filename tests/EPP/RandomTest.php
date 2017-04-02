@@ -2,8 +2,8 @@
 
 namespace AfriCC\Tests\EPP;
 
-use PHPUnit\Framework\TestCase;
 use AfriCC\EPP\Random;
+use PHPUnit\Framework\TestCase;
 
 class RandomTest extends TestCase
 {

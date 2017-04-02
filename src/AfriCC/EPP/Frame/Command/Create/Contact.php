@@ -86,4 +86,3 @@ class Contact extends Create
         $this->appendDisclose(sprintf('contact:disclose[@flag=\'%d\']/contact:%s', (int) $flag, $value));
     }
 }
-

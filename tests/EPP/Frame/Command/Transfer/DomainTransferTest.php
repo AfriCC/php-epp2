@@ -2,8 +2,8 @@
 
 namespace AfriCC\Tests\EPP\Frame\Command\Transfer;
 
-use PHPUnit\Framework\TestCase;
 use AfriCC\EPP\Frame\Command\Transfer\Domain;
+use PHPUnit\Framework\TestCase;
 
 class DomainTransferTest extends TestCase
 {

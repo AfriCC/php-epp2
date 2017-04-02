@@ -2,8 +2,8 @@
 
 namespace AfriCC\Tests\EPP\Frame\Command;
 
-use PHPUnit\Framework\TestCase;
 use AfriCC\EPP\Frame\Command\Login;
+use PHPUnit\Framework\TestCase;
 
 class LoginTest extends TestCase
 {

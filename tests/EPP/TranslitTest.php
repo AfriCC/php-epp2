@@ -2,8 +2,8 @@
 
 namespace AfriCC\Tests\EPP;
 
-use PHPUnit\Framework\TestCase;
 use AfriCC\EPP\Translit;
+use PHPUnit\Framework\TestCase;
 
 class TranslitTest extends TestCase
 {
