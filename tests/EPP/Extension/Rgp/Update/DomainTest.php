@@ -1,7 +1,8 @@
 <?php
 
-namespace AfriCC\EPP\Extension\Rgp\Update;
+namespace AfriCC\Tests\EPP\Extension\Rgp\Update;
 
+use AfriCC\EPP\Extension\Rgp\Update\Domain;
 use PHPUnit\Framework\TestCase;
 
 class DomainTest extends TestCase

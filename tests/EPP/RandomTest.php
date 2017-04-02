@@ -1,6 +1,6 @@
 <?php
 
-namespace AfriCC\EPP\Test;
+namespace AfriCC\Tests\EPP;
 
 use AfriCC\EPP\Random;
 use PHPUnit\Framework\TestCase;

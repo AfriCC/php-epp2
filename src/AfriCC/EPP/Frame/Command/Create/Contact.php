@@ -12,12 +12,12 @@
 namespace AfriCC\EPP\Frame\Command\Create;
 
 use AfriCC\EPP\ContactTrait;
-use AfriCC\EPP\Frame\Command\Create as CreateCommand;
+use AfriCC\EPP\Frame\Command\Create;
 
 /**
  * @see http://tools.ietf.org/html/rfc5733#section-3.2.1
  */
-class Contact extends CreateCommand
+class Contact extends Create
 {
     use ContactTrait;
 
