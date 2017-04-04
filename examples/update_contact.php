@@ -6,11 +6,11 @@ ini_set('display_errors', true);
 
 chdir(__DIR__);
 
-require '../src/AfriCC/autoload.php';
+require '../vendor/autoload.php';
 
 use AfriCC\EPP\Frame\Command\Update\Contact as UpdateContact;
 
-$frame = new UpdateContact;
+$frame = new UpdateContact();
 $frame->setId('C0054');
 $frame->addCity('Voerde');
 $frame->addAddStreet('Long St. 14');

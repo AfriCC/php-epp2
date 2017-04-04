@@ -16,20 +16,27 @@ use Exception;
 trait ContactTrait
 {
     /**
-     * this was once needed as the conversion done by COZA was faulty
+     * This was once needed as the conversion done by COZA was faulty
      * the bug has since been fixed but this remains to allow testing
-     * set true to force ascii usage on type=loc (which should allow UTF8)
+     * set true to force ascii usage on type=loc (which should allow UTF8).
      *
      * @var bool
      */
     protected $force_ascii = false;
 
     /**
-     * set true to skip the generation of type=int (like .MX)
+     * Set true to skip the generation of type=int.
      *
      * @var bool
      */
     protected $skip_int = false;
+
+    /**
+     * Set true to skip the generation of type=loc.
+     *
+     * @var bool
+     */
+    protected $skip_loc = false;
 
     abstract public function set($path = null, $value = null);
 
@@ -38,9 +45,20 @@ trait ContactTrait
         $this->force_ascii = true;
     }
 
+    /**
+     * Skip the generation of type=int.
+     */
     public function skipInt()
     {
         $this->skip_int = true;
+    }
+
+    /**
+     * Skip the generation of type=loc.
+     */
+    public function skipLoc()
+    {
+        $this->skip_loc = true;
     }
 
     public function appendId($path, $id)
@@ -50,10 +68,8 @@ trait ContactTrait
 
     public function appendName($path, $name)
     {
-        if ($this->force_ascii) {
-            $this->set(sprintf($path, 'loc'), Translit::transliterate($name));
-        } else {
-            $this->set(sprintf($path, 'loc'), $name);
+        if (!$this->skip_loc) {
+            $this->set(sprintf($path, 'loc'), $this->force_ascii ? Translit::transliterate($name) : $name);
         }
 
         if (!$this->skip_int) {
@@ -63,10 +79,8 @@ trait ContactTrait
 
     public function appendOrganization($path, $org)
     {
-        if ($this->force_ascii) {
-            $this->set(sprintf($path, 'loc'), Translit::transliterate($org));
-        } else {
-            $this->set(sprintf($path, 'loc'), $org);
+        if (!$this->skip_loc) {
+            $this->set(sprintf($path, 'loc'), $this->force_ascii ? Translit::transliterate($org) : $org);
         }
 
         if (!$this->skip_int) {
@@ -76,10 +90,8 @@ trait ContactTrait
 
     public function appendStreet($path, $street)
     {
-        if ($this->force_ascii) {
-            $this->set(sprintf($path, 'loc'), Translit::transliterate($street));
-        } else {
-            $this->set(sprintf($path, 'loc'), $street);
+        if (!$this->skip_loc) {
+            $this->set(sprintf($path, 'loc'), $this->force_ascii ? Translit::transliterate($street) : $street);
         }
 
         if (!$this->skip_int) {
@@ -89,10 +101,8 @@ trait ContactTrait
 
     public function appendCity($path, $city)
     {
-        if ($this->force_ascii) {
-            $this->set(sprintf($path, 'loc'), Translit::transliterate($city));
-        } else {
-            $this->set(sprintf($path, 'loc'), $city);
+        if (!$this->skip_loc) {
+            $this->set(sprintf($path, 'loc'), $this->force_ascii ? Translit::transliterate($city) : $city);
         }
 
         if (!$this->skip_int) {
@@ -102,10 +112,8 @@ trait ContactTrait
 
     public function appendProvince($path, $sp)
     {
-        if ($this->force_ascii) {
-            $this->set(sprintf($path, 'loc'), Translit::transliterate($sp));
-        } else {
-            $this->set(sprintf($path, 'loc'), $sp);
+        if (!$this->skip_loc) {
+            $this->set(sprintf($path, 'loc'), $this->force_ascii ? Translit::transliterate($sp) : $sp);
         }
 
         if (!$this->skip_int) {
@@ -115,10 +123,8 @@ trait ContactTrait
 
     public function appendPostalCode($path, $pc)
     {
-        if ($this->force_ascii) {
-            $this->set(sprintf($path, 'loc'), Translit::transliterate($pc));
-        } else {
-            $this->set(sprintf($path, 'loc'), $pc);
+        if (!$this->skip_loc) {
+            $this->set(sprintf($path, 'loc'), $this->force_ascii ? Translit::transliterate($pc) : $pc);
         }
 
         if (!$this->skip_int) {
@@ -132,10 +138,8 @@ trait ContactTrait
             throw new Exception(sprintf('the country-code: \'%s\' is unknown', $cc));
         }
 
-        if ($this->force_ascii) {
-            $this->set(sprintf($path, 'loc'), Translit::transliterate($cc));
-        } else {
-            $this->set(sprintf($path, 'loc'), $cc);
+        if (!$this->skip_loc) {
+            $this->set(sprintf($path, 'loc'), $this->force_ascii ? Translit::transliterate($cc) : $cc);
         }
 
         if (!$this->skip_int) {
@@ -168,6 +172,7 @@ trait ContactTrait
             $pw = Random::auth(12);
         }
         $this->set($path, $pw);
+
         return $pw;
     }
 

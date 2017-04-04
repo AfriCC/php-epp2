@@ -8,19 +8,21 @@
     "authors": [
         {
             "name": "Gunter Grodotzki",
-            "email": "packagist@afri.cc",
+            "email": "hello@afri.cc",
             "homepage": "https://www.afri.cc",
             "role": "Developer"
         }
     ],
     "require": {
-        "php": ">=5.4.0",
+        "php": ">=5.5.0",
         "ext-intl": "*",
-        "ext-mcrypt": "*"
+        "ext-openssl": "*"
     },
     "autoload": {
         "psr-4": {
             "AfriCC\\": "src/AfriCC"
         }
+    },
+    "require-dev": {
     }
 }

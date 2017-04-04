@@ -27,25 +27,23 @@ meaningful branchname, issue pull request with thus branchname)!
 Requirements
 ------------
 
-* PHP 5.4 or higher
-* libicu 4.8 or higher
-* php-intl 3 or higher
-* php-mcrypt
+* PHP 5.5+
+* php-ext-intl
+* php-ext-openssl
 
 
 Features
 --------
 
 * modern PHP standards
-    * autoloader (e.g. lazy loading, we don't want to load XXX php files, if we only need few operations)
-    * [PSR-1](http://www.php-fig.org/psr/psr-1/) and [PSR-2](http://www.php-fig.org/psr/psr-2/) compliant
+    * [PSR-1](http://www.php-fig.org/psr/psr-1/), [PSR-2](http://www.php-fig.org/psr/psr-2/) & [PSR-4](http://www.php-fig.org/psr/psr-4/)
     * notice and warning free (find them, and I'll fix it!)
 * high-level usage (Plug & Play)
 * simplified client (auto login/logout, auto inject clTRID)
 * SSL (+local-cert)
-* Xpath like setter to simplify the creation of complex XML structures
-* XML based responses for direct traversal via Xpath
-* [RFC 5730](http://tools.ietf.org/html/rfc5730), [RFC 5731](http://tools.ietf.org/html/rfc5731), [RFC 5732](http://tools.ietf.org/html/rfc5732), [RFC 5733](http://tools.ietf.org/html/rfc5733), [RFC 5734](http://tools.ietf.org/html/rfc5734)
+* XPath like setter to simplify the creation of complex XML structures
+* XML based responses for direct traversal via XPath
+* [RFC 5730](http://tools.ietf.org/html/rfc5730), [RFC 5731](http://tools.ietf.org/html/rfc5731), [RFC 5732](http://tools.ietf.org/html/rfc5732), [RFC 5733](http://tools.ietf.org/html/rfc5733), [RFC 5734](http://tools.ietf.org/html/rfc5734) & [RFC 3915](http://tools.ietf.org/html/rfc3915)
 
 
 Install
@@ -53,12 +51,8 @@ Install
 
 Via Composer
 
-```json
-{
-    "require": {
-        "africc/php-epp2": "0.1.*"
-    }
-}
+```
+$ composer require africc/php-epp2
 ```
 
 
@@ -78,7 +72,7 @@ this will automatically login on connect() and logout on close()
 
 ```php
 <?php
-require 'src/AfriCC/autoload.php';
+require 'vendor/autoload.php';
 
 use AfriCC\EPP\Client as EPPClient;
 
@@ -115,7 +109,7 @@ add values.
 
 ```php
 <?php
-require 'src/AfriCC/autoload.php';
+require 'vendor/autoload.php';
 
 use AfriCC\EPP\Frame\Command\Create\Host as CreateHost;
 
@@ -173,6 +167,7 @@ foreach ($data['chkData']['cd'] as $cd) {
 Future
 ------
 
+* objectspec on login needs to be smarter (no global/static object, auto-injecter)
 * stricter response parsing
 * stricter request validation
 * make it server capable (in conjunction with apache mod_epp)
@@ -198,3 +193,4 @@ License
 php-epp2 is released under the GPLv3 License. See the bundled
 [LICENSE](https://github.com/AfriCC/php-epp2/blob/master/LICENSE) file for
 details.
+

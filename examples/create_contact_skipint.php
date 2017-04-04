@@ -6,11 +6,11 @@ ini_set('display_errors', true);
 
 chdir(__DIR__);
 
-require '../src/AfriCC/autoload.php';
+require '../vendor/autoload.php';
 
 use AfriCC\EPP\Frame\Command\Create\Contact as CreateContact;
 
-$frame = new CreateContact;
+$frame = new CreateContact();
 $frame->skipInt();
 $frame->setId('CONTACT1');
 $frame->setName('Günter Grodotzki');

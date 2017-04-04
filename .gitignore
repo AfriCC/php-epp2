@@ -1,11 +1,16 @@
-# Eclipse + PDT
+# osx specific
+.DS_Store
+
+# ignore-ide
 /.settings/
 /.buildpath
 /.project
-
 # Intellij IDEA
 /.idea
 *.iml
+
+# composer
+/vendor/
 
 # configs
 /config.php

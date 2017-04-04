@@ -11,11 +11,11 @@
 
 namespace AfriCC\EPP\Extension\COZA\Update;
 
-use AfriCC\EPP\Frame\Command\Update\Contact as ContactUpdate;
 use AfriCC\EPP\ExtensionInterface as Extension;
+use AfriCC\EPP\Frame\Command\Update\Contact as ContactUpdate;
 
 /**
- * @link https://www.registry.net.za/content.php?wiki=1&contentid=18&title=EPP%20Contact%20Extensions
+ * @see https://www.registry.net.za/content.php?wiki=1&contentid=18&title=EPP%20Contact%20Extensions
  */
 class CozaContact extends ContactUpdate implements Extension
 {

@@ -1,14 +1,15 @@
 <?php
 
-namespace AfriCC\EPP\Frame\Command;
+namespace AfriCC\Tests\EPP\Frame\Command;
 
 use AfriCC\EPP\Frame\Command\Login;
+use PHPUnit\Framework\TestCase;
 
-class LoginTest extends \PHPUnit_Framework_TestCase
+class LoginTest extends TestCase
 {
     public function testLoginServices()
     {
-        $frame = new Login;
+        $frame = new Login();
         $frame->setClientId('gunter');
         $frame->setPassword('grodotzki');
         $frame->setNewPassword('grodotzki2');
@@ -17,7 +18,7 @@ class LoginTest extends \PHPUnit_Framework_TestCase
         $frame->addService('urn:ietf:params:xml:ns:domain-1.0');
         $frame->addService('urn:ietf:params:xml:ns:contact-1.0');
 
-        $this->assertXmlStringEqualsXmlString((string) $frame,
+        $this->assertXmlStringEqualsXmlString(
             '<epp xmlns="urn:ietf:params:xml:ns:epp-1.0">
               <command>
                 <login>
@@ -34,13 +35,15 @@ class LoginTest extends \PHPUnit_Framework_TestCase
                   </svcs>
                 </login>
               </command>
-            </epp>'
+            </epp>
+            ',
+            (string) $frame
         );
     }
 
     public function testLoginServicesExtensions()
     {
-        $frame = new Login;
+        $frame = new Login();
         $frame->setClientId('gunter');
         $frame->setPassword('grodotzki');
         $frame->setNewPassword('grodotzki2');
@@ -51,7 +54,7 @@ class LoginTest extends \PHPUnit_Framework_TestCase
         $frame->addServiceExtension('http://drs.ua/epp/drs-1.0');
         $frame->addServiceExtension('http://hostmaster.ua/epp/uaepp-1.1');
 
-        $this->assertXmlStringEqualsXmlString((string) $frame,
+        $this->assertXmlStringEqualsXmlString(
             '<?xml version="1.0" encoding="UTF-8" standalone="no"?>
             <epp xmlns="urn:ietf:params:xml:ns:epp-1.0">
               <command>
@@ -73,7 +76,9 @@ class LoginTest extends \PHPUnit_Framework_TestCase
                   </svcs>
                 </login>
               </command>
-            </epp>'
+            </epp>
+            ',
+            (string) $frame
         );
     }
 }

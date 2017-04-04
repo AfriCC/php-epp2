@@ -11,11 +11,11 @@
 
 namespace AfriCC\EPP\Extension\NICMX\Restore;
 
-use AfriCC\EPP\Frame\Command\Renew as Renew;
 use AfriCC\EPP\ExtensionInterface as Extension;
+use AfriCC\EPP\Frame\Command\Renew;
 
 /**
- * @link https://www.registry.mx
+ * @see https://www.registry.mx
  */
 class Domain extends Renew implements Extension
 {

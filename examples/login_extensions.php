@@ -6,11 +6,11 @@ ini_set('display_errors', true);
 
 chdir(__DIR__);
 
-require '../src/AfriCC/autoload.php';
+require '../vendor/autoload.php';
 
 use AfriCC\EPP\Frame\Command\Login;
 
-$frame = new Login;
+$frame = new Login();
 $frame->setClientId('gunter');
 $frame->setPassword('grodotzki');
 $frame->setNewPassword('grodotzki2');

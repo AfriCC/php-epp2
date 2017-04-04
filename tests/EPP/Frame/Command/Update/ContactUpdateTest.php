@@ -1,14 +1,15 @@
 <?php
 
-namespace AfriCC\EPP\Frame\Command;
+namespace AfriCC\Tests\EPP\Frame\Command\Update;
 
-use AfriCC\EPP\Frame\Command\Update\Contact as UpdateContact;
+use AfriCC\EPP\Frame\Command\Update\Contact;
+use PHPUnit\Framework\TestCase;
 
-class ContactUpdateTest extends \PHPUnit_Framework_TestCase
+class UpdateContactTest extends TestCase
 {
-    public function testContactUpdate()
+    public function testUpdateContactFrame()
     {
-        $frame = new UpdateContact;
+        $frame = new Contact();
         $frame->setId('C0054');
         $frame->addCity('Voerde');
         $frame->addAddStreet('Long St. 14');
@@ -18,7 +19,7 @@ class ContactUpdateTest extends \PHPUnit_Framework_TestCase
         $frame->removeAddStreet('Long St. 16');
         $frame->removeCity('Durban');
 
-        $this->assertXmlStringEqualsXmlString((string) $frame,
+        $this->assertXmlStringEqualsXmlString(
             '<?xml version="1.0" encoding="UTF-8" standalone="no"?>
             <epp xmlns="urn:ietf:params:xml:ns:epp-1.0">
               <command>
@@ -72,13 +73,15 @@ class ContactUpdateTest extends \PHPUnit_Framework_TestCase
                   </contact:update>
                 </update>
               </command>
-            </epp>'
+            </epp>
+            ',
+            (string) $frame
         );
     }
 
-    public function testContactUpdateDisclose()
+    public function testUpdateContactDiscloseFrame()
     {
-        $frame = new UpdateContact;
+        $frame = new Contact();
         $frame->setId('C0054');
         $frame->addCity('Voerde');
         $frame->addAddStreet('Long St. 14');
@@ -90,7 +93,7 @@ class ContactUpdateTest extends \PHPUnit_Framework_TestCase
         $frame->changeAddDisclose('voice', 1);
         $frame->changeAddDisclose('name[@type=\'int\']', 1);
 
-        $this->assertXmlStringEqualsXmlString((string) $frame,
+        $this->assertXmlStringEqualsXmlString(
             '<?xml version="1.0" encoding="UTF-8" standalone="no"?>
             <epp xmlns="urn:ietf:params:xml:ns:epp-1.0">
               <command>
@@ -148,7 +151,9 @@ class ContactUpdateTest extends \PHPUnit_Framework_TestCase
                   </contact:update>
                 </update>
               </command>
-            </epp>'
+            </epp>
+            ',
+            (string) $frame
         );
     }
 }
