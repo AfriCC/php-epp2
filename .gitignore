@@ -5,6 +5,9 @@
 /.settings/
 /.buildpath
 /.project
+# Intellij IDEA
+/.idea
+*.iml
 
 # composer
 /vendor/

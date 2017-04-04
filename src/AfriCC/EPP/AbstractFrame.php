@@ -229,7 +229,7 @@ abstract class AbstractFrame extends DOMDocument implements FrameInterface
         if ($this instanceof ExtensionInterface) {
             // automatically guess extension according to class name if not defined in class
             if (!isset($this->extension)) {
-                $this->extension = strtolower($this->className(get_class($this)));
+                $this->extension = $this->getExtensionName();
             }
 
             // add to object spec
@@ -247,5 +247,10 @@ abstract class AbstractFrame extends DOMDocument implements FrameInterface
         }
 
         return substr($class, $pos + 1);
+    }
+
+    public function getExtensionName()
+    {
+        return strtolower($this->className(get_class($this)));
     }
 }
