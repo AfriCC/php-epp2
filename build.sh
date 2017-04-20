@@ -25,7 +25,7 @@ if [[ "${php_version}" == 7.* ]]; then
     --update-with-dependencies \
     phpunit/phpunit \
     &> /dev/null
-elif [[ "${php_version}" == 5.6.* ]]; then
+elif [[ "${php_version}" == 5.6.* ]] || [[ "${php_version}" == "VM" ]]; then
   composer require \
     --dev \
     --update-with-dependencies \
