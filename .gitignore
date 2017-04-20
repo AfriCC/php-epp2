@@ -15,3 +15,6 @@
 # configs
 /config.php
 /coza/
+
+# build
+/build/

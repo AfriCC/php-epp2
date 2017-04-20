@@ -10,14 +10,14 @@ trap 'throw_exception' ERR
 
 php_version="$(php --version | head -n1 | cut -d' ' -f2)"
 
-consolelog "composer install"
+consolelog 'composer install'
 composer install \
   --no-interaction \
   --prefer-dist \
   --no-suggest \
   &> /dev/null
 
-consolelog "install phpunit"
+consolelog 'install phpunit'
 # switch phpunit version depending on php version
 if [[ "${php_version}" == 7.* ]]; then
   composer require \
@@ -39,10 +39,18 @@ else
     &> /dev/null
 fi
 
-consolelog "run tests"
-vendor/bin/phpunit --coverage-text
+if [[ ! -z "${RUN_COVERAGE}" ]]; then
+  consolelog 'run tests & coverage'
 
-consolelog "composer optimise"
+  mkdir -p build/logs
+  vendor/bin/phpunit --coverage-text --coverage-clover build/logs/clover.xml
+  vendor/bin/coveralls --quiet
+else
+  consolelog 'run tests'
+  vendor/bin/phpunit
+fi
+
+consolelog 'composer optimise'
 composer remove \
   --dev \
   phpunit/phpunit \
