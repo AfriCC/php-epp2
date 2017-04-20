@@ -7,6 +7,11 @@ php:
   - 5.5
   - hhvm
 
+matrix:
+  include:
+    - php: 7.1
+      env: RUN_COVERAGE=1
+
 sudo: false
 
 script: ./build.sh
