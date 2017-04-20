@@ -40,7 +40,8 @@ else
 fi
 
 consolelog "run tests"
-vendor/bin/phpunit --coverage-text
+vendor/bin/phpunit --coverage-text --coverage-clover build/logs/clover.xml
+vendor/bin/coveralls -v
 
 consolelog "composer optimise"
 composer remove \

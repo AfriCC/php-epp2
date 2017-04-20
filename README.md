@@ -1,4 +1,10 @@
-[![Build Status](https://travis-ci.org/AfriCC/php-epp2.svg?branch=master)](https://travis-ci.org/AfriCC/php-epp2) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/AfriCC/php-epp2/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/AfriCC/php-epp2/?branch=master) [![Latest Stable Version](https://poser.pugx.org/africc/php-epp2/v/stable.svg)](https://packagist.org/packages/africc/php-epp2) [![Packagist](https://img.shields.io/packagist/dt/africc/php-epp2.svg)](https://packagist.org/packages/africc/php-epp2) [![Latest Unstable Version](https://poser.pugx.org/africc/php-epp2/v/unstable.svg)](https://packagist.org/packages/africc/php-epp2) [![License](https://poser.pugx.org/africc/php-epp2/license.svg)](https://packagist.org/packages/africc/php-epp2)
+[![Build Status](https://travis-ci.org/AfriCC/php-epp2.svg?branch=master)](https://travis-ci.org/AfriCC/php-epp2)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/AfriCC/php-epp2/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/AfriCC/php-epp2/?branch=master)
+[![Coverage Status](https://coveralls.io/repos/github/AfriCC/php-epp2/badge.svg?branch=master)](https://coveralls.io/github/AfriCC/php-epp2?branch=master)
+[![Latest Stable Version](https://poser.pugx.org/africc/php-epp2/v/stable.svg)](https://packagist.org/packages/africc/php-epp2)
+[![Packagist](https://img.shields.io/packagist/dt/africc/php-epp2.svg)](https://packagist.org/packages/africc/php-epp2)
+[![Latest Unstable Version](https://poser.pugx.org/africc/php-epp2/v/unstable.svg)](https://packagist.org/packages/africc/php-epp2)
+[![License](https://poser.pugx.org/africc/php-epp2/license.svg)](https://packagist.org/packages/africc/php-epp2)
 
 php-epp2
 ========
