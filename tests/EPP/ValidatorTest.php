@@ -31,6 +31,7 @@ class ValidatorTest extends TestCase
         $this->assertTrue(Validator::isEmail('hi@afri.cc'));
         $this->assertTrue(Validator::isEmail('hi+hi@günter.de'));
         $this->assertFalse(Validator::isEmail('@afri.cc'));
+        $this->assertFalse(Validator::isEmail('afri.cc'));
     }
 
     public function testIsCountryCode()
