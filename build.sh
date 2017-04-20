@@ -42,7 +42,7 @@ fi
 consolelog 'run tests & coverage'
 mkdir -p build/logs
 vendor/bin/phpunit --coverage-text --coverage-clover build/logs/clover.xml
-vendor/bin/coveralls -v
+vendor/bin/coveralls --quiet
 
 consolelog 'composer optimise'
 composer remove \

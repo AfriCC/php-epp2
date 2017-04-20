@@ -330,7 +330,7 @@ class Validator
 
         $ascii_email = substr($email, 0, $pos) . '@' . idn_to_ascii(substr($email, $pos + 1), 0, INTL_IDNA_VARIANT_2003);
 
-        return filter_var($ascii_email, FILTER_VALIDATE_EMAIL);
+        return !! filter_var($ascii_email, FILTER_VALIDATE_EMAIL);
     }
 
     /**
