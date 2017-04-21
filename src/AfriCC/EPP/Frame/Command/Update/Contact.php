@@ -13,6 +13,7 @@ namespace AfriCC\EPP\Frame\Command\Update;
 
 use AfriCC\EPP\Frame\Command\Update as UpdateCommand;
 use AfriCC\EPP\ContactTrait;
+use AfriCC\EPP\Validator;
 
 /**
  * @link http://tools.ietf.org/html/rfc5733#section-3.2.5
@@ -110,5 +111,133 @@ class Contact extends UpdateCommand
         if (is_callable([$this, $method_name])) {
             return call_user_func_array([$this, $method_name], $arguments);
         }
+    }
+
+
+    public function changeContactType($type)
+    {
+        $type = Validator::isValidContactType($type);
+        $this->set('contact:chg/contact:type', $type);
+    }
+
+    public function changeOrganization($org, $type = 'loc')
+    {
+        $this->set(
+            sprintf('contact:chg/postalInfo[@type=\'%s\']/contact:org', $type),
+            $org
+        );
+    }
+
+
+    public function changeRegisterNumber($register_number, $type = 'loc')
+    {
+        $this->set(
+            sprintf(
+                'contact:chg/postalInfo[@type=\'%s\']/contact:registernumber',
+                $type
+            ), $register_number
+        );
+    }
+
+    public function changeFirstName($first_name, $type='loc')
+    {
+        $this->set(
+            sprintf(
+                'contact:chg/postalInfo[@type=\'%s\']/contact:firstname',
+                $type
+            ), $first_name
+        );
+    }
+
+    public function changeLastName($last_name, $type = 'loc')
+    {
+        $this->set(
+            sprintf(
+                'contact:chg/postalInfo[@type=\'%s\']/contact:lastname',
+                $type
+            ), $last_name
+        );
+    }
+
+    public function changeIsFinish($is_finish, $type = 'loc')
+    {
+        $this->set(
+            sprintf(
+                'contact:chg/postalInfo[@type=\'%s\']/contact:isfinnish',
+                $type
+            ), $is_finish
+        );
+    }
+
+    public function changeBirthDate($birth_date, $type = 'loc')
+    {
+        $this->set(
+            sprintf(
+                'contact:chg/postalInfo[@type=\'%s\']/contact:birthDate',
+                $type
+            ), $birth_date
+        );
+    }
+
+    public function changeStreet($street, $type='loc')
+    {
+        $this->set(
+            sprintf(
+                'contact:chg/postalInfo[@type=\'%s\']/contact:addr/contact:street[]',
+                $type
+            ), $street
+        );
+    }
+
+    public function changeCity($city, $type='loc')
+    {
+        $this->set(
+            sprintf(
+                'contact:chg/postalInfo[@type=\'%s\']/contact:addr/contact:city',
+                $type
+            ), $city
+        );
+    }
+
+    public function changePostCode($postal_code, $type ='loc')
+    {
+        $this->set(
+            sprintf(
+                'contact:chg/postalInfo[@type=\'%s\']/contact:addr/contact:pc',
+                $type
+            ), $postal_code
+        );
+    }
+
+    public function changeCountryCode($country_code, $type='loc')
+    {
+        $this->set(
+            sprintf(
+                'contact:chg/postalInfo[@type=\'%s\']/contact:addr/contact:cc',
+                $type
+            ), $country_code
+        );
+    }
+
+    public function changeVoice($voice)
+    {
+        $this->set(
+            'contact:chg/voice', $voice
+        );
+    }
+
+    public function changeEmail($email)
+    {
+        $this->set('contact:chg/contact:email', $email);
+    }
+
+    public function changeLegalEmail($legal_email)
+    {
+        $this->set('contact:chg/legalemail', $legal_email);
+    }
+
+    public function changeDisclose($value, $flag = 0)
+    {
+        $this->set(sprintf('contact:chg/disclose[@flag=\'%d\']/contact:%s', (int)$flag, $value));
     }
 }
