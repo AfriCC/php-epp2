@@ -276,6 +276,7 @@ trait ContactTrait
 
     public function appendBirthDay($path, $date)
     {
+
         if ($this->force_ascii) {
             $this->set(sprintf($path, 'loc'), Translit::transliterate($date));
         } else {
