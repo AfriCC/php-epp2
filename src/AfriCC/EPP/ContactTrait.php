@@ -261,7 +261,7 @@ trait ContactTrait
         }
     }
 
-    private function appendIsfinnish($path, $finnish)
+    private function appendIsFinnish($path, $finnish)
     {
         if ($this->force_ascii) {
             $this->set(sprintf($path, 'loc'), Translit::transliterate($finnish));
@@ -276,7 +276,6 @@ trait ContactTrait
 
     public function appendBirthDay($path, $date)
     {
-
         if ($this->force_ascii) {
             $this->set(sprintf($path, 'loc'), Translit::transliterate($date));
         } else {
