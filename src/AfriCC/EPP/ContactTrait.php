@@ -261,16 +261,16 @@ trait ContactTrait
         }
     }
 
-    private function appendIsFinish($path, $finish)
+    private function appendIsfinnish($path, $finnish)
     {
         if ($this->force_ascii) {
-            $this->set(sprintf($path, 'loc'), Translit::transliterate($finish));
+            $this->set(sprintf($path, 'loc'), Translit::transliterate($finnish));
         } else {
-            $this->set(sprintf($path, 'loc'), $finish);
+            $this->set(sprintf($path, 'loc'), $finnish);
         }
 
         if (!$this->skip_int) {
-            $this->set(sprintf($path, 'int'), Translit::transliterate($finish));
+            $this->set(sprintf($path, 'int'), Translit::transliterate($finnish));
         }
     }
 
