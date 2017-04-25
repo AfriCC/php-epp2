@@ -219,6 +219,7 @@ class Contact extends CreateCommand
      */
     public function setIdentity($identity)
     {
+
         $this->appendIdentity('contact:postalInfo[@type=\'%s\']/contact:identity', $identity);
     }
 
