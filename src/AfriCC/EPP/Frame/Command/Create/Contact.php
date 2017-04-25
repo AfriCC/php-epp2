@@ -207,11 +207,11 @@ class Contact extends CreateCommand
     }
 
     /**
-     * @param $finish
+     * @param $finnish
      */
-    public function setIsFinish($finish)
+    public function setIsFinnish($finnish)
     {
-        $this->appendIsFinish('contact:postalInfo[@type=\'%s\']/contact:isfinnish', $finish);
+        $this->appendIsFinnish('contact:postalInfo[@type=\'%s\']/contact:isfinnish', $finnish);
     }
 
     /**
