@@ -159,13 +159,13 @@ class Contact extends UpdateCommand
         );
     }
 
-    public function changeIsFinish($is_finish, $type = 'loc')
+    public function changeIsFinish($is_finnish, $type = 'loc')
     {
         $this->set(
             sprintf(
                 'contact:chg/postalInfo[@type=\'%s\']/contact:isfinnish',
                 $type
-            ), $is_finish
+            ), $is_finnish
         );
     }
 
