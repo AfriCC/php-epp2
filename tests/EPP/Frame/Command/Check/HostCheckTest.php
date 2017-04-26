@@ -3,8 +3,8 @@
 namespace AfriCC\Tests\EPP\Frame\Command\Check;
 
 use AfriCC\EPP\Frame\Command\Check\Host as HostCheck;
-use PHPUnit\Framework\TestCase;
 use Exception;
+use PHPUnit\Framework\TestCase;
 
 class HostCheckTest extends TestCase
 {

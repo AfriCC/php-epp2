@@ -3,8 +3,8 @@
 namespace AfriCC\Tests\EPP\DOM;
 
 use AfriCC\EPP\DOM\DOMElement;
-use PHPUnit\Framework\TestCase;
 use DOMDocument;
+use PHPUnit\Framework\TestCase;
 
 class DOMElementTest extends TestCase
 {
