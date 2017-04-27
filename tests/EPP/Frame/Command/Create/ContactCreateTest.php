@@ -5,9 +5,9 @@ namespace AfriCC\Tests\EPP\Frame\Command\Create;
 use AfriCC\EPP\Frame\Command\Create\Contact;
 use PHPUnit\Framework\TestCase;
 
-class CreateContactTest extends TestCase
+class ContactCreateTest extends TestCase
 {
-    public function testCreateContactFrame()
+    public function testContactCreateFrame()
     {
         $frame = new Contact();
         $frame->setId('CONTACT1');
@@ -77,7 +77,7 @@ class CreateContactTest extends TestCase
         );
     }
 
-    public function testCreateContactSkipIntFrame()
+    public function testContactCreateSkipIntFrame()
     {
         $frame = new Contact();
         $frame->skipInt();
@@ -136,7 +136,7 @@ class CreateContactTest extends TestCase
         );
     }
 
-    public function testCreateContactSkipLocFrame()
+    public function testContactCreateSkipLocFrame()
     {
         $frame = new Contact();
         $frame->skipLoc();
@@ -195,7 +195,7 @@ class CreateContactTest extends TestCase
         );
     }
 
-    public function testCreateContactDiscloseFrame()
+    public function testContactCreateDiscloseFrame()
     {
         $frame = new Contact();
         $frame->skipInt();

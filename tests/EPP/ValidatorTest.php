@@ -22,7 +22,7 @@ class ValidatorTest extends TestCase
 
     public function testIsHostname()
     {
-        $this->assertTrue(Validator::isHostname('google.co.za'));
+        $this->assertTrue(Validator::isHostname(TEST_DOMAIN));
         $this->assertFalse(Validator::isHostname('google'));
     }
 

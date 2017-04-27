@@ -5,7 +5,7 @@ namespace AfriCC\Tests\EPP\Frame\Command\Update;
 use AfriCC\EPP\Frame\Command\Update\Contact;
 use PHPUnit\Framework\TestCase;
 
-class UpdateContactTest extends TestCase
+class ContactUpdateTest extends TestCase
 {
     public function testUpdateContactFrame()
     {
