@@ -47,7 +47,7 @@ class ResponseFactory
             // ok now we can create an object according to the response-frame
             $frame_type = strtolower($node->localName);
             if ($frame_type === 'response') {
-                // check if it is a message queue
+                // check if it is a message queue @todo this should go into the response object!
                 $results = $xpath->query('//epp:epp/epp:response/epp:msgQ');
                 if ($results->length > 0) {
                     return new \AfriCC\EPP\Frame\Response\MessageQueue($xml);

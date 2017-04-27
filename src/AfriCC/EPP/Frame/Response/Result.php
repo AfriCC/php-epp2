@@ -9,58 +9,35 @@
  * that was distributed with this source code.
  */
 
-namespace AfriCC\EPP\Frame;
+namespace AfriCC\EPP\Frame\Response;
 
-use AfriCC\EPP\AbstractFrame;
-use AfriCC\EPP\Frame\Response\Result;
+use DOMElement;
 use DOMNode;
-use DOMNodeList;
 
-/**
- * @see http://tools.ietf.org/html/rfc5730#section-2.6
- */
-class Response extends AbstractFrame
+class Result
 {
-    /**
-     * nodeToArray force array values for the following tags. Usually the upper
-     * level will expect them as an array to traverse. Otherwise, if only one
-     * value exists it will be converted directly to a string
-     *
-     * @var array
-     */
-    protected $n2a_force_array = [
-        'hostAttr' => true,
-        'hostObj' => true,
-        'street' => true,
-        'hostAddr' => true,
-    ];
+    protected $code;
 
-    /**
-     * nodeToArray ignore conversion of following attributes. Usually because
-     * the information is redundant or useless (like the definition of IP types
-     * which should be done on the higher level)
-     *
-     * @var array
-     */
-    protected $n2a_ignore_attr = [
-        'hostAddr' => true,
-    ];
+    protected $msg;
 
-    public function results()
+    protected $msgLang = 'en';
+
+    protected $values = [];
+
+    protected $extValues = [];
+
+    public function __construct(DOMElement $node)
     {
-        $results = [];
-        $nodes = $this->get('//epp:epp/epp:response/epp:result');
-        foreach ($nodes as $node) {
-            $results[] = new Result($node);
+        if ($node->hasAttribute('code')) {
+            $this->code = (int) $node->getAttribute('code');
         }
 
-        return $results;
+        $this->parseResultNode($node);
     }
 
     public function success()
     {
-        $code = $this->code();
-        if ($code >= 1000 && $code < 2000) {
+        if ($this->code() >= 1000 && $this->code() < 2000) {
             return true;
         }
 
@@ -69,50 +46,55 @@ class Response extends AbstractFrame
 
     public function code()
     {
-        return (int) $this->get('//epp:epp/epp:response/epp:result/@code');
+        return $this->code;
     }
 
     public function message()
     {
-        return (string) $this->get('//epp:epp/epp:response/epp:result/epp:msg/text()');
+        return $this->msg;
     }
 
-    public function clientTransactionId()
+    public function messageLanguage()
     {
-        $value = $this->get('//epp:epp/epp:response/epp:trID/epp:clTRID/text()');
-        if ($value === false) {
-            return;
-        }
-
-        return (string) $value;
+        return $this->msgLang;
     }
 
-    public function serverTransactionId()
+    public function values()
     {
-        $value = $this->get('//epp:epp/epp:response/epp:trID/epp:svTRID/text()');
-        if ($value === false) {
-            return;
-        }
-
-        return (string) $value;
+        return $this->values;
     }
 
-    public function data()
+    public function extValues()
     {
-        $nodes = $this->get('//epp:epp/epp:response/epp:resData');
-        if ($nodes === false || !($nodes instanceof DOMNodeList) || $nodes->length === 0 || !$nodes->item(0)->hasChildNodes()) {
-            $data = [];
-        } else {
-            $data = $this->nodeToArray($nodes->item(0));
-        }
+        return $this->extValues;
+    }
 
-        // check for extension data
-        $nodes = $this->get('//epp:epp/epp:response/epp:extension');
-        if ($nodes !== false && $nodes instanceof DOMNodeList && $nodes->length > 0 && $nodes->item(0)->hasChildNodes()) {
-            $data = array_merge_recursive($data, $this->nodeToArray($nodes->item(0)));
-        }
+    protected function parseResultNode($node)
+    {
+        foreach ($node->childNodes as $each) {
+            if ($each->nodeType !== XML_ELEMENT_NODE) {
+                continue;
+            }
 
-        return $data;
+            switch($each->localName) {
+                case 'msg':
+                    $this->msg = $each->nodeValue;
+                    if ($each->hasAttribute('lang')) {
+                        $this->msgLang = $each->getAttribute('lang');
+                    }
+                    break;
+
+                case 'value':
+                    $this->values = $this->nodeToArray($each);
+                    break;
+
+                case 'extValue':
+                    break;
+
+                default:
+                    break;
+            }
+        }
     }
 
     private function nodeToArray(DOMNode $node)
