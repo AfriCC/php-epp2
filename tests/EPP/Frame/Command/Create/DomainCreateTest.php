@@ -3,6 +3,7 @@
 namespace AfriCC\Tests\EPP\Frame\Command\Create;
 
 use AfriCC\EPP\Frame\Command\Create\Domain;
+use Exception;
 use PHPUnit\Framework\TestCase;
 
 class DomainCreateTest extends TestCase
@@ -53,5 +54,37 @@ class DomainCreateTest extends TestCase
             ',
             (string) $frame
         );
+    }
+
+    public function testDomainCreateFrameInvalidDomain()
+    {
+        $frame = new Domain();
+
+        if (method_exists($this, 'expectException')) {
+            $this->expectException(Exception::class);
+            $frame->setDomain('invalid_domain');
+        } else {
+            try {
+                $frame->setDomain('invalid_domain');
+            } catch (Exception $e) {
+                $this->assertEquals('Exception', get_class($e));
+            }
+        }
+    }
+
+    public function testDomainCreateFrameInvalidHostObj()
+    {
+        $frame = new Domain();
+
+        if (method_exists($this, 'expectException')) {
+            $this->expectException(Exception::class);
+            $frame->addHostObj('invalid_domain');
+        } else {
+            try {
+                $frame->addHostObj('invalid_domain');
+            } catch (Exception $e) {
+                $this->assertEquals('Exception', get_class($e));
+            }
+        }
     }
 }

@@ -153,8 +153,10 @@ if (!($response instanceof Response)) {
     exit(1);
 }
 
-echo $response->code() . PHP_EOL;
-echo $response->message() . PHP_EOL;
+$result = $response->results()[0];
+
+echo $result->code() . PHP_EOL;
+echo $result->message() . PHP_EOL;
 echo $response->clientTransactionId() . PHP_EOL;
 echo $response->serverTransactionId() . PHP_EOL;
 $data = $response->data();

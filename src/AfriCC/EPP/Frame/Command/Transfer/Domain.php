@@ -26,7 +26,7 @@ class Domain extends TransferCommand
     public function setDomain($domain)
     {
         if (!Validator::isHostname($domain)) {
-            throw new Exception(sprintf('%s is not a valid domain name'));
+            throw new Exception(sprintf('%s is not a valid domain name', $domain));
         }
 
         $this->set('domain:name', $domain);
