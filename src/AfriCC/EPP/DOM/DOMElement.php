@@ -11,10 +11,10 @@
 
 namespace AfriCC\EPP\DOM;
 
-use DOMElement as DOMElementLegacy;
+use DOMElement as PHP_DOMElement;
 use DOMNodeList;
 
-class DOMElement extends DOMElementLegacy
+class DOMElement extends PHP_DOMElement
 {
     public function hasChildNodes()
     {

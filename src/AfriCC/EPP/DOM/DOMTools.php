@@ -11,7 +11,7 @@
 
 namespace AfriCC\EPP\DOM;
 
-use \DOMElement;
+use DOMElement as PHP_DOMElement;
 
 class DOMTools
 {
@@ -25,7 +25,7 @@ class DOMTools
      * contain duplicate information (forex: ipType).
      */
     public static function nodeToArray(
-        DOMElement $node,
+        PHP_DOMElement $node,
         $forceArrayKeys = ['hostAttr', 'hostObj', 'street', 'hostAddr'],
         $ignoreAttributeKeys = ['hostAddr']
     ) {
