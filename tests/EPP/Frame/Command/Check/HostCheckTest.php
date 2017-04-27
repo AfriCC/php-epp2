@@ -37,7 +37,7 @@ class HostCheckTest extends TestCase
         } else {
             try {
                 $frame->addHost('invalid_host');
-            } catch(Exception $e) {
+            } catch (Exception $e) {
                 $this->assertEquals('Exception', get_class($e));
             }
         }

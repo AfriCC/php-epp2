@@ -37,7 +37,7 @@ class DomainCheckTest extends TestCase
         } else {
             try {
                 $frame->addDomain('invalid_domain');
-            } catch(Exception $e) {
+            } catch (Exception $e) {
                 $this->assertEquals('Exception', get_class($e));
             }
         }
