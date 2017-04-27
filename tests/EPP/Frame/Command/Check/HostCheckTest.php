@@ -29,9 +29,17 @@ class HostCheckTest extends TestCase
 
     public function testHostCheckFrameInvalidHost()
     {
-        $this->expectException(Exception::class);
-
         $frame = new HostCheck();
-        $frame->addHost('invalid_host');
+
+        if (method_exists($this, 'expectException')) {
+            $this->expectException(Exception::class);
+            $frame->addHost('invalid_host');
+        } else {
+            try {
+                $frame->addHost('invalid_host');
+            } catch(Exception $e) {
+                $this->assertEquals('Exception', get_class($e));
+            }
+        }
     }
 }

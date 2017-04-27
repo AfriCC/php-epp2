@@ -29,9 +29,17 @@ class DomainCheckTest extends TestCase
 
     public function testDomainCheckFrameInvalidDomain()
     {
-        $this->expectException(Exception::class);
-
         $frame = new DomainCheck();
-        $frame->addDomain('invalid_domain');
+
+        if (method_exists($this, 'expectException')) {
+            $this->expectException(Exception::class);
+            $frame->addDomain('invalid_domain');
+        } else {
+            try {
+                $frame->addDomain('invalid_domain');
+            } catch(Exception $e) {
+                $this->assertEquals('Exception', get_class($e));
+            }
+        }
     }
 }

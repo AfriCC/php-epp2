@@ -80,5 +80,7 @@ class Domain extends CreateCommand
         }
 
         $this->set('domain:authInfo/domain:pw', $pw);
+
+        return $pw;
     }
 }
