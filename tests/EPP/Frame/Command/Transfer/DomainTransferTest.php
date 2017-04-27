@@ -77,4 +77,20 @@ class DomainTransferTest extends TestCase
             }
         }
     }
+
+    public function testDomainTransferFrameInvalidOperation()
+    {
+        $frame = new Domain();
+
+        if (method_exists($this, 'expectException')) {
+            $this->expectException(Exception::class);
+            $frame->setOperation('invalid_operation');
+        } else {
+            try {
+                $frame->setOperation('invalid_operation');
+            } catch (Exception $e) {
+                $this->assertEquals('Exception', get_class($e));
+            }
+        }
+    }
 }
