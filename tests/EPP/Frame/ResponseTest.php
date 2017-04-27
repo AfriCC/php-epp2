@@ -104,8 +104,8 @@ class ResponseTest extends TestCase
         $this->assertEquals([
             'hostObj' => [
                 'ns21.yoann.mx',
-                'ns2.yoann.mx'
-            ]],
+                'ns2.yoann.mx',
+            ], ],
             $results[0]->values()
         );
 
@@ -114,7 +114,7 @@ class ResponseTest extends TestCase
                 'hostObj' => ['ns2.yoann.mx'],
             ],
             'reason' => 'A host that wants to be added is repeated',
-            '@reason' => ['lang' => 'en']
+            '@reason' => ['lang' => 'en'],
             ],
             $results[1]->extValues()
         );
@@ -179,7 +179,7 @@ class ResponseTest extends TestCase
                     '@name' => ['avail' => '0'],
                     'reason' => 'In Use',
                 ],
-            ]]],
+            ], ], ],
             $response->data()
         );
     }

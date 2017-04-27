@@ -28,8 +28,7 @@ class DOMTools
         DOMElement $node,
         $forceArrayKeys = ['hostAttr', 'hostObj', 'street', 'hostAddr'],
         $ignoreAttributeKeys = ['hostAddr']
-    )
-    {
+    ) {
         $tmp = [];
         foreach ($node->childNodes as $each) {
             if ($each->nodeType !== XML_ELEMENT_NODE) {
