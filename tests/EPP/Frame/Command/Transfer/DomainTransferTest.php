@@ -3,11 +3,12 @@
 namespace AfriCC\Tests\EPP\Frame\Command\Transfer;
 
 use AfriCC\EPP\Frame\Command\Transfer\Domain;
+use Exception;
 use PHPUnit\Framework\TestCase;
 
 class DomainTransferTest extends TestCase
 {
-    public function testTransferDomainFrame()
+    public function testDomainTransferFrame()
     {
         $frame = new Domain();
         $frame->setOperation('cancel');
@@ -35,7 +36,7 @@ class DomainTransferTest extends TestCase
         );
     }
 
-    public function testTransferDomainQueryFrame()
+    public function testDomainTransferFrameQuery()
     {
         $frame = new Domain();
         $frame->setOperation('query');
@@ -59,5 +60,37 @@ class DomainTransferTest extends TestCase
             ',
             (string) $frame
         );
+    }
+
+    public function testDomainTransferFrameInvalidDomain()
+    {
+        $frame = new Domain();
+
+        if (method_exists($this, 'expectException')) {
+            $this->expectException(Exception::class);
+            $frame->setDomain('invalid_domain');
+        } else {
+            try {
+                $frame->setDomain('invalid_domain');
+            } catch (Exception $e) {
+                $this->assertEquals('Exception', get_class($e));
+            }
+        }
+    }
+
+    public function testDomainTransferFrameInvalidOperation()
+    {
+        $frame = new Domain();
+
+        if (method_exists($this, 'expectException')) {
+            $this->expectException(Exception::class);
+            $frame->setOperation('invalid_operation');
+        } else {
+            try {
+                $frame->setOperation('invalid_operation');
+            } catch (Exception $e) {
+                $this->assertEquals('Exception', get_class($e));
+            }
+        }
     }
 }

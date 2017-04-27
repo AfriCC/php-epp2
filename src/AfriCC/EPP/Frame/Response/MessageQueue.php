@@ -22,7 +22,7 @@ class MessageQueue extends ResponseFrame
 
     public function queueCount()
     {
-        return $this->get('//epp:epp/epp:response/epp:msgQ/@count');
+        return (int) $this->get('//epp:epp/epp:response/epp:msgQ/@count');
     }
 
     public function queueMessage()
