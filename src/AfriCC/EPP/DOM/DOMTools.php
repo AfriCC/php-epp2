@@ -11,7 +11,7 @@
 
 namespace AfriCC\EPP\DOM;
 
-use DOMElement;
+use \DOMElement;
 
 class DOMTools
 {
