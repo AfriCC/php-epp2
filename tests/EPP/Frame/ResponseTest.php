@@ -183,4 +183,25 @@ class ResponseTest extends TestCase
             $response->data()
         );
     }
+
+    public function testResponseSuccess()
+    {
+        $response = ResponseFactory::build(
+            '<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+            <epp xmlns="urn:ietf:params:xml:ns:epp-1.0">
+             <response>
+               <result code="1000">
+                 <msg lang="en">Command completed successfully</msg>
+               </result>
+               <trID>
+                 <clTRID>ABC-12345</clTRID>
+                 <svTRID>54321-XYZ</svTRID>
+               </trID>
+             </response>
+            </epp>
+            '
+            );
+
+        $this->assertTrue($response->results()[0]->success());
+    }
 }
