@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.3.1 - 2017-04-27
+
+### Added
+
+- `ExtensionInterface` now uses `getExtensionName` for a more cleaner
+  interface (thx @jkaflik)
+- added a lot of tests to improve code coverage
+
 ## 0.3.0 - 2017-04-02
 
 ### Added
