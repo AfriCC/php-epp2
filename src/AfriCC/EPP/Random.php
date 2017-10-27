@@ -41,7 +41,7 @@ class Random
      *
      * @return string
      */
-    public static function auth($len)
+    public static function auth($len, $hex = '')
     {
         if (function_exists('random_bytes')) {
             $randomBytes = random_bytes($len);
@@ -51,7 +51,11 @@ class Random
             $randomBytes = mcrypt_create_iv($len, MCRYPT_DEV_URANDOM);
         }
 
-        $randomBytes = base64_encode($randomBytes);
+        if (TRUE == $hex) {
+            $randomBytes = bin2hex($randomBytes);
+        } else {
+            $randomBytes = base64_encode($randomBytes);
+        }
 
         return substr(rtrim($randomBytes, '='), 0, $len);
     }
