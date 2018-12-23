@@ -254,4 +254,32 @@ class ContactCreateTest extends TestCase
             (string) $frame
         );
     }
+
+    public function testContactCreateEntities()
+    {
+        $frame = new Contact();
+        $frame->setId('CONTACT1');
+        $frame->setOrganization('Fäther & Sons"');
+
+        $this->assertXmlStringEqualsXmlString(
+            '
+                <epp xmlns="urn:ietf:params:xml:ns:epp-1.0">
+                  <command>
+                    <create>
+                      <contact:create xmlns:contact="urn:ietf:params:xml:ns:contact-1.0">
+                        <contact:id>CONTACT1</contact:id>
+                        <contact:postalInfo type="loc">
+                          <contact:org>Fäther &amp; Sons"</contact:org>
+                        </contact:postalInfo>
+                        <contact:postalInfo type="int">
+                          <contact:org>Father &amp; Sons"</contact:org>
+                        </contact:postalInfo>
+                      </contact:create>
+                    </create>
+                  </command>
+                </epp>
+            ',
+            (string) $frame
+        );
+    }
 }
