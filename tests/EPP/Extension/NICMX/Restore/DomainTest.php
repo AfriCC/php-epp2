@@ -5,7 +5,7 @@ namespace AfriCC\Tests\EPP\Extension\NICMX\Restore;
 use AfriCC\EPP\Extension\NICMX\Restore\Domain;
 use PHPUnit\Framework\TestCase;
 
-class DomainRestoreTest extends TestCase
+class DomainTest extends TestCase
 {
     public function testNicMxRestoreDomainFrame()
     {
