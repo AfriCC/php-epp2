@@ -1,5 +1,20 @@
 # Changelog
 
+## 1.0.0 - 2018-12-23
+
+### Changes
+
+- response will always be a result-array (_breaking_)
+
+### Added
+
+- `verify_peer_name` option (thx @panaceya)
+
+### Fixed
+
+- cz-nic (thx @krtcom)
+- php 7.2+ compat (thx @krtcom)
+
 ## 0.3.1 - 2017-04-27
 
 ### Added
