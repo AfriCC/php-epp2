@@ -59,7 +59,7 @@ abstract class AbstractFrame extends DOMDocument implements FrameInterface
         }
 
         if ($value !== null) {
-            $this->nodes[$path]->nodeValue = $value;
+            $this->nodes[$path]->nodeValue = htmlspecialchars($value, ENT_XML1, 'UTF-8');
         }
 
         return $this->nodes[$path];
