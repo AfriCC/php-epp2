@@ -38,6 +38,7 @@ class Client
     protected $connect_timeout;
     protected $timeout;
     protected $chunk_size;
+    protected $verify_peer_name;
 
     public function __construct(array $config)
     {
@@ -108,6 +109,12 @@ class Client
         } else {
             $this->chunk_size = 1024;
         }
+
+        if (!empty($config['verify_peer_name'])) {
+            $this->verify_peer_name = (bool) $config['verify_peer_name'];
+        } else {
+            $this->verify_peer_name = true;
+        }
     }
 
     public function __destruct()
@@ -125,6 +132,7 @@ class Client
 
             $context = stream_context_create();
             stream_context_set_option($context, 'ssl', 'verify_peer', false);
+            stream_context_set_option($context, 'ssl', 'verify_peer_name', $this->verify_peer_name);
             stream_context_set_option($context, 'ssl', 'allow_self_signed', true);
 
             if ($this->local_cert !== null) {
