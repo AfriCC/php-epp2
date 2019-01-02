@@ -13,6 +13,7 @@ namespace AfriCC\EPP\Frame\Command\Update;
 
 use AfriCC\EPP\AddrTrait;
 use AfriCC\EPP\Frame\Command\Update as UpdateCommand;
+use AfriCC\EPP\ObjectSpec;
 use AfriCC\EPP\Random;
 use AfriCC\EPP\Validator;
 use Exception;
@@ -104,6 +105,52 @@ class Domain extends UpdateCommand
             $node->setAttribute('lang', 'en');
             $node->nodeValue = $text;
         }
+    }
+    
+    /**
+     * Add/remove SecDNS dsData - RFC 5910
+     *
+     * @param int $keyTag
+     * @param int $alg
+     * @param int $digestType
+     * @param string $digest
+     * @param bool $remove whether to remove or add (default add)
+     */
+    public function addSecDNSdsData($keyTag, $alg, $digestType, $digest, $remove = false)
+    {
+        $key = $remove ? 'rem' : 'add';
+        $node = $this->set(sprintf('//epp:epp/epp:command/epp:extension/secDNS:update/secDNS:%s/secDNS:dsData[]', $key));
+        $ns = ObjectSpec::xmlns('secDNS');
+        $keyTagNode = $this->createElementNS($ns, 'secDNS:keyTag', $keyTag);
+        $algNode = $this->createElementNS($ns, 'secDNS:alg', $alg);
+        $digestTypeNode = $this->createElementNS($ns, 'secDNS:digestType', $digestType);
+        $digestNode = $this->createElementNS($ns, 'secDNS:digest', $digest);
+        $node->appendChild($keyTagNode);
+        $node->appendChild($algNode);
+        $node->appendChild($digestTypeNode);
+        $node->appendChild($digestNode);
+    }
+    
+    /**
+     * Add/remove SecDNS dsData - RFC 5910
+     *
+     * @param int $keyTag
+     * @param int $alg
+     * @param int $digestType
+     * @param string $digest
+     */
+    public function removeSecDNSdsData($keyTag, $alg, $digestType, $digest)
+    {
+        $this->addSecDNSdsData($keyTag, $alg, $digestType, $digest, true);
+    }
+    
+    /**
+     * Remove all secDNS data - RFC 5910
+     * @param boolean $all - whether to remove ALL (true) or do nothing (false)
+     */
+    public function removeSecDNSAll($all = true)
+    {
+        $this->set('//epp:epp/epp:command/epp:extension/secDNS:update/secDNS:rem/secDNS:all', $all ? 'true': 'false');
     }
 
     public function removeAdminContact($contact)

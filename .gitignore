@@ -11,6 +11,7 @@
 
 # composer
 /vendor/
+composer.lock
 
 # configs
 /config.php
