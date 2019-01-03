@@ -31,7 +31,7 @@ class ObjectSpec
         ],
         'secDNS' => [
             'xmlns' => 'urn:ietf:params:xml:ns:secDNS-1.1',
-        ]
+        ],
     ];
 
     public static $mappings = [

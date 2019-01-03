@@ -6,7 +6,7 @@ use AfriCC\EPP\Frame\Command\Update\Domain;
 use Exception;
 use PHPUnit\Framework\TestCase;
 
-class DomainCreateTest extends TestCase
+class DomainUpdateTest extends TestCase
 {
     public function testDomainUpdateFrame()
     {
@@ -63,7 +63,7 @@ class DomainCreateTest extends TestCase
             (string) $frame
         );
     }
-    
+
     public function testDomainUpdateFrameDNSSecdsData()
     {
         $frame = new Domain();
@@ -78,7 +78,7 @@ class DomainCreateTest extends TestCase
         $frame->removeHostAttr('ns3.' . TEST_DOMAIN);
         $frame->addStatus('clientHold', 'Payment overdue.');
         $auth = $frame->changeAuthInfo();
-        
+
         //RFC 5910 - order: first remove, then add
         $frame->removeSecDNSdsData(1, 2, 3, 'AABBCCDDEEFF');
         $frame->addSecDNSdsData(2, 4, 9, 'ABACADAFA0');
@@ -143,12 +143,11 @@ class DomainCreateTest extends TestCase
             (string) $frame
         );
     }
-    
+
     public function testDomainUpdateFrameRemoveDNSSecdsData()
     {
         $frame = new Domain();
         $frame->setDomain(TEST_DOMAIN);
-        
         $frame->removeSecDNSAll();
 
         $this->assertXmlStringEqualsXmlString(

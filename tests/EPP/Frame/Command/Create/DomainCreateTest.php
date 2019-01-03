@@ -59,7 +59,7 @@ class DomainCreateTest extends TestCase
             (string) $frame
         );
     }
-    
+
     public function testDomainCreateFrameDNSSecdsData()
     {
         $frame = new Domain();
