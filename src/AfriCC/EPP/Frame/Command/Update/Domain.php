@@ -106,7 +106,7 @@ class Domain extends UpdateCommand
             $node->nodeValue = $text;
         }
     }
-    
+
     /**
      * Add/remove SecDNS dsData - RFC 5910
      *
@@ -130,7 +130,7 @@ class Domain extends UpdateCommand
         $node->appendChild($digestTypeNode);
         $node->appendChild($digestNode);
     }
-    
+
     /**
      * Add/remove SecDNS dsData - RFC 5910
      *
@@ -143,14 +143,14 @@ class Domain extends UpdateCommand
     {
         $this->addSecDNSdsData($keyTag, $alg, $digestType, $digest, true);
     }
-    
+
     /**
      * Remove all secDNS data - RFC 5910
-     * @param boolean $all - whether to remove ALL (true) or do nothing (false)
+     * @param bool $all - whether to remove ALL (true) or do nothing (false)
      */
     public function removeSecDNSAll($all = true)
     {
-        $this->set('//epp:epp/epp:command/epp:extension/secDNS:update/secDNS:rem/secDNS:all', $all ? 'true': 'false');
+        $this->set('//epp:epp/epp:command/epp:extension/secDNS:update/secDNS:rem/secDNS:all', $all ? 'true' : 'false');
     }
 
     public function removeAdminContact($contact)

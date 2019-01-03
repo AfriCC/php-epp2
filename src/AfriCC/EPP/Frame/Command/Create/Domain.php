@@ -13,11 +13,11 @@ namespace AfriCC\EPP\Frame\Command\Create;
 
 use AfriCC\EPP\AddrTrait;
 use AfriCC\EPP\Frame\Command\Create as CreateCommand;
+use AfriCC\EPP\ObjectSpec;
 use AfriCC\EPP\PeriodTrait;
 use AfriCC\EPP\Random;
 use AfriCC\EPP\Validator;
 use Exception;
-use AfriCC\EPP\ObjectSpec;
 
 /**
  * @see http://tools.ietf.org/html/rfc5731#section-3.2.1
@@ -84,11 +84,11 @@ class Domain extends CreateCommand
 
         return $pw;
     }
-    
+
     /**
      * Add SecDNS dsData - RFC 5910
-     * 
-     * @param int $keyTag 
+     *
+     * @param int $keyTag
      * @param int $alg
      * @param int $digestType
      * @param string $digest
