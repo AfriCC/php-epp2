@@ -29,6 +29,9 @@ class ObjectSpec
         'contact' => [
             'xmlns' => 'urn:ietf:params:xml:ns:contact-1.0',
         ],
+        'secDNS' => [
+            'xmlns' => 'urn:ietf:params:xml:ns:secDNS-1.1',
+        ],
     ];
 
     public static $mappings = [
