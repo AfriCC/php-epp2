@@ -23,6 +23,11 @@ class Contact extends InfoCommand
         $this->set('contact:id', $id);
     }
 
+    /**
+     * Set contact authinfo
+     *
+     * @param string $pw authinfo
+     */
     public function setAuthInfo($pw)
     {
         $this->set('contact:authInfo/contact:pw', $pw);

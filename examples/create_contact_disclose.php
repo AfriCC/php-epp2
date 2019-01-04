@@ -21,7 +21,7 @@ $frame->setCity('Cape Town');
 $frame->setProvince('WC');
 $frame->setPostalCode('8001');
 $frame->setCountryCode('ZA');
-$frame->setVoice('+27.844784784');
+$frame->setVoice('+27.844784784', '123');
 $frame->setFax('+1.844784784');
 $frame->setEmail('github@afri.cc');
 $auth = $frame->setAuthInfo();

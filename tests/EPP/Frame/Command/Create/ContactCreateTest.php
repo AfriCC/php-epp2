@@ -21,7 +21,7 @@ class ContactCreateTest extends TestCase
         $frame->setPostalCode('8001');
         $frame->setCountryCode('ZA');
         $frame->setVoice('+27.844784784');
-        $frame->setFax('+1.844784784');
+        $frame->setFax('+1.844784784', '123');
         $frame->setEmail('github@afri.cc');
         $auth = $frame->setAuthInfo();
         $frame->addDisclose('voice');
@@ -59,7 +59,7 @@ class ContactCreateTest extends TestCase
                       </contact:addr>
                     </contact:postalInfo>
                     <contact:voice>+27.844784784</contact:voice>
-                    <contact:fax>+1.844784784</contact:fax>
+                    <contact:fax x="123">+1.844784784</contact:fax>
                     <contact:email>github@afri.cc</contact:email>
                     <contact:authInfo>
                       <contact:pw>' . $auth . '</contact:pw>
@@ -91,7 +91,7 @@ class ContactCreateTest extends TestCase
         $frame->setProvince('WC');
         $frame->setPostalCode('8001');
         $frame->setCountryCode('ZA');
-        $frame->setVoice('+27.844784784');
+        $frame->setVoice('+27.844784784', '123');
         $frame->setFax('+1.844784784');
         $frame->setEmail('github@afri.cc');
         $auth = $frame->setAuthInfo();
@@ -117,7 +117,7 @@ class ContactCreateTest extends TestCase
                         <contact:cc>ZA</contact:cc>
                       </contact:addr>
                     </contact:postalInfo>
-                    <contact:voice>+27.844784784</contact:voice>
+                    <contact:voice x="123">+27.844784784</contact:voice>
                     <contact:fax>+1.844784784</contact:fax>
                     <contact:email>github@afri.cc</contact:email>
                     <contact:authInfo>
