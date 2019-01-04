@@ -61,14 +61,14 @@ class Contact extends Create
         $this->appendCountryCode('contact:postalInfo[@type=\'%s\']/contact:addr/contact:cc', $cc);
     }
 
-    public function setVoice($voice)
+    public function setVoice($voice, $extension = null)
     {
-        $this->appendVoice('contact:voice', $voice);
+        $this->appendVoice('contact:voice', $voice, $extension);
     }
 
-    public function setFax($fax)
+    public function setFax($fax, $extension = null)
     {
-        $this->appendFax('contact:fax', $fax);
+        $this->appendFax('contact:fax', $fax, $extension);
     }
 
     public function setEmail($email)

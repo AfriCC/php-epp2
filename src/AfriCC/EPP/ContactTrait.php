@@ -38,27 +38,44 @@ trait ContactTrait
      */
     protected $skip_loc = false;
 
+    /**
+     * @param string $path
+     * @param mixed $value
+     *
+     * @return \DOMElement
+     */
     abstract public function set($path = null, $value = null);
 
-    public function forceAscii()
+    /**
+     * Whether to force ASCI on loc contacts
+     *
+     * @param bool $value
+     *
+     * @see \AfriCC\EPP\ContactTrait::force_ascii
+     */
+    public function forceAscii($value = true)
     {
-        $this->force_ascii = true;
+        $this->force_ascii = $value;
     }
 
     /**
      * Skip the generation of type=int.
+     *
+     * @param bool $value
      */
-    public function skipInt()
+    public function skipInt($value = true)
     {
-        $this->skip_int = true;
+        $this->skip_int = $value;
     }
 
     /**
      * Skip the generation of type=loc.
+     *
+     * @param bool $value
      */
-    public function skipLoc()
+    public function skipLoc($value = true)
     {
-        $this->skip_loc = true;
+        $this->skip_loc = $value;
     }
 
     public function appendId($path, $id)
@@ -147,14 +164,22 @@ trait ContactTrait
         }
     }
 
-    public function appendVoice($path, $voice)
+    public function appendVoice($path, $voice, $extension = null)
     {
-        $this->set($path, $voice);
+        $node = $this->set($path, $voice);
+
+        if (!is_null($extension)) {
+            $node->setAttribute('x', $extension);
+        }
     }
 
-    public function appendFax($path, $fax)
+    public function appendFax($path, $fax, $extension = null)
     {
-        $this->set($path, $fax);
+        $node = $this->set($path, $fax);
+
+        if (!is_null($extension)) {
+            $node->setAttribute('x', $extension);
+        }
     }
 
     public function appendEmail($path, $email)

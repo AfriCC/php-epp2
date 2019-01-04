@@ -16,6 +16,8 @@ class ContactUpdateTest extends TestCase
         $frame->addAddStreet('CBD');
         $frame->changeAddStreet('Long St. 15');
         $frame->changeCity('Cape Town');
+        $frame->changeVoice('+12.345678', '123');
+        $frame->changeFax('+12.345678', '910');
         $frame->removeAddStreet('Long St. 16');
         $frame->removeCity('Durban');
 
@@ -55,6 +57,8 @@ class ContactUpdateTest extends TestCase
                           <contact:city>Cape Town</contact:city>
                         </contact:addr>
                       </contact:postalInfo>
+                      <contact:voice x="123">+12.345678</contact:voice>
+                      <contact:fax x="910">+12.345678</contact:fax>
                     </contact:chg>
                     <contact:rem>
                       <contact:postalInfo type="loc">
@@ -147,6 +151,35 @@ class ContactUpdateTest extends TestCase
                           <contact:city>Durban</contact:city>
                         </contact:addr>
                       </contact:postalInfo>
+                    </contact:rem>
+                  </contact:update>
+                </update>
+              </command>
+            </epp>
+            ',
+            (string) $frame
+        );
+    }
+
+    public function testUpdateContactStatusFrame()
+    {
+        $frame = new Contact();
+        $frame->setId('C0054');
+        $frame->addStatus('clientUpdateProhibited');
+        $frame->removeStatus('clientDeleteProhibited');
+
+        $this->assertXmlStringEqualsXmlString(
+            '<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+            <epp xmlns="urn:ietf:params:xml:ns:epp-1.0">
+              <command>
+                <update>
+                  <contact:update xmlns:contact="urn:ietf:params:xml:ns:contact-1.0">
+                    <contact:id>C0054</contact:id>
+                    <contact:add>
+                      <contact:status s="clientUpdateProhibited"/>
+                    </contact:add>
+                    <contact:rem>
+                      <contact:status s="clientDeleteProhibited"/>
                     </contact:rem>
                   </contact:update>
                 </update>
