@@ -23,3 +23,4 @@ $pw = $frame->changeAuthInfo();
 $frame->removeSecDNSdsData(1, 2, 3, 'AABBCCDDEEFF');
 $frame->addSecDNSdsData(2, 4, 9, 'ABACADAFA0');
 echo $frame;
+echo "Generated new authinfo: '$pw'\n";
