@@ -154,4 +154,48 @@ class DomainCreateTest extends TestCase
             }
         }
     }
+
+    public function testDomainCreateFrameInvalidHostAttr()
+    {
+        $frame = new Domain();
+
+        if (method_exists($this, 'expectException')) {
+            $this->expectException(Exception::class);
+            $frame->addHostAttr('ns1.' . TEST_DOMAIN, [
+                'invalidip',
+                '999.999.999.999',
+            ]);
+        } else {
+            try {
+                $frame->addHostAttr('ns1.' . TEST_DOMAIN, [
+                    'invalidip',
+                    '999.999.999.999',
+                ]);
+            } catch (Exception $e) {
+                $this->assertEquals('Exception', get_class($e));
+            }
+        }
+    }
+
+    public function testDomainCreateFrameInvalidHostAttrDomain()
+    {
+        $frame = new Domain();
+
+        if (method_exists($this, 'expectException')) {
+            $this->expectException(Exception::class);
+            $frame->addHostAttr('invalid_domain', [
+                '8.8.8.8',
+                '2a00:1450:4009:809::100e',
+            ]);
+        } else {
+            try {
+                $frame->addHostAttr('invalid_domain', [
+                    '8.8.8.8',
+                    '2a00:1450:4009:809::100e',
+                ]);
+            } catch (Exception $e) {
+                $this->assertEquals('Exception', get_class($e));
+            }
+        }
+    }
 }

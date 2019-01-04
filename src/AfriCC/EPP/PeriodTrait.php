@@ -18,10 +18,19 @@ use Exception;
  */
 trait PeriodTrait
 {
+    /**
+     * Set value to path
+     *
+     * @param string $path
+     * @param mixed $value
+     *
+     * @return \DOMElement
+     */
     abstract public function set($path = null, $value = null);
 
     protected function appendPeriod($path, $period)
     {
+        $matches = [];
         if (preg_match('/^(\d+)([a-z])$/i', $period, $matches)) {
             $this->set(sprintf($path, $matches[2]), $matches[1]);
         } else {

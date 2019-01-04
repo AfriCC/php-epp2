@@ -21,6 +21,11 @@ use DOMNodeList;
  */
 class Response extends AbstractFrame
 {
+    /**
+     * Get Results from response frame
+     *
+     * @return Result[]
+     */
     public function results()
     {
         $results = [];
@@ -32,6 +37,13 @@ class Response extends AbstractFrame
         return $results;
     }
 
+    /**
+     * Whether response is successful
+     *
+     * @todo On response with multiple codes this fails miserably
+     *
+     * @return bool true on succes, false otherwise.
+     */
     public function success()
     {
         $code = $this->code();
@@ -42,11 +54,25 @@ class Response extends AbstractFrame
         return false;
     }
 
+    /**
+     * Get Response code
+     *
+     * @todo on response with multiple results this fails miserably
+     *
+     * @return int response code
+     */
     public function code()
     {
         return (int) $this->get('//epp:epp/epp:response/epp:result/@code');
     }
 
+    /**
+     * Get Response message
+     *
+     * @todo check message against multiple responses
+     *
+     * @return string message
+     */
     public function message()
     {
         return (string) $this->get('//epp:epp/epp:response/epp:result/epp:msg/text()');

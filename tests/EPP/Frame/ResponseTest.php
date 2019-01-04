@@ -204,4 +204,24 @@ class ResponseTest extends TestCase
 
         $this->assertTrue($response->results()[0]->success());
     }
+
+    public function testResponseFailure()
+    {
+        $response = ResponseFactory::build(
+            '<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+            <epp xmlns="urn:ietf:params:xml:ns:epp-1.0">
+             <response>
+               <result code="2004">
+                 <msg lang="en">Parameter value range error</msg>
+               </result>
+             </response>
+            </epp>
+            '
+            );
+
+        $this->assertFalse($response->results()[0]->success());
+        $this->assertFalse($response->success());
+        $this->assertNull($response->clientTransactionId());
+        $this->assertNull($response->serverTransactionId());
+    }
 }

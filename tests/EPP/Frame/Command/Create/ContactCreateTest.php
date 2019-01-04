@@ -3,6 +3,7 @@
 namespace AfriCC\Tests\EPP\Frame\Command\Create;
 
 use AfriCC\EPP\Frame\Command\Create\Contact;
+use Exception;
 use PHPUnit\Framework\TestCase;
 
 class ContactCreateTest extends TestCase
@@ -281,5 +282,68 @@ class ContactCreateTest extends TestCase
             ',
             (string) $frame
         );
+    }
+
+    public function testContactCreateForceAscii()
+    {
+        $frame = new Contact();
+        $frame->forceAscii();
+        $frame->setId('CONTACT1');
+        $frame->setOrganization('Fäther & Sons"');
+
+        $this->assertXmlStringEqualsXmlString(
+            '
+                <epp xmlns="urn:ietf:params:xml:ns:epp-1.0">
+                  <command>
+                    <create>
+                      <contact:create xmlns:contact="urn:ietf:params:xml:ns:contact-1.0">
+                        <contact:id>CONTACT1</contact:id>
+                        <contact:postalInfo type="loc">
+                          <contact:org>Father &amp; Sons"</contact:org>
+                        </contact:postalInfo>
+                        <contact:postalInfo type="int">
+                          <contact:org>Father &amp; Sons"</contact:org>
+                        </contact:postalInfo>
+                      </contact:create>
+                    </create>
+                  </command>
+                </epp>
+            ',
+            (string) $frame
+        );
+    }
+
+    public function testContactCreateInvalidCC()
+    {
+        $frame = new Contact();
+        $frame->setId('CONTACT1');
+
+        if (method_exists($this, 'expectException')) {
+            $this->expectException(Exception::class);
+            $frame->setCountryCode('Canada');
+        } else {
+            try {
+                $frame->setCountryCode('Canada');
+            } catch (Exception $e) {
+                $this->assertEquals('Exception', get_class($e));
+            }
+        }
+    }
+
+    public function testContactCreateInvalidEmail()
+    {
+        $frame = new Contact();
+        $frame->setId('CONTACT1');
+
+        if (method_exists($this, 'expectException')) {
+            $this->expectException(Exception::class);
+            $frame->setEmail('Canada');
+        } else {
+            try {
+                $frame->setEmail('Canada');
+            } catch (Exception $e) {
+                $this->assertEquals('Exception', get_class($e));
+            }
+        }
     }
 }
