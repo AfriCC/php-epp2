@@ -20,6 +20,14 @@ trait AddrTrait
 {
     protected $host_attr_index = 0;
 
+    /**
+     * Set value to path
+     *
+     * @param string $path
+     * @param mixed $value
+     *
+     * @return \DOMElement
+     */
     abstract public function set($path = null, $value = null);
 
     protected function appendAddr($path, $ip)

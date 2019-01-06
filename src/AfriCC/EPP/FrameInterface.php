@@ -17,9 +17,27 @@ namespace AfriCC\EPP;
  */
 interface FrameInterface
 {
+    /**
+     * Set value to path
+     *
+     * @param string $path
+     * @param mixed $value
+     *
+     * @return \DOMElement
+     */
     public function set($path, $value);
 
+    /**
+     * Get value from path
+     *
+     * @param string $query
+     *
+     * @return string|bool|\DOMNodeList
+     */
     public function get($query);
 
+    /**
+     * @return string
+     */
     public function __toString();
 }

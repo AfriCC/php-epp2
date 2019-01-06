@@ -28,6 +28,11 @@ abstract class AbstractFrame extends DOMDocument implements FrameInterface
     protected $mapping;
     protected $extension;
 
+    /**
+     * Construct (with import if specified) frame
+     *
+     * @param DOMDocument $import
+     */
     public function __construct($import = null)
     {
         parent::__construct('1.0', 'UTF-8');
@@ -50,6 +55,11 @@ abstract class AbstractFrame extends DOMDocument implements FrameInterface
         $this->getStructure();
     }
 
+    /**
+     * {@inheritdoc}
+     *
+     * @see \AfriCC\EPP\FrameInterface::set()
+     */
     public function set($path = null, $value = null)
     {
         $path = $this->realxpath($path);
@@ -65,6 +75,11 @@ abstract class AbstractFrame extends DOMDocument implements FrameInterface
         return $this->nodes[$path];
     }
 
+    /**
+     * {@inheritdoc}
+     *
+     * @see \AfriCC\EPP\FrameInterface::get()
+     */
     public function get($query)
     {
         $nodes = $this->xpath->query($query);
@@ -86,18 +101,32 @@ abstract class AbstractFrame extends DOMDocument implements FrameInterface
         }
     }
 
+    /**
+     * {@inheritdoc}
+     *
+     * @see \AfriCC\EPP\FrameInterface::__toString()
+     */
     public function __toString()
     {
         return $this->saveXML();
     }
 
+    /**
+     * Create nodes specified by path
+     *
+     * @param string $path
+     *
+     * @throws Exception
+     *
+     * @return null|string
+     */
     protected function createNodes($path)
     {
         $path_parts = explode('/', $path);
         $node_path = null;
 
         for ($i = 0, $limit = count($path_parts); $i < $limit; ++$i) {
-            $attr_name = $attr_value = null;
+            $attr_name = $attr_value = $matches = null;
 
             // if no namespace given, use root-namespace
             if (strpos($path_parts[$i], ':') === false) {
@@ -123,12 +152,11 @@ abstract class AbstractFrame extends DOMDocument implements FrameInterface
                 ++$next_key;
                 $path_parts[$i] = sprintf('%s:%s[%d]', $node_ns, $node_name, $next_key);
             }
-            // direct node-array access
             if (preg_match('/^(.*)\[(\d+)\]$/', $node_name, $matches)) {
+                // direct node-array access
                 $node_name = $matches[1];
-            }
-            // check if attribute needs to be set
-            elseif (preg_match('/^(.*)\[@([a-z0-9]+)=\'([a-z0-9_]+)\'\]$/i', $node_name, $matches)) {
+            } elseif (preg_match('/^(.*)\[@([a-z0-9]+)=\'([a-z0-9_]+)\'\]$/i', $node_name, $matches)) {
+                // check if attribute needs to be set
                 $node_name = $matches[1];
                 $attr_name = $matches[2];
                 $attr_value = $matches[3];
@@ -146,7 +174,7 @@ abstract class AbstractFrame extends DOMDocument implements FrameInterface
                 throw new Exception(sprintf('unknown namespace: %s', $node_ns));
             }
 
-            // create node (but don't explicitely define root-node)
+            // create node (but don't explicitly define root-node)
             if ($node_ns === 'epp') {
                 $this->nodes[$node_path] = $this->createElementNS($node_xmlns, $node_name);
             } else {
@@ -170,13 +198,19 @@ abstract class AbstractFrame extends DOMDocument implements FrameInterface
         return $node_path;
     }
 
+    /**
+     * Get Real XPath for provided path
+     *
+     * @param string $path
+     *
+     * @return string
+     */
     protected function realxpath($path)
     {
         if ($path === null) {
             $path_parts = [];
-        }
-        // absolute path
-        elseif (isset($path[1]) && $path[0] === '/' && $path[1] === '/') {
+        } elseif (isset($path[1]) && $path[0] === '/' && $path[1] === '/') {
+            // absolute path
             return substr($path, 2);
         } else {
             $path_parts = explode('/', $path);
@@ -237,6 +271,13 @@ abstract class AbstractFrame extends DOMDocument implements FrameInterface
         }
     }
 
+    /**
+     * Get Class name from full class
+     *
+     * @param string $class
+     *
+     * @return string
+     */
     private function className($class)
     {
         if (!is_string($class)) {

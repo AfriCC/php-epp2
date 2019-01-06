@@ -12,15 +12,21 @@ class DomainUpdateTest extends TestCase
     {
         $frame = new Domain();
         $frame->setDomain(TEST_DOMAIN);
-        $frame->addAdminContact('ADMIN-1');
+        $frame->addAdminContact('ADMIN-2');
         $frame->addTechContact('TECH-2');
+        $frame->addBillingContact('BILL-2');
+        $frame->removeAdminContact('ADMIN-1');
+        $frame->removeTechContact('TECH-1');
+        $frame->removeBillingContact('BILL-1');
         $frame->addHostObj('ns1.' . TEST_DOMAIN);
         $frame->addHostAttr('ns2.' . TEST_DOMAIN, [
             '8.8.8.8',
             '2a00:1450:4009:809::100e',
         ]);
-        $frame->removeHostAttr('ns3.' . TEST_DOMAIN);
+        $frame->removeHostObj('ns3.' . TEST_DOMAIN);
+        $frame->removeHostAttr('ns4.' . TEST_DOMAIN);
         $frame->addStatus('clientHold', 'Payment overdue.');
+        $frame->removeStatus('clientDeleteProhibited');
         $auth = $frame->changeAuthInfo();
 
         $this->assertXmlStringEqualsXmlString(
@@ -31,8 +37,9 @@ class DomainUpdateTest extends TestCase
                   <domain:update xmlns:domain="urn:ietf:params:xml:ns:domain-1.0">
                     <domain:name>' . TEST_DOMAIN . '</domain:name>
                     <domain:add>
-                      <domain:contact type="admin">ADMIN-1</domain:contact>
+                      <domain:contact type="admin">ADMIN-2</domain:contact>
                       <domain:contact type="tech">TECH-2</domain:contact>
+                      <domain:contact type="billing">BILL-2</domain:contact>
                       <domain:ns>
                         <domain:hostObj>ns1.' . TEST_DOMAIN . '</domain:hostObj>
                         <domain:hostAttr>
@@ -44,11 +51,16 @@ class DomainUpdateTest extends TestCase
                       <domain:status s="clientHold" lang="en">Payment overdue.</domain:status>
                     </domain:add>
                     <domain:rem>
+                      <domain:contact type="admin">ADMIN-1</domain:contact>
+                      <domain:contact type="tech">TECH-1</domain:contact>
+                      <domain:contact type="billing">BILL-1</domain:contact>
                       <domain:ns>
+                        <domain:hostObj>ns3.' . TEST_DOMAIN . '</domain:hostObj>
                         <domain:hostAttr>
-                          <domain:hostName>ns3.' . TEST_DOMAIN . '</domain:hostName>
+                          <domain:hostName>ns4.' . TEST_DOMAIN . '</domain:hostName>
                         </domain:hostAttr>
                       </domain:ns>
+                      <domain:status s="clientDeleteProhibited" />
                     </domain:rem>
                     <domain:chg>
                       <domain:authInfo>
@@ -62,6 +74,31 @@ class DomainUpdateTest extends TestCase
             ',
             (string) $frame
         );
+    }
+
+    public function testDomainUpdateFrameChangeRegistrar()
+    {
+        $frame = new Domain();
+        $frame->setDomain(TEST_DOMAIN);
+        $frame->changeRegistrant('C005');
+
+        $this->assertXmlStringEqualsXmlString(
+            '<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+            <epp xmlns="urn:ietf:params:xml:ns:epp-1.0">
+              <command>
+                <update>
+                  <domain:update xmlns:domain="urn:ietf:params:xml:ns:domain-1.0">
+                    <domain:name>' . TEST_DOMAIN . '</domain:name>
+                    <domain:chg>
+                      <domain:registrant>C005</domain:registrant>
+                    </domain:chg>
+                  </domain:update>
+                </update>
+              </command>
+            </epp>
+            ',
+            (string) $frame
+            );
     }
 
     public function testDomainUpdateFrameDNSSecdsData()

@@ -48,4 +48,23 @@ class DomainRenewTest extends TestCase
             }
         }
     }
+
+    public function testDomainRenewFrameInvalidPeriod()
+    {
+        $frame = new Domain();
+        $frame->setDomain(TEST_DOMAIN);
+
+        if (method_exists($this, 'expectException')) {
+            $this->expectException(Exception::class);
+            $frame->setCurrentExpirationDate('2017-04-25');
+            $frame->setPeriod('1');
+        } else {
+            try {
+                $frame->setCurrentExpirationDate('2017-04-25');
+                $frame->setPeriod('1');
+            } catch (Exception $e) {
+                $this->assertEquals('Exception', get_class($e));
+            }
+        }
+    }
 }
