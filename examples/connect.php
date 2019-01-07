@@ -30,3 +30,5 @@ try {
 }
 
 $epp_client->close();
+
+echo $greeting;

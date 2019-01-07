@@ -11,6 +11,11 @@
             "email": "hello@afri.cc",
             "homepage": "https://www.afri.cc",
             "role": "Developer"
+		}, {
+			"name" : "Hubert Kowalski",
+			"email" : "h.kowalski@hakger.pl",
+			"homepage" : "https://www.hakger.pl",
+			"role" : "Contributor"
         }
     ],
     "require": {
@@ -18,12 +23,16 @@
         "ext-intl": "*",
         "ext-openssl": "*"
     },
+    "require-dev": {
+        "satooshi/php-coveralls": "^1.0"
+    },
     "autoload": {
         "psr-4": {
             "AfriCC\\": "src/AfriCC"
         }
     },
-    "require-dev": {
-        "satooshi/php-coveralls": "^1.0"
+	"suggests" : {
+		"ext-curl" : "Required if you wish to use HTTPClient",
+		"paragonie/random_compat" : "Better support for random_bytes on earlier PHP"
     }
 }

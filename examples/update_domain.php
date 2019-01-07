@@ -20,3 +20,4 @@ $frame->addStatus('clientHold', 'Payment overdue.');
 $frame->removeHostAttr('ns3.google.com');
 $pw = $frame->changeAuthInfo();
 echo $frame;
+echo "Generated new authinfo: '$pw'\n";
