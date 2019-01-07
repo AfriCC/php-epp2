@@ -1,5 +1,26 @@
 # Changelog
 
+## dev-master - now
+
+### Changes
+
+- Updated code documentation (more contributions welcome)
+- Increased testing coverage
+- More detailed examples of using this library
+
+### Added
+
+- DNSSec dsData support in Domain classes ( @johnny-bit)
+- Introduced `HTTPClient` allowing EPP communication over HTTP(S) (@johnny-bit)
+- `AbstractClient` class and `ClientInterface` interface for ease of creating `Client` replacements(@johnny-bit)
+- NASK Extension - a full Polish domain registry support
+
+### Fixed
+
+- RFC5733 compatibility enhancements (added `extension` to voice and fax) for Contact calls(@johnny-bit)
+- Removed coverage checks from non-testable classes
+- Incorrect file permissions (execute bit) on source files
+
 ## 1.0.0 - 2018-12-23
 
 ### Changes
