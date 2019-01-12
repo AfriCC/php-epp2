@@ -22,11 +22,18 @@ use Exception;
 abstract class AbstractFrame extends DOMDocument implements FrameInterface
 {
     protected $xpath;
+    /**
+     * @var \DOMElement[]
+     */
     protected $nodes;
     protected $format;
     protected $command;
     protected $mapping;
     protected $extension;
+    /**
+     * @var bool whether to ignore command part when building realxpath
+     */
+    protected $ignore_command = false;
 
     /**
      * Construct (with import if specified) frame
@@ -152,6 +159,7 @@ abstract class AbstractFrame extends DOMDocument implements FrameInterface
                 ++$next_key;
                 $path_parts[$i] = sprintf('%s:%s[%d]', $node_ns, $node_name, $next_key);
             }
+
             if (preg_match('/^(.*)\[(\d+)\]$/', $node_name, $matches)) {
                 // direct node-array access
                 $node_name = $matches[1];
@@ -220,7 +228,7 @@ abstract class AbstractFrame extends DOMDocument implements FrameInterface
             array_unshift($path_parts, $this->mapping . ':' . $this->command);
         }
 
-        if (!empty($this->command)) {
+        if (!empty($this->command) && !$this->ignore_command) {
             array_unshift($path_parts, 'epp:' . $this->command);
         }
 

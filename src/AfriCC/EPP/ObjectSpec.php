@@ -40,10 +40,10 @@ class ObjectSpec
 
     public static function xmlns($object)
     {
-        if (!isset(self::$specs[$object]['xmlns'])) {
+        if (!isset(static::$specs[$object]['xmlns'])) {
             return false;
         }
 
-        return self::$specs[$object]['xmlns'];
+        return static::$specs[$object]['xmlns'];
     }
 }
