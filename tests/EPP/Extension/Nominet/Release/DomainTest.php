@@ -11,7 +11,7 @@ class DomainTest extends TestCase
     {
         $tag = 'EXAMPLE-TAG';
 
-        $frame = new DomainRelease;
+        $frame = new DomainRelease();
         $frame->setDomain(TEST_DOMAIN);
         $frame->setRegistrarTag('EXAMPLE-TAG');
 

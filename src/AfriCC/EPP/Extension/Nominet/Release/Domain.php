@@ -11,8 +11,8 @@
 
 namespace App\EPP\Extension\Nominet\Release;
 
-use AfriCC\EPP\Frame\Command\Update as UpdateCommand;
 use AfriCC\EPP\ExtensionInterface as Extension;
+use AfriCC\EPP\Frame\Command\Update as UpdateCommand;
 use AfriCC\EPP\Validator;
 use Exception;
 
