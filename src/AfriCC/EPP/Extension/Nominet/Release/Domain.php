@@ -9,7 +9,7 @@
  * that was distributed with this source code.
  */
 
-namespace App\EPP\Extension\Nominet\Release;
+namespace AfriCC\EPP\Extension\Nominet\Release;
 
 use AfriCC\EPP\ExtensionInterface as Extension;
 use AfriCC\EPP\Frame\Command\Update as UpdateCommand;
