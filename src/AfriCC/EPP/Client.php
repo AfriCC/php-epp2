@@ -39,7 +39,7 @@ class Client extends AbstractClient implements ClientInterface
             $this->chunk_size = 1024;
         }
 
-        if (isset($config['verify_peer_name'])) {
+        if (isset($config['verify_peer_name'])) {
             $this->verify_peer_name = (bool) $config['verify_peer_name'];
         } else {
             $this->verify_peer_name = true;
