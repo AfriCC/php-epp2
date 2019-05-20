@@ -111,7 +111,7 @@ class Client
         }
 
         if (isset($config['verify_peer_name'])) {
-            $this->verify_peer_name = (bool) $config['verify_peer_name'];
+            $this->verify_peer_name = boolvar($config['verify_peer_name']);
         } else {
             $this->verify_peer_name = true;
         }
