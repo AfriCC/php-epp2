@@ -1,8 +1,8 @@
 <?php
 
-namespace AfriCC\Tests\EPP\Extension\NicIt\Create;
+namespace AfriCC\Tests\EPP\Extension\NicIT\Create;
 
-use AfriCC\EPP\Extension\NicIt\Create\Contact;
+use AfriCC\EPP\Extension\NicIT\Create\Contact;
 use PHPUnit\Framework\TestCase;
 
 class ContactTest extends TestCase

@@ -1,8 +1,8 @@
 <?php
 
-namespace AfriCC\Tests\EPP\Extension\NicIt\Transfer;
+namespace AfriCC\Tests\EPP\Extension\NicIT\Transfer;
 
-use AfriCC\EPP\Extension\NicIt\Transfer\Domain;
+use AfriCC\EPP\Extension\NicIT\Transfer\Domain;
 use PHPUnit\Framework\TestCase;
 
 class DomainTest extends TestCase
