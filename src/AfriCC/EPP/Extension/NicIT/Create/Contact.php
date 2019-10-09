@@ -15,7 +15,6 @@ use AfriCC\EPP\ExtensionInterface as Extension;
 use AfriCC\EPP\Frame\Command\Create\Contact as ContactCreate;
 use AfriCC\EPP\Validator;
 
-
 class Contact extends ContactCreate implements Extension
 {
     protected $extension = 'extcon';
@@ -46,15 +45,15 @@ class Contact extends ContactCreate implements Extension
         if (!in_array($entityType, self::$entityTypes)) {
             throw new Exception(sprintf('the entity type: \'%s\' is invalid', $entityType));
         }
-        $this->set('//epp:epp/epp:command/epp:extension/extcon:create/extcon:registrant/extcon:entityType:', $entityType);
+        $this->set('//epp:epp/epp:command/epp:extension/extcon:create/extcon:registrant/extcon:entityType', $entityType);
 
         if ($nationalityCode != '' && !Validator::isCountryCode($nationalityCode)) {
             throw new Exception(sprintf('the country-code: \'%s\' is unknown', $nationalityCode));
         }
-        $this->set('//epp:epp/epp:command/epp:extension/extcon:create/extcon:registrant/extcon:nationalityCode:', $nationalityCode);
+        $this->set('//epp:epp/epp:command/epp:extension/extcon:create/extcon:registrant/extcon:nationalityCode', $nationalityCode);
 
         if ($regCode != '') {
-            $this->set('//epp:epp/epp:command/epp:extension/extcon:create/extcon:registrant/extcon:regCode:', $regCode);
+            $this->set('//epp:epp/epp:command/epp:extension/extcon:create/extcon:registrant/extcon:regCode', $regCode);
         }
     }
 }
