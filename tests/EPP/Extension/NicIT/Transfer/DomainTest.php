@@ -5,7 +5,7 @@ namespace AfriCC\Tests\EPP\Extension\NicIt\Transfer;
 use AfriCC\EPP\Extension\NicIt\Transfer\Domain;
 use PHPUnit\Framework\TestCase;
 
-class DomainTransferTest extends TestCase
+class DomainTest extends TestCase
 {
     public function testDomainTransferFrame()
     {

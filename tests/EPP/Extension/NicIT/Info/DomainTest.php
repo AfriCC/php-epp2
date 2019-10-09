@@ -9,7 +9,7 @@ class DomainTest extends TestCase
 {
     public function testNicItInfoDomainFrame()
     {
-        $frame = new InfoDomain();
+        $frame = new Domain();
         $frame->setDomain(TEST_DOMAIN);
         $frame->setInfContacts('all');
 
