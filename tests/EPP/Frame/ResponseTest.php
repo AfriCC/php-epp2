@@ -2,7 +2,6 @@
 
 namespace AfriCC\Tests\EPP\Frame;
 
-use AfriCC\EPP\Frame\Response;
 use AfriCC\EPP\Frame\Response\MessageQueue;
 use AfriCC\EPP\Frame\ResponseFactory;
 use PHPUnit\Framework\TestCase;
