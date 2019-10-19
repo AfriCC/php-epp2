@@ -2,7 +2,6 @@
 
 namespace AfriCC\Tests\EPP\Frame;
 
-use AfriCC\EPP\Frame\Response;
 use AfriCC\EPP\Frame\Response\MessageQueue;
 use AfriCC\EPP\Frame\ResponseFactory;
 use PHPUnit\Framework\TestCase;
@@ -223,5 +222,41 @@ class ResponseTest extends TestCase
         $this->assertFalse($response->success());
         $this->assertNull($response->clientTransactionId());
         $this->assertNull($response->serverTransactionId());
+    }
+
+    public function testInvalidResponse()
+    {
+        $not_found = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head><title>404 Not Found</title></head>
+<body>  Requested resource was not found</body>
+</html>';
+        $response = ResponseFactory::build($not_found);
+
+        $this->assertEquals($response, $not_found);
+    }
+
+    public function testEmptyResponse()
+    {
+        $empty_epp = '<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+            <epp xmlns="urn:ietf:params:xml:ns:epp-1.0">
+            </epp>';
+        $response = ResponseFactory::build($empty_epp);
+
+        $this->assertEquals($response, $empty_epp);
+    }
+
+    public function testWeirdResponse()
+    {
+        $empty_epp = '<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+            <epp xmlns="urn:ietf:params:xml:ns:epp-1.0">
+<invalid>
+invalid_request
+</invalid>
+            </epp>';
+        $response = ResponseFactory::build($empty_epp);
+
+        $this->assertEquals($response, $empty_epp);
     }
 }
