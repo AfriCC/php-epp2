@@ -43,6 +43,9 @@ class Random
      */
     public static function auth($len)
     {
+        // All code bellow does the same - generate as safe as possible random string
+        // no need for full coverage test ;)
+        // @codeCoverageIgnoreStart
         if (function_exists('random_bytes')) {
             $randomBytes = random_bytes($len);
         } elseif (function_exists('openssl_random_pseudo_bytes')) {
@@ -50,6 +53,7 @@ class Random
         } else {
             $randomBytes = mcrypt_create_iv($len, MCRYPT_DEV_URANDOM);
         }
+        // @codeCoverageIgnoreEnd
 
         $randomBytes = base64_encode($randomBytes);
 
