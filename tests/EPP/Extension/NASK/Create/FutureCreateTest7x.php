@@ -7,7 +7,7 @@ use AfriCC\EPP\Extension\NASK\ObjectSpec;
 use Exception;
 use PHPUnit\Framework\TestCase;
 
-class FutureCreateTest extends TestCase
+class FutureCreateTest7x extends TestCase
 {
     /**
      * Prepares the environment before running a test.

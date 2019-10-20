@@ -7,7 +7,7 @@ use AfriCC\EPP\Extension\NASK\Update\Domain;
 use Exception;
 use PHPUnit\Framework\TestCase;
 
-class DomainUpdateTest extends TestCase
+class DomainUpdateTest5x extends TestCase
 {
     /**
      * Prepares the environment before running a test.

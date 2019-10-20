@@ -7,7 +7,7 @@ use AfriCC\EPP\Extension\NASK\ObjectSpec;
 use Exception;
 use PHPUnit\Framework\TestCase;
 
-class DomainCreateTest extends TestCase
+class DomainCreateTest5x extends TestCase
 {
     /**
      * Prepares the environment before running a test.

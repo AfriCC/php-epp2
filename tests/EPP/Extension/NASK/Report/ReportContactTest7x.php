@@ -6,7 +6,7 @@ use AfriCC\EPP\Extension\NASK\ObjectSpec;
 use AfriCC\EPP\Extension\NASK\Report\Contact as Report;
 use PHPUnit\Framework\TestCase;
 
-class ReportContactTest extends TestCase
+class ReportContactTest7x extends TestCase
 {
     public function setUp(): void
     {

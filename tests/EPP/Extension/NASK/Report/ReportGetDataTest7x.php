@@ -6,7 +6,7 @@ use AfriCC\EPP\Extension\NASK\ObjectSpec;
 use AfriCC\EPP\Extension\NASK\Report\GetData as Report;
 use PHPUnit\Framework\TestCase;
 
-class ReportGetDataTest extends TestCase
+class ReportGetDataTest7x extends TestCase
 {
     public function setUp(): void
     {

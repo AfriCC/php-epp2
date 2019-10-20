@@ -6,12 +6,12 @@ use AfriCC\EPP\Extension\NASK\Create\Contact;
 use AfriCC\EPP\Extension\NASK\ObjectSpec;
 use PHPUnit\Framework\TestCase;
 
-class ContactCreateTest extends TestCase
+class ContactCreateTest7x extends TestCase
 {
     /**
      * Prepares the environment before running a test.
      */
-    protected function setUp():void
+    protected function setUp(): void
     {
         parent::setUp();
         ObjectSpec::overwriteParent();

@@ -6,7 +6,7 @@ use AfriCC\EPP\Extension\NASK\ObjectSpec;
 use AfriCC\EPP\Extension\NASK\Report\Cancel as Report;
 use PHPUnit\Framework\TestCase;
 
-class ReportCancelTest extends TestCase
+class ReportCancelTest5x extends TestCase
 {
     public function setUp()
     {

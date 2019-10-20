@@ -10,7 +10,7 @@ use PHPUnit\Framework\TestCase;
 /**
  * Future test case.
  */
-class FutureCheckTest extends TestCase
+class FutureCheckTest5x extends TestCase
 {
     /**
      * Prepares the environment before running a test.

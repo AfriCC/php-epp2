@@ -7,7 +7,7 @@ use AfriCC\EPP\Extension\NASK\Update\Future;
 use Exception;
 use PHPUnit\Framework\TestCase;
 
-class FutureUpdateTest extends TestCase
+class FutureUpdateTest5x extends TestCase
 {
     /**
      * Prepares the environment before running a test.

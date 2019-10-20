@@ -9,7 +9,7 @@ use PHPUnit\Framework\TestCase;
 /**
  * @backupStaticAttributes enabled
  */
-class ReportTest extends TestCase
+class ReportTest5x extends TestCase
 {
     public function setUp()
     {

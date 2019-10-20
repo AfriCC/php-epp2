@@ -6,7 +6,7 @@ use AfriCC\EPP\Extension\NASK\ObjectSpec;
 use AfriCC\EPP\Extension\NASK\Report\Future as Report;
 use PHPUnit\Framework\TestCase;
 
-class ReportFutureTest extends TestCase
+class ReportFutureTest5x extends TestCase
 {
     public function setUp()
     {

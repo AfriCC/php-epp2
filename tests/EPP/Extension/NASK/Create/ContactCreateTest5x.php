@@ -6,7 +6,7 @@ use AfriCC\EPP\Extension\NASK\Create\Contact;
 use AfriCC\EPP\Extension\NASK\ObjectSpec;
 use PHPUnit\Framework\TestCase;
 
-class ContactCreateTest extends TestCase
+class ContactCreateTest5x extends TestCase
 {
     /**
      * Prepares the environment before running a test.

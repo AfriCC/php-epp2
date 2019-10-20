@@ -6,7 +6,7 @@ use AfriCC\EPP\Extension\NASK\ObjectSpec;
 use AfriCC\EPP\Extension\NASK\Report\Domain as Report;
 use PHPUnit\Framework\TestCase;
 
-class ReportDomainTest extends TestCase
+class ReportDomainTest7x extends TestCase
 {
     public function setUp(): void
     {

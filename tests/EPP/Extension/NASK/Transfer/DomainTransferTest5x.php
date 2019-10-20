@@ -6,7 +6,7 @@ use AfriCC\EPP\Extension\NASK\ObjectSpec;
 use AfriCC\EPP\Extension\NASK\Transfer\Domain;
 use PHPUnit\Framework\TestCase;
 
-class DomainTransferTest extends TestCase
+class DomainTransferTest5x extends TestCase
 {
     /**
      * Prepares the environment before running a test.

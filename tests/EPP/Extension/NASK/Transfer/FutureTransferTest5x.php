@@ -7,7 +7,7 @@ use AfriCC\EPP\Extension\NASK\Transfer\Future;
 use Exception;
 use PHPUnit\Framework\TestCase;
 
-class FutureTransferTest extends TestCase
+class FutureTransferTest5x extends TestCase
 {
     /**
      * Prepares the environment before running a test.

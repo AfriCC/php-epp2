@@ -6,7 +6,7 @@ use AfriCC\EPP\Extension\NASK\ObjectSpec;
 use AfriCC\EPP\Extension\NASK\Renew\Domain;
 use PHPUnit\Framework\TestCase;
 
-class DomainRenewTest extends TestCase
+class DomainRenewTest7x extends TestCase
 {
     /**
      * Prepares the environment before running a test.

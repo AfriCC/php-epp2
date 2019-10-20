@@ -6,7 +6,7 @@ use AfriCC\EPP\Extension\NASK\Info\Contact;
 use AfriCC\EPP\Extension\NASK\ObjectSpec;
 use PHPUnit\Framework\TestCase;
 
-class ContactInfoTest extends TestCase
+class ContactInfoTest5x extends TestCase
 {
     /**
      * Prepares the environment before running a test.

@@ -6,7 +6,7 @@ use AfriCC\EPP\Extension\NASK\ObjectSpec;
 use AfriCC\EPP\Extension\NASK\Report\Host as Report;
 use PHPUnit\Framework\TestCase;
 
-class ReportHostTest extends TestCase
+class ReportHostTest7x extends TestCase
 {
     public function setUp(): void
     {
