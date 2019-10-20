@@ -12,6 +12,8 @@
     <testsuites>
         <testsuite name="AfriCC/EPP Test Suite">
             <directory suffix="Test.php">./tests</directory>
+            <directory suffix="Test5x.php" phpVersion="7.1.0" phpVersionOperator="&lt;">./tests</directory>
+            <directory suffix="Test7x.php" phpVersion="7.1.0" phpVersionOperator=">=">./tests</directory>
         </testsuite>
     </testsuites>
     <filter>

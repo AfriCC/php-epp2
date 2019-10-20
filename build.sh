@@ -14,8 +14,9 @@ consolelog 'composer install'
 composer install \
   --no-interaction \
   --prefer-dist \
-  --no-suggest \
-  &> /dev/null
+  --no-suggest
+# \
+#  &> /dev/null
 
 consolelog 'install phpunit'
 # switch phpunit version depending on php version
