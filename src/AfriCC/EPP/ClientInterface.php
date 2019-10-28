@@ -10,7 +10,6 @@ namespace AfriCC\EPP;
  *
  * @see http://tools.ietf.org/html/rfc5734
  * @see AbstractClient
- *
  */
 interface ClientInterface
 {

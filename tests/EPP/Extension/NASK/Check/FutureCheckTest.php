@@ -12,7 +12,6 @@ use PHPUnit\Framework\TestCase;
  */
 class FutureCheckTest extends TestCase
 {
-
     /**
      * Tests Future->addFuture()
      */

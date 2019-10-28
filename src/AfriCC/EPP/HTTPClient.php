@@ -3,7 +3,6 @@
 namespace AfriCC\EPP;
 
 use AfriCC\EPP\Frame\Command\Logout as LogoutCommand;
-use AfriCC\EPP\Frame\ResponseFactory;
 
 /**
  * A high level HTTP(S) based client for the Extensible Provisioning Protocol (EPP)

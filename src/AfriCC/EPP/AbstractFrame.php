@@ -56,21 +56,21 @@ abstract class AbstractFrame extends DOMDocument implements FrameInterface
         $objectSpec = null;
 
         $num = func_num_args();
-        if($num>2){
-            throw new Exception("Too many arguments");
+        if ($num > 2) {
+            throw new Exception('Too many arguments');
         }
 
         $args = func_get_args();
-        foreach($args as $arg){
-            if($arg instanceof \DOMDocument){
+        foreach ($args as $arg) {
+            if ($arg instanceof \DOMDocument) {
                 $import = $arg;
             }
-            if($arg instanceof ObjectSpec){
+            if ($arg instanceof ObjectSpec) {
                 $objectSpec = $arg;
             }
         }
 
-        if(\is_null($objectSpec)){
+        if (\is_null($objectSpec)) {
             $objectSpec = new ObjectSpec();
         }
 

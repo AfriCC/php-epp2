@@ -7,8 +7,8 @@ ini_set('display_errors', true);
 chdir(__DIR__);
 
 require './_autoload.php';
-use AfriCC\EPP\Extension\NASK\Renew\Future as RenewFuture;
 use AfriCC\EPP\Extension\NASK\ObjectSpec as NASKObjectSpec;
+use AfriCC\EPP\Extension\NASK\Renew\Future as RenewFuture;
 
 $frame = new RenewFuture(new NASKObjectSpec());
 $frame->setFuture('example.pl');

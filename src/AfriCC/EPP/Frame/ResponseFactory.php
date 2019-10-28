@@ -11,8 +11,8 @@
 
 namespace AfriCC\EPP\Frame;
 
-use AfriCC\EPP\ObjectSpec;
 use AfriCC\EPP\Frame\Response\MessageQueue;
+use AfriCC\EPP\ObjectSpec;
 use DOMDocument;
 use DOMXPath;
 
@@ -35,7 +35,7 @@ class ResponseFactory
 
         $xpath = new DOMXPath($xml);
 
-        if(is_null($objectSpec)){
+        if (is_null($objectSpec)) {
             $objectSpec = new ObjectSpec();
         }
 

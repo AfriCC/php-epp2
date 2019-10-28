@@ -8,7 +8,6 @@ use PHPUnit\Framework\TestCase;
 
 class ContactUpdateTest extends TestCase
 {
-
     public function testContactUpdateIndividual()
     {
         $frame = new Contact(new NASKObjectSpec());

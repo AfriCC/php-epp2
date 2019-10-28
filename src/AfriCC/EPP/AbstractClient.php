@@ -51,7 +51,7 @@ abstract class AbstractClient implements ClientInterface
      * Send frame to EPP server
      *
      * @param FrameInterface $frame Frame to send
-     * @return void Doesn't return!
+     *
      * @throws Exception on send error
      */
     abstract protected function sendFrame(FrameInterface $frame);
@@ -59,8 +59,9 @@ abstract class AbstractClient implements ClientInterface
     /**
      * Get response frame from EPP server (use after sendFrame)
      *
-     * @return string raw XML of EPP Frame
      * @throws Exception on frame receive error
+     *
+     * @return string raw XML of EPP Frame
      */
     abstract protected function getFrame();
 
@@ -87,7 +88,7 @@ abstract class AbstractClient implements ClientInterface
             $this->debug = false;
         }
 
-        if(is_null($objectSpec)){
+        if (is_null($objectSpec)) {
             $objectSpec = new ObjectSpec();
         }
 

@@ -7,8 +7,8 @@ ini_set('display_errors', true);
 chdir(__DIR__);
 
 require './_autoload.php';
-use AfriCC\EPP\Extension\NASK\Report;
 use AfriCC\EPP\Extension\NASK\ObjectSpec as NASKObjectSpec;
+use AfriCC\EPP\Extension\NASK\Report;
 
 $frame = new Report(new NASKObjectSpec());
 $frame->setOffset(0);

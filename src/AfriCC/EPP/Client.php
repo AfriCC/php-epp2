@@ -12,7 +12,6 @@
 namespace AfriCC\EPP;
 
 use AfriCC\EPP\Frame\Command\Logout as LogoutCommand;
-use AfriCC\EPP\Frame\ResponseFactory;
 use Exception;
 
 /**

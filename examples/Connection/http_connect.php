@@ -8,9 +8,9 @@ chdir(__DIR__);
 
 require '../../vendor/autoload.php';
 
-use AfriCC\EPP\HTTPClient as EPPClient;
-use \AfriCC\EPP\Extension\NASK\ObjectSpec as NASKObjectSpec;
+use AfriCC\EPP\Extension\NASK\ObjectSpec as NASKObjectSpec;
 use AfriCC\EPP\Frame\Command\Poll;
+use AfriCC\EPP\HTTPClient as EPPClient;
 
 $objectSpec = new NASKObjectSpec();
 $config = [
@@ -38,22 +38,22 @@ try {
 
     $response = $epp_client->request($frame);
 
-    while($response->success() && $response->code() !== 1300 ){ // 1300 = result successful, no more mesages
+    while ($response->success() && $response->code() !== 1300) { // 1300 = result successful, no more mesages
 
-        echo "Epp Poll message ID: ";
+        echo 'Epp Poll message ID: ';
         echo $response->queueId();
         echo "\n";
-        echo "Epp Poll Message: ";
+        echo 'Epp Poll Message: ';
         echo $response->queueMessage();
 
         $ackFrame = new Poll($epp_client->getObjectSpec());
         $ackFrame->ack($response->queueId());
         $ackResponse = $epp_client->request($ackFrame);
-        if(!$ackResponse->success()){
+        if (!$ackResponse->success()) {
             echo "Couldn't ACK poll message\n";
             break; // no ack!
         }
-        $response= $client->request($frame); //reuse already existing poll request frame
+        $response = $client->request($frame); //reuse already existing poll request frame
     }
 } catch (Exception $e) {
     echo $e->getMessage() . PHP_EOL;
