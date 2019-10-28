@@ -132,6 +132,9 @@ EOF;
         $this->AssertInstanceOf(\DOMNodeList::class, $return);
     }
 
+    /**
+     * @requires PHP 5.6
+     */
     public function testNonExistingXmlns()
     {
         $stub = $this->getMockForAbstractClass(AbstractFrame::class);
