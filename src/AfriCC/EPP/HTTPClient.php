@@ -143,13 +143,13 @@ class HTTPClient extends AbstractClient implements ClientInterface
         return false;
     }
 
-    protected function sendFrame(FrameInterface $frame)
+    public function sendFrame(FrameInterface $frame)
     {
         $content = (string) $frame;
         curl_setopt($this->curl, CURLOPT_POSTFIELDS, $content);
     }
 
-    protected function getFrame()
+    public function getFrame()
     {
         $return = curl_exec($this->curl);
 

@@ -161,7 +161,7 @@ class Client extends AbstractClient implements ClientInterface
         return false;
     }
 
-    protected function getFrame()
+    public function getFrame()
     {
         $header = $this->recv(4);
 
@@ -178,7 +178,7 @@ class Client extends AbstractClient implements ClientInterface
         }
     }
 
-    protected function sendFrame(FrameInterface $frame)
+    public function sendFrame(FrameInterface $frame)
     {
         $buffer = (string) $frame;
         $header = pack('N', mb_strlen($buffer, 'ASCII') + 4);

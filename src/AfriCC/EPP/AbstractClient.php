@@ -54,7 +54,7 @@ abstract class AbstractClient implements ClientInterface
      *
      * @throws Exception on send error
      */
-    abstract protected function sendFrame(FrameInterface $frame);
+    abstract public function sendFrame(FrameInterface $frame);
 
     /**
      * Get response frame from EPP server (use after sendFrame)
@@ -63,7 +63,7 @@ abstract class AbstractClient implements ClientInterface
      *
      * @return string raw XML of EPP Frame
      */
-    abstract protected function getFrame();
+    abstract public function getFrame();
 
     public function request(FrameInterface $frame)
     {

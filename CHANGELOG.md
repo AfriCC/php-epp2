@@ -8,7 +8,6 @@
 - Increased testing coverage
 - More detailed examples of using this library
 - All frame objects now accept ObjectSpec as dependency in order to fix static ObjectSpec problems (eg inability to have custom namespaces). This isn't breaking since without ObjectSpec being passed, default one is used
-- `get/sendFrame` are now protected methods in `Client` classes (_breaking_)
 
 ### Added
 

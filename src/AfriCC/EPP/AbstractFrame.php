@@ -43,8 +43,9 @@ abstract class AbstractFrame extends DOMDocument implements FrameInterface
     /**
      * Construct (with import if specified) frame
      *
-     * @param DOMDocument $import
-     * @param ObjectSpec $objectSpec
+     * Pass a DOMDocument instance to have it imported as a frame.
+     * Pass an ObjectSpec instance to have it set as used ObjectSpec
+     * More arguments will be ignored and only the last one will be used.
      */
     public function __construct()
     {
@@ -53,43 +54,49 @@ abstract class AbstractFrame extends DOMDocument implements FrameInterface
         $this->formatOutput = true;
 
         $import = null;
-        $objectSpec = null;
 
-        $num = func_num_args();
-        if ($num > 2) {
-            throw new Exception('Too many arguments');
-        }
-
-        $args = func_get_args();
+        $args = \func_get_args();
         foreach ($args as $arg) {
-            if ($arg instanceof \DOMDocument) {
+            if ($arg instanceof DOMDocument) {
                 $import = $arg;
             }
             if ($arg instanceof ObjectSpec) {
-                $objectSpec = $arg;
+                $this->objectSpec = $arg;
             }
         }
 
-        if (\is_null($objectSpec)) {
-            $objectSpec = new ObjectSpec();
+        if (\is_null($this->objectSpec)) {
+            $this->objectSpec = new ObjectSpec();
         }
-
-        $this->objectSpec = $objectSpec;
 
         if ($import instanceof DOMDocument) {
-            $node = $this->importNode($import->documentElement, true);
-            $this->appendChild($node);
-
-            // register namespaces
-            $this->xpath = new DOMXPath($this);
-            foreach ($this->objectSpec->specs as $prefix => $spec) {
-                $this->xpath->registerNamespace($prefix, $spec['xmlns']);
-            }
-
-            $this->registerNodeClass('\DOMElement', '\AfriCC\EPP\DOM\DOMElement');
+            $this->import($import);
         }
 
+        $this->registerXpath();
+
+        $this->registerNodeClass('\DOMElement', '\AfriCC\EPP\DOM\DOMElement');
+
         $this->getStructure();
+    }
+
+    /**
+     * Import frame data
+     * @param \DOMDocument $import
+     */
+    private function import(DOMDocument $import)
+    {
+        $node = $this->importNode($import->documentElement, true);
+        $this->appendChild($node);
+    }
+
+    private function registerXpath()
+    {
+        // register namespaces
+        $this->xpath = new DOMXPath($this);
+        foreach ($this->objectSpec->specs as $prefix => $spec) {
+            $this->xpath->registerNamespace($prefix, $spec['xmlns']);
+        }
     }
 
     /**
