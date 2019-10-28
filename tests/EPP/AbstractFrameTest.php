@@ -3,9 +3,9 @@
 namespace AfriCC\Tests\EPP;
 
 use AfriCC\EPP\AbstractFrame;
-use PHPUnit\Framework\TestCase;
 use AfriCC\EPP\Frame\ResponseFactory;
 use AfriCC\EPP\ObjectSpec;
+use PHPUnit\Framework\TestCase;
 
 class AbstractFrameTest extends TestCase
 {
@@ -28,7 +28,7 @@ EOF;
         $import = ResponseFactory::build($raw_data);
         $stub = $this->getMockForAbstractClass(AbstractFrame::class, [$import]);
 
-        $this->assertXmlStringEqualsXmlString($import, (string)$stub);
+        $this->assertXmlStringEqualsXmlString($import, (string) $stub);
     }
 
     public function testImportSpec()
@@ -53,12 +53,12 @@ EOF;
         $import = ResponseFactory::build($raw_data, $objectSpec);
         $stub = $this->getMockForAbstractClass(AbstractFrame::class, [$import, $objectSpec]);
 
-        $this->assertXmlStringEqualsXmlString($import, (string)$stub);
+        $this->assertXmlStringEqualsXmlString($import, (string) $stub);
     }
 
     public function testExtensionName()
     {
-        $stub = $this->getMockForAbstractClass(AbstractFrame::class,[], 'MockFrame');
+        $stub = $this->getMockForAbstractClass(AbstractFrame::class, [], 'MockFrame');
 
         $this->assertEquals('mockframe', $stub->getExtensionName());
     }
@@ -141,5 +141,4 @@ EOF;
 
         $return = $stub->set('//epp:epp/notepp:response/');
     }
-
 }

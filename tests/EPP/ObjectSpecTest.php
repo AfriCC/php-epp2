@@ -3,8 +3,8 @@
 namespace AfriCC\Tests\EPP;
 
 use AfriCC\EPP\ObjectSpec;
-use PHPUnit\Framework\TestCase;
 use AfriCC\EPP\Random;
+use PHPUnit\Framework\TestCase;
 
 /**
  * ObjectSpec test case.
@@ -27,10 +27,9 @@ class ObjectSpecTest extends TestCase
     {
         $objectSpec = new ObjectSpec();
         $randomId = Random::auth(32);
-        while(isset($objectSpec->specs[$randomId])){
+        while (isset($objectSpec->specs[$randomId])) {
             $randomId = Random::auth(32); //make sure randomId is not in xmlns specs
         }
         $this->assertFalse($objectSpec->xmlns($randomId));
     }
 }
-

@@ -82,6 +82,7 @@ abstract class AbstractFrame extends DOMDocument implements FrameInterface
 
     /**
      * Import frame data
+     *
      * @param \DOMDocument $import
      */
     private function import(DOMDocument $import)
