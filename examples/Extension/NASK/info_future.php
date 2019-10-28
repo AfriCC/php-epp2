@@ -8,11 +8,9 @@ chdir(__DIR__);
 
 require './_autoload.php';
 use AfriCC\EPP\Extension\NASK\Info\Future as InfoFuture;
-use AfriCC\EPP\Extension\NASK\ObjectSpec;
+use AfriCC\EPP\Extension\NASK\ObjectSpec as NASKObjectSpec;
 
-ObjectSpec::overwriteParent();
-
-$frame = new InfoFuture();
+$frame = new InfoFuture(new NASKObjectSpec());
 $frame->setFuture('example.pl');
 $frame->setAuthInfo('2fooBAR');
 echo $frame;

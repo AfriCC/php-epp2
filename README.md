@@ -45,11 +45,12 @@ Features
     * [PSR-1](http://www.php-fig.org/psr/psr-1/), [PSR-2](http://www.php-fig.org/psr/psr-2/) & [PSR-4](http://www.php-fig.org/psr/psr-4/)
     * notice and warning free (find them, and I'll fix it!)
 * high-level usage (Plug & Play)
-* simplified client (auto login/logout, auto inject clTRID)
+* simplified client for socket and http(s) connections (auto login/logout, auto inject clTRID)
 * SSL (+local-cert)
 * XPath like setter to simplify the creation of complex XML structures
 * XML based responses for direct traversal via XPath
 * [RFC 5730](http://tools.ietf.org/html/rfc5730), [RFC 5731](http://tools.ietf.org/html/rfc5731), [RFC 5732](http://tools.ietf.org/html/rfc5732), [RFC 5733](http://tools.ietf.org/html/rfc5733), [RFC 5734](http://tools.ietf.org/html/rfc5734) & [RFC 3915](http://tools.ietf.org/html/rfc3915)
+* DNSSEC support [RFC 5910](http://tools.ietf.org/html/rfc5910)
 
 
 Install
@@ -119,7 +120,7 @@ require 'vendor/autoload.php';
 
 use AfriCC\EPP\Frame\Command\Create\Host as CreateHost;
 
-$frame = new CreateHost;
+$frame = new CreateHost();
 $frame->setHost('ns1.example.com');
 $frame->setHost('ns2.example.com');
 $frame->addAddr('8.8.8.8');
@@ -141,7 +142,7 @@ Method which will return an assoc array.
 use AfriCC\EPP\Frame\Command\Check\Domain as DomainCheck;
 use AfriCC\EPP\Frame\Response;
 
-$frame = new DomainCheck;
+$frame = new DomainCheck();
 $frame->addDomain('example.org');
 $frame->addDomain('example.net');
 $frame->addDomain('example.com');
@@ -170,12 +171,95 @@ foreach ($data['chkData']['cd'] as $cd) {
     printf('Domain: %s, available: %d' . PHP_EOL, $cd['name'], $cd['@name']['avail']);
 }
 ```
+### Custom ObjectSpec
 
+If registrar you're working with uses custom namespace names (eg NASK) you can 
+use custom ObjectSpec. Clients always use specified ObjectSpec when decoding
+responses from EPP server.
+
+You can use this feature as follows:
+
+```php
+use AfriCC\EPP\HTTPClient as EPPClient;
+use \AfriCC\EPP\Extension\NASK\ObjectSpec as NASKObjectSpec;
+use AfriCC\EPP\Frame\Command\Poll;
+
+$objectSpec = new NASKObjectSpec();
+$config = [
+    'host' => 'https://app.registrar.tld',
+    'username' => 'user',
+    'password' => 'pass',
+    'services' => $objectSpec->services,
+    'serviceExtensions' => $objectSpec->serviceExtensions,
+];
+
+$epp_client = new EPPClient($config, $objectSpec);
+
+$frame = new Poll($epp_client->getObjectSpec());
+```
+
+or you can create frames with custom ObjectSpec:
+
+```php
+use AfriCC\EPP\Extension\NASK\Update\Future as UpdateFuture;
+use AfriCC\EPP\Extension\NASK\ObjectSpec as NASKObjectSpec;
+
+$frame = new UpdateFuture(new NASKObjectSpec());
+$frame->setFuture('example7.pl');
+$frame->changeRegistrant('mak21');
+$frame->changeAuthInfo('2fooBAR');
+echo $frame;
+```
+
+You can also create different clients with different ObjectSpec and then you can
+use `getObjectSpec` method when creating any request frame:
+
+```php
+use AfriCC\EPP\ObjectSpec as DefaultObjectSpec;
+use AfriCC\EPP\Extension\NASK\ObjectSpec as NASKObjectSpec;
+use AfriCC\EPP\Client as EPPClient;
+use AfriCC\EPP\HTTPClient as HTTPEPPClient;
+use AfriCC\EPP\Frame\Command\Poll;
+
+//...
+$nask_objectspec = new NASKObjectSpec();
+$default_objectspec = new DefaultObjectSpec();
+
+$nask_client = new HTTPEPPClient($nask_config, $nask_objectspec);
+$http_client = new HTTPEPPClient($http_config, $default_objectspec);
+$socket_client = new EPPClient($socket_config, $default_objectspec);
+$nask_socket_client = new EPPClient($nask_socket_config, $nask_objectspec);
+
+$nask_poll = new Poll($nask_client->getObjectSpec());
+$default_poll = new Poll($socket_client->getObjectSpec());
+```
+
+You can also change Client's objectSpec on the fly via `setObjectSpec` method:
+
+```php
+use AfriCC\EPP\ObjectSpec as DefaultObjectSpec;
+use AfriCC\EPP\Extension\NASK\ObjectSpec as NASKObjectSpec;
+use AfriCC\EPP\Client as EPPClient;
+
+//...
+$nask_objectspec = new NASKObjectSpec();
+$default_objectspec = new DefaultObjectSpec();
+
+$variable_client = new EPPClient($socket_config, $default_objectspec);
+
+//calls to getObjectSpec will return default objectSpec and responses
+//will be parsed using default ObjectSpec
+
+$variable_client->setObjectSpec($nask_objectspec);
+
+//calls to getObjectSpec will return NASK objectSpec and responses
+//will be parsed using NASK ObjectSpec
+
+```
 
 Future
 ------
 
-* objectspec on login needs to be smarter (no global/static object, auto-injecter)
 * stricter response parsing
 * stricter request validation
 * make it server capable (in conjunction with apache mod_epp)
@@ -201,4 +285,3 @@ License
 php-epp2 is released under the GPLv3 License. See the bundled
 [LICENSE](https://github.com/AfriCC/php-epp2/blob/master/LICENSE) file for
 details.
-

@@ -8,11 +8,9 @@ chdir(__DIR__);
 
 require './_autoload.php';
 use AfriCC\EPP\Extension\NASK\Create\Future as CreateFuture;
-use AfriCC\EPP\Extension\NASK\ObjectSpec;
+use AfriCC\EPP\Extension\NASK\ObjectSpec as NASKObjectSpec;
 
-ObjectSpec::overwriteParent();
-
-$frame = new CreateFuture();
+$frame = new CreateFuture(new NASKObjectSpec());
 $frame->setFuture('example.pl');
 $frame->setPeriod('3y');
 $frame->setRegistrant('jd1234');

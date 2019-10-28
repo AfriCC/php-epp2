@@ -36,15 +36,45 @@ abstract class AbstractFrame extends DOMDocument implements FrameInterface
     protected $ignore_command = false;
 
     /**
+     * @var ObjectSpec custom objectspec used to create XML
+     */
+    protected $objectSpec;
+
+    /**
      * Construct (with import if specified) frame
      *
      * @param DOMDocument $import
+     * @param ObjectSpec $objectSpec
      */
-    public function __construct($import = null)
+    public function __construct()
     {
         parent::__construct('1.0', 'UTF-8');
         $this->xmlStandalone = false;
         $this->formatOutput = true;
+
+        $import = null;
+        $objectSpec = null;
+
+        $num = func_num_args();
+        if($num>2){
+            throw new Exception("Too many arguments");
+        }
+
+        $args = func_get_args();
+        foreach($args as $arg){
+            if($arg instanceof \DOMDocument){
+                $import = $arg;
+            }
+            if($arg instanceof ObjectSpec){
+                $objectSpec = $arg;
+            }
+        }
+
+        if(\is_null($objectSpec)){
+            $objectSpec = new ObjectSpec();
+        }
+
+        $this->objectSpec = $objectSpec;
 
         if ($import instanceof DOMDocument) {
             $node = $this->importNode($import->documentElement, true);
@@ -52,7 +82,7 @@ abstract class AbstractFrame extends DOMDocument implements FrameInterface
 
             // register namespaces
             $this->xpath = new DOMXPath($this);
-            foreach (ObjectSpec::$specs as $prefix => $spec) {
+            foreach ($this->objectSpec->specs as $prefix => $spec) {
                 $this->xpath->registerNamespace($prefix, $spec['xmlns']);
             }
 
@@ -177,7 +207,7 @@ abstract class AbstractFrame extends DOMDocument implements FrameInterface
             }
 
             // resolve node namespace
-            $node_xmlns = ObjectSpec::xmlns($node_ns);
+            $node_xmlns = $this->objectSpec->xmlns($node_ns);
             if ($node_xmlns === false) {
                 throw new Exception(sprintf('unknown namespace: %s', $node_ns));
             }
@@ -259,7 +289,7 @@ abstract class AbstractFrame extends DOMDocument implements FrameInterface
             $parent_class = $this->className(get_parent_class($class));
             if ($parent_class === false) {
                 continue;
-            } elseif (empty($this->mapping) && in_array(strtolower($parent_class), ObjectSpec::$mappings)) {
+            } elseif (empty($this->mapping) && in_array(strtolower($parent_class), $this->objectSpec->mappings)) {
                 $this->mapping = strtolower($bare_class);
             } elseif (empty($this->command) && $parent_class === 'Command') {
                 $this->command = strtolower($bare_class);
@@ -275,7 +305,7 @@ abstract class AbstractFrame extends DOMDocument implements FrameInterface
             }
 
             // add to object spec
-            ObjectSpec::$specs[$this->extension]['xmlns'] = $this->getExtensionNamespace();
+            $this->objectSpec->specs[$this->extension]['xmlns'] = $this->getExtensionNamespace();
         }
     }
 

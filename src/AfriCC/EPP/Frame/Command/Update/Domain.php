@@ -13,7 +13,6 @@ namespace AfriCC\EPP\Frame\Command\Update;
 
 use AfriCC\EPP\AddrTrait;
 use AfriCC\EPP\Frame\Command\Update as UpdateCommand;
-use AfriCC\EPP\ObjectSpec;
 use AfriCC\EPP\Random;
 use AfriCC\EPP\Validator;
 use Exception;
@@ -120,7 +119,7 @@ class Domain extends UpdateCommand
     {
         $key = $remove ? 'rem' : 'add';
         $node = $this->set(sprintf('//epp:epp/epp:command/epp:extension/secDNS:update/secDNS:%s/secDNS:dsData[]', $key));
-        $ns = ObjectSpec::xmlns('secDNS');
+        $ns = $this->objectSpec->xmlns('secDNS');
         $keyTagNode = $this->createElementNS($ns, 'secDNS:keyTag', $keyTag);
         $algNode = $this->createElementNS($ns, 'secDNS:alg', $alg);
         $digestTypeNode = $this->createElementNS($ns, 'secDNS:digestType', $digestType);

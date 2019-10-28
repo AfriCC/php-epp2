@@ -7,12 +7,10 @@ ini_set('display_errors', true);
 chdir(__DIR__);
 
 require './_autoload.php';
-use AfriCC\EPP\Extension\NASK\ObjectSpec;
 use AfriCC\EPP\Extension\NASK\Report\Contact as ReportContact;
+use AfriCC\EPP\Extension\NASK\ObjectSpec as NASKObjectSpec;
 
-ObjectSpec::overwriteParent();
-
-$frame = new ReportContact();
+$frame = new ReportContact(new NASKObjectSpec());
 $frame->setContactId('k13');
 $frame->setOffset(0);
 $frame->setLimit(50);

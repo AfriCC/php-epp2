@@ -16,7 +16,7 @@ namespace AfriCC\EPP;
  */
 class ObjectSpec
 {
-    public static $specs = [
+    public $specs = [
         'epp' => [
             'xmlns' => 'urn:ietf:params:xml:ns:epp-1.0',
         ],
@@ -34,16 +34,16 @@ class ObjectSpec
         ],
     ];
 
-    public static $mappings = [
+    public $mappings = [
         'check', 'create', 'delete', 'info', 'renew', 'transfer', 'update',
     ];
 
-    public static function xmlns($object)
+    public function xmlns($object)
     {
-        if (!isset(static::$specs[$object]['xmlns'])) {
+        if (!isset($this->specs[$object]['xmlns'])) {
             return false;
         }
 
-        return static::$specs[$object]['xmlns'];
+        return $this->specs[$object]['xmlns'];
     }
 }

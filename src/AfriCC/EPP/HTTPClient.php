@@ -18,9 +18,9 @@ class HTTPClient extends AbstractClient implements ClientInterface
     protected $curl;
     protected $cookiejar;
 
-    public function __construct(array $config)
+    public function __construct(array $config, ObjectSpec $objectSpec = null)
     {
-        parent::__construct($config);
+        parent::__construct($config, $objectSpec);
 
         $proto = \parse_url($this->host, PHP_URL_SCHEME);
         if ($proto == 'https') {
@@ -120,7 +120,7 @@ class HTTPClient extends AbstractClient implements ClientInterface
         $this->setupCurl();
 
         // get greeting
-        $greeting = $this->request(new \AfriCC\EPP\Frame\Hello());
+        $greeting = $this->request(new \AfriCC\EPP\Frame\Hello($this->objectSpec));
 
         // login
         $this->login($newPassword);
@@ -136,7 +136,7 @@ class HTTPClient extends AbstractClient implements ClientInterface
     {
         if ($this->active()) {
             // send logout frame
-            $this->request(new LogoutCommand());
+            $this->request(new LogoutCommand($this->objectSpec));
 
             return curl_close($this->curl);
         }
@@ -144,37 +144,15 @@ class HTTPClient extends AbstractClient implements ClientInterface
         return false;
     }
 
-    /**
-     * sends a XML-based frame to the server
-     *
-     * @param FrameInterface $frame the frame to send to the server
-     *
-     * @return string
-     */
-    public function send(FrameInterface $frame)
+    protected function sendFrame(FrameInterface $frame)
     {
         $content = (string) $frame;
         curl_setopt($this->curl, CURLOPT_POSTFIELDS, $content);
-
-        return curl_exec($this->curl);
     }
 
-    /**
-     * request via EPP
-     *
-     * @param FrameInterface $frame Request frame to server
-     *
-     * @return string|\AfriCC\EPP\Frame\Response\MessageQueue|\AfriCC\EPP\Frame\Response Response from server
-     */
-    public function request(FrameInterface $frame)
+    protected function getFrame()
     {
-        if ($frame instanceof TransactionAwareInterface) {
-            $frame->setClientTransactionId(
-                $this->generateClientTransactionId()
-                );
-        }
-
-        $return = $this->send($frame);
+        $return = curl_exec($this->curl);
 
         if ($return === false) {
             $code = curl_errno($this->curl);
@@ -182,7 +160,7 @@ class HTTPClient extends AbstractClient implements ClientInterface
             throw new \Exception($msg, $code);
         }
 
-        return ResponseFactory::build($return);
+        return $return;
     }
 
     protected function log($message)

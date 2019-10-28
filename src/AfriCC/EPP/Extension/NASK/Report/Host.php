@@ -11,7 +11,8 @@ class Host extends Report
      */
     public function __construct()
     {
-        parent::__construct();
+        $args = func_get_args();
+        \call_user_func_array('parent::__construct', $args);
         $this->set('extreport:host');
     }
 
