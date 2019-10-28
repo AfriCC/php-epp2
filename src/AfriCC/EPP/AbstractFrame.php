@@ -69,9 +69,7 @@ abstract class AbstractFrame extends DOMDocument implements FrameInterface
             $this->objectSpec = new ObjectSpec();
         }
 
-        if ($import instanceof DOMDocument) {
-            $this->import($import);
-        }
+        $this->import($import);
 
         $this->registerXpath();
 
@@ -85,8 +83,11 @@ abstract class AbstractFrame extends DOMDocument implements FrameInterface
      *
      * @param \DOMDocument $import
      */
-    private function import(DOMDocument $import)
+    private function import(DOMDocument $import = null)
     {
+        if(is_null($import)){
+            return;
+        }
         $node = $this->importNode($import->documentElement, true);
         $this->appendChild($node);
     }
