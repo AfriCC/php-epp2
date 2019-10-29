@@ -99,7 +99,7 @@ class Client extends AbstractClient implements ClientInterface
      *
      * @param resource|null $context SSL context or null in case of tcp connection
      *
-     * @throws Exception
+     * @throws Exception on socket errors
      */
     private function setupSocket($context = null)
     {
@@ -112,6 +112,12 @@ class Client extends AbstractClient implements ClientInterface
         $this->socket = @stream_socket_client($target, $errno, $errstr, $this->connect_timeout, STREAM_CLIENT_CONNECT, $context);
 
         if ($this->socket === false) {
+            if ($errno === 0) {
+                // Socket initialization may fail, before system call connect()
+                // so the $errno isn't populated.
+                // see https://www.php.net/manual/en/function.stream-socket-client.php#refsect1-function.stream-socket-client-errors
+                throw new Exception("problem initializing the socket");
+            }
             throw new Exception($errstr, $errno);
         }
 
