@@ -12,8 +12,8 @@
 namespace AfriCC\EPP\Extension\Rgp\Update;
 
 use AfriCC\EPP\ExtensionInterface as Extension;
-use AfriCC\EPP\Frame\Command\Update\Domain as DomainUpdate;
 use AfriCC\EPP\ExtensionTrait;
+use AfriCC\EPP\Frame\Command\Update\Domain as DomainUpdate;
 
 /**
  * @see https://tools.ietf.org/html/rfc3915#section-4.2.5

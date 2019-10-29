@@ -3,9 +3,9 @@
 namespace AfriCC\EPP\Extension\NASK\Create;
 
 use AfriCC\EPP\ExtensionInterface;
+use AfriCC\EPP\ExtensionTrait;
 use AfriCC\EPP\Frame\Command\Create\Domain as DomainCreate;
 use AfriCC\EPP\Validator;
-use AfriCC\EPP\ExtensionTrait;
 
 class Domain extends DomainCreate implements ExtensionInterface
 {

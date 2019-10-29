@@ -3,8 +3,8 @@
 namespace AfriCC\EPP\Extension\NASK\Info;
 
 use AfriCC\EPP\ExtensionInterface;
-use AfriCC\EPP\Frame\Command\Info\Contact as ContactInfo;
 use AfriCC\EPP\ExtensionTrait;
+use AfriCC\EPP\Frame\Command\Info\Contact as ContactInfo;
 
 class Contact extends ContactInfo implements ExtensionInterface
 {

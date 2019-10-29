@@ -3,8 +3,8 @@
 namespace AfriCC\EPP\Extension\NASK\Update;
 
 use AfriCC\EPP\ExtensionInterface;
-use AfriCC\EPP\Frame\Command\Update\Contact as ContactUpdate;
 use AfriCC\EPP\ExtensionTrait;
+use AfriCC\EPP\Frame\Command\Update\Contact as ContactUpdate;
 
 class Contact extends ContactUpdate implements ExtensionInterface
 {

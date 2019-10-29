@@ -3,8 +3,8 @@
 namespace AfriCC\EPP\Extension\NASK\Create;
 
 use AfriCC\EPP\ExtensionInterface;
-use AfriCC\EPP\Frame\Command\Create\Contact as ContactCreate;
 use AfriCC\EPP\ExtensionTrait;
+use AfriCC\EPP\Frame\Command\Create\Contact as ContactCreate;
 
 class Contact extends ContactCreate implements ExtensionInterface
 {

@@ -12,8 +12,8 @@
 namespace AfriCC\EPP\Extension\NICMX\Info;
 
 use AfriCC\EPP\ExtensionInterface as Extension;
-use AfriCC\EPP\Frame\Command\Info;
 use AfriCC\EPP\ExtensionTrait;
+use AfriCC\EPP\Frame\Command\Info;
 
 /**
  * @see http://www.registry.mx

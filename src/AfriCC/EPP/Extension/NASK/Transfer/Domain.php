@@ -3,8 +3,8 @@
 namespace AfriCC\EPP\Extension\NASK\Transfer;
 
 use AfriCC\EPP\ExtensionInterface as Extension;
-use AfriCC\EPP\Frame\Command\Transfer\Domain as DomainTransfer;
 use AfriCC\EPP\ExtensionTrait;
+use AfriCC\EPP\Frame\Command\Transfer\Domain as DomainTransfer;
 
 class Domain extends DomainTransfer implements Extension
 {

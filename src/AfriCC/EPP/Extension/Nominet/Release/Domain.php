@@ -12,10 +12,10 @@
 namespace AfriCC\EPP\Extension\Nominet\Release;
 
 use AfriCC\EPP\ExtensionInterface as Extension;
+use AfriCC\EPP\ExtensionTrait;
 use AfriCC\EPP\Frame\Command\Update as UpdateCommand;
 use AfriCC\EPP\Validator;
 use Exception;
-use AfriCC\EPP\ExtensionTrait;
 
 /**
  * @see https://registrars.nominet.uk/namespace/uk/registration-and-domain-management/epp-commands#release

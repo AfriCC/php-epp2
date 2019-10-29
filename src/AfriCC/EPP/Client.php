@@ -116,7 +116,7 @@ class Client extends AbstractClient implements ClientInterface
                 // Socket initialization may fail, before system call connect()
                 // so the $errno isn't populated.
                 // see https://www.php.net/manual/en/function.stream-socket-client.php#refsect1-function.stream-socket-client-errors
-                throw new Exception("problem initializing the socket");
+                throw new Exception('problem initializing the socket');
             }
             throw new Exception($errstr, $errno);
         }
@@ -173,7 +173,7 @@ class Client extends AbstractClient implements ClientInterface
         $header = '';
         do {
             $header = $this->recv(4);
-        } while (empty($header) && (time()<$hard_time_limit));
+        } while (empty($header) && (time() < $hard_time_limit));
 
         if (time() >= $hard_time_limit) {
             throw new Exception('Timeout while reading header from EPP Server');

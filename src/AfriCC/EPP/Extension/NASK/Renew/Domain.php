@@ -3,8 +3,8 @@
 namespace AfriCC\EPP\Extension\NASK\Renew;
 
 use AfriCC\EPP\ExtensionInterface;
-use AfriCC\EPP\Frame\Command\Renew\Domain as DomainRenew;
 use AfriCC\EPP\ExtensionTrait;
+use AfriCC\EPP\Frame\Command\Renew\Domain as DomainRenew;
 
 class Domain extends DomainRenew implements ExtensionInterface
 {

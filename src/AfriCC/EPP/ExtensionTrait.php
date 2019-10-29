@@ -27,4 +27,3 @@ trait ExtensionTrait
         return $this->extension_xmlns;
     }
 }
-

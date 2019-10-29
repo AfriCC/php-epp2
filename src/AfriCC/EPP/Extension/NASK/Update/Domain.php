@@ -3,9 +3,9 @@
 namespace AfriCC\EPP\Extension\NASK\Update;
 
 use AfriCC\EPP\ExtensionInterface;
+use AfriCC\EPP\ExtensionTrait;
 use AfriCC\EPP\Frame\Command\Update\Domain as DomainUpdate;
 use AfriCC\EPP\Validator;
-use AfriCC\EPP\ExtensionTrait;
 
 class Domain extends DomainUpdate implements ExtensionInterface
 {
