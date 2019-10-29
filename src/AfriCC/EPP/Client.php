@@ -169,7 +169,15 @@ class Client extends AbstractClient implements ClientInterface
 
     public function getFrame()
     {
-        $header = $this->recv(4);
+        $hard_time_limit = time() + $this->timeout + 2;
+        $header = '';
+        do {
+            $header = $this->recv(4);
+        } while (empty($header) && (time()<$hard_time_limit));
+
+        if (time() >= $hard_time_limit) {
+            throw new Exception('Timeout while reading header from EPP Server');
+        }
 
         // Unpack first 4 bytes which is our length
         $unpacked = unpack('N', $header);
