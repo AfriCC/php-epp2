@@ -13,6 +13,10 @@ namespace AfriCC\EPP;
 
 trait ExtensionTrait
 {
+    protected $extension_xmlns;
+
+    abstract protected function className($class);
+
     public function getExtensionName()
     {
         return strtolower($this->className(get_class($this)));

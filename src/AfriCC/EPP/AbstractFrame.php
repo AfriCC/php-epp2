@@ -327,7 +327,7 @@ abstract class AbstractFrame extends DOMDocument implements FrameInterface
      *
      * @return string
      */
-    private function className($class)
+    protected function className($class)
     {
         if (!is_string($class)) {
             return $class;
