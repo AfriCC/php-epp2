@@ -4,16 +4,14 @@ namespace AfriCC\EPP\Extension\NASK\Transfer;
 
 use AfriCC\EPP\ExtensionInterface as Extension;
 use AfriCC\EPP\Frame\Command\Transfer\Domain as DomainTransfer;
+use AfriCC\EPP\ExtensionTrait;
 
 class Domain extends DomainTransfer implements Extension
 {
+    use ExtensionTrait;
+
     protected $extension = 'extdom';
     protected $extension_xmlns = 'http://www.dns.pl/nask-epp-schema/extdom-2.0';
-
-    public function getExtensionNamespace()
-    {
-        return $this->extension_xmlns;
-    }
 
     /**
      * Add resend confirmation request

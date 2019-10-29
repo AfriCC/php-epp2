@@ -15,12 +15,15 @@ use AfriCC\EPP\ExtensionInterface as Extension;
 use AfriCC\EPP\Frame\Command\Update as UpdateCommand;
 use AfriCC\EPP\Validator;
 use Exception;
+use AfriCC\EPP\ExtensionTrait;
 
 /**
  * @see https://registrars.nominet.uk/namespace/uk/registration-and-domain-management/epp-commands#release
  */
 class Domain extends UpdateCommand implements Extension
 {
+    use ExtensionTrait;
+
     protected $extension = 'r';
     protected $extension_xmlns = 'http://www.nominet.org.uk/epp/xml/std-release-1.0';
 
@@ -36,10 +39,5 @@ class Domain extends UpdateCommand implements Extension
     public function setRegistrarTag($tag)
     {
         $this->set('//epp:epp/epp:command/epp:update/r:release/r:registrarTag', $tag);
-    }
-
-    public function getExtensionNamespace()
-    {
-        return $this->extension_xmlns;
     }
 }

@@ -4,16 +4,14 @@ namespace AfriCC\EPP\Extension\NASK\Update;
 
 use AfriCC\EPP\ExtensionInterface;
 use AfriCC\EPP\Frame\Command\Update\Contact as ContactUpdate;
+use AfriCC\EPP\ExtensionTrait;
 
 class Contact extends ContactUpdate implements ExtensionInterface
 {
+    use ExtensionTrait;
+
     protected $extension = 'extcon';
     protected $extension_xmlns = 'http://www.dns.pl/nask-epp-schema/extcon-2.0';
-
-    public function getExtensionNamespace()
-    {
-        return $this->extension_xmlns;
-    }
 
     /**
      * Set entity type of contact

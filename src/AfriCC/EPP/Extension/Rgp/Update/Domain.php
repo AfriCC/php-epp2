@@ -13,12 +13,15 @@ namespace AfriCC\EPP\Extension\Rgp\Update;
 
 use AfriCC\EPP\ExtensionInterface as Extension;
 use AfriCC\EPP\Frame\Command\Update\Domain as DomainUpdate;
+use AfriCC\EPP\ExtensionTrait;
 
 /**
  * @see https://tools.ietf.org/html/rfc3915#section-4.2.5
  */
 class Domain extends DomainUpdate implements Extension
 {
+    use ExtensionTrait;
+
     protected $extension = 'rgp';
     protected $extension_xmlns = 'urn:ietf:params:xml:ns:rgp-1.0';
 
@@ -83,10 +86,5 @@ class Domain extends DomainUpdate implements Extension
     public function setOther($other)
     {
         $this->set('//epp:epp/epp:command/epp:extension/rgp:update/rgp:restore[@op=\'report\']/rgp:report/rgp:other', $other);
-    }
-
-    public function getExtensionNamespace()
-    {
-        return $this->extension_xmlns;
     }
 }

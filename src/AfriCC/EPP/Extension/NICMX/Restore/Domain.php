@@ -13,22 +13,20 @@ namespace AfriCC\EPP\Extension\NICMX\Restore;
 
 use AfriCC\EPP\ExtensionInterface as Extension;
 use AfriCC\EPP\Frame\Command\Renew;
+use AfriCC\EPP\ExtensionTrait;
 
 /**
  * @see https://www.registry.mx
  */
 class Domain extends Renew implements Extension
 {
+    use ExtensionTrait;
+
     protected $extension = 'nicmx-domrst';
     protected $extension_xmlns = 'http://www.nic.mx/nicmx-domrst-1.0';
 
     public function setDomain($domain)
     {
         $this->set('//epp:epp/epp:command/epp:renew/nicmx-domrst:restore/nicmx-domrst:name', $domain);
-    }
-
-    public function getExtensionNamespace()
-    {
-        return $this->extension_xmlns;
     }
 }

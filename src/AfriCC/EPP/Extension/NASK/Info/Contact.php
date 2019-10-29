@@ -4,16 +4,14 @@ namespace AfriCC\EPP\Extension\NASK\Info;
 
 use AfriCC\EPP\ExtensionInterface;
 use AfriCC\EPP\Frame\Command\Info\Contact as ContactInfo;
+use AfriCC\EPP\ExtensionTrait;
 
 class Contact extends ContactInfo implements ExtensionInterface
 {
+    use ExtensionTrait;
+
     protected $extension = 'extcon';
     protected $extension_xmlns = 'http://www.dns.pl/nask-epp-schema/extcon-2.0';
-
-    public function getExtensionNamespace()
-    {
-        return $this->extension_xmlns;
-    }
 
     /**
      * Set contact authinfo

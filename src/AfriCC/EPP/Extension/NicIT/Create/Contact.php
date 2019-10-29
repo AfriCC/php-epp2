@@ -15,9 +15,12 @@ use AfriCC\EPP\ExtensionInterface as Extension;
 use AfriCC\EPP\Frame\Command\Create\Contact as ContactCreate;
 use AfriCC\EPP\Validator;
 use Exception;
+use AfriCC\EPP\ExtensionTrait;
 
 class Contact extends ContactCreate implements Extension
 {
+    use ExtensionTrait;
+
     protected $extension = 'extcon';
     protected $extension_xmlns = 'http://www.nic.it/ITNIC-EPP/extcon-1.0';
 
@@ -30,11 +33,6 @@ class Contact extends ContactCreate implements Extension
         6, // Other subjects
         7, // Foreigners who match 2-6
     ];
-
-    public function getExtensionNamespace()
-    {
-        return $this->extension_xmlns;
-    }
 
     public function setConsentForPublishing($consent = false)
     {

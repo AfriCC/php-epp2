@@ -5,17 +5,14 @@ namespace AfriCC\EPP\Extension\NASK\Create;
 use AfriCC\EPP\ExtensionInterface;
 use AfriCC\EPP\Frame\Command\Create\Domain as DomainCreate;
 use AfriCC\EPP\Validator;
+use AfriCC\EPP\ExtensionTrait;
 
 class Domain extends DomainCreate implements ExtensionInterface
 {
+    use ExtensionTrait;
+
     protected $extension = 'extdom';
-
     protected $extension_xmlns = 'http://www.dns.pl/nask-epp-schema/extdom-2.0';
-
-    public function getExtensionNamespace()
-    {
-        return $this->extension_xmlns;
-    }
 
     public function setBook()
     {

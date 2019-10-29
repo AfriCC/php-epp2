@@ -21,6 +21,8 @@ use Exception;
  */
 abstract class AbstractFrame extends DOMDocument implements FrameInterface
 {
+    use ExtensionTrait;
+
     protected $xpath;
     /**
      * @var \DOMElement[]
@@ -335,10 +337,5 @@ abstract class AbstractFrame extends DOMDocument implements FrameInterface
         }
 
         return substr($class, $pos + 1);
-    }
-
-    public function getExtensionName()
-    {
-        return strtolower($this->className(get_class($this)));
     }
 }
