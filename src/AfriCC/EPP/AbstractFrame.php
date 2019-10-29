@@ -34,6 +34,7 @@ abstract class AbstractFrame extends DOMDocument implements FrameInterface
      * Extension name
      *
      * Redefine in case it's different than class name
+     *
      * @var string
      */
     protected $extension;
@@ -42,6 +43,7 @@ abstract class AbstractFrame extends DOMDocument implements FrameInterface
      * Extension namespace
      *
      * Make sure to define it in class implementing ExtensionInterface
+     *
      * @var string
      */
     protected $extension_xmlns;
@@ -362,6 +364,7 @@ abstract class AbstractFrame extends DOMDocument implements FrameInterface
         if (empty($this->extension_xmlns) && ($this instanceof ExtensionInterface)) {
             throw new Exception(sprintf('Extension %s has no defined namespace', get_class($this)));
         }
+
         return $this->extension_xmlns;
     }
 }
