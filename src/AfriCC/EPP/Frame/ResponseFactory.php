@@ -11,6 +11,7 @@
 
 namespace AfriCC\EPP\Frame;
 
+use AfriCC\EPP\Frame\Response\MessageQueue;
 use AfriCC\EPP\ObjectSpec;
 use DOMDocument;
 use DOMXPath;
@@ -21,10 +22,11 @@ class ResponseFactory
      * Build response frame
      *
      * @param string $buffer
+     * @param ObjectSpec $objectSpec
      *
      * @return string|\AfriCC\EPP\Frame\Response\MessageQueue|\AfriCC\EPP\Frame\Response
      */
-    public static function build($buffer)
+    public static function build($buffer, ObjectSpec $objectSpec = null)
     {
         $xml = new DOMDocument('1.0', 'UTF-8');
         $xml->formatOutput = true;
@@ -32,11 +34,16 @@ class ResponseFactory
         $xml->loadXML($buffer);
 
         $xpath = new DOMXPath($xml);
-        foreach (ObjectSpec::$specs as $prefix => $spec) {
+
+        if (is_null($objectSpec)) {
+            $objectSpec = new ObjectSpec();
+        }
+
+        foreach ($objectSpec->specs as $prefix => $spec) {
             $xpath->registerNamespace($prefix, $spec['xmlns']);
         }
 
-        $nodes = $xml->getElementsByTagNameNS(ObjectSpec::xmlns('epp'), 'epp');
+        $nodes = $xml->getElementsByTagNameNS($objectSpec->xmlns('epp'), 'epp');
         if ($nodes === null || $nodes->length !== 1) {
             return $buffer;
         }
@@ -57,10 +64,10 @@ class ResponseFactory
                 // check if it is a message queue @todo this should go into the response object!
                 $results = $xpath->query('//epp:epp/epp:response/epp:msgQ');
                 if ($results->length > 0) {
-                    return new \AfriCC\EPP\Frame\Response\MessageQueue($xml);
+                    return new MessageQueue($xml, $objectSpec);
                 }
 
-                return new Response($xml);
+                return new Response($xml, $objectSpec);
             }
         }
 

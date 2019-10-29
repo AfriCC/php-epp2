@@ -6,7 +6,7 @@ use AfriCC\EPP\ObjectSpec as MainObjectSpec;
 
 class ObjectSpec extends MainObjectSpec
 {
-    public static $specs = [
+    public $specs = [
         'epp' => [
             'xmlns' => 'http://www.dns.pl/nask-epp-schema/epp-2.0',
         ],
@@ -28,31 +28,16 @@ class ObjectSpec extends MainObjectSpec
 
     ];
 
-    public static $services = [
+    public $services = [
         'http://www.dns.pl/nask-epp-schema/contact-2.0',
         'http://www.dns.pl/nask-epp-schema/host-2.0',
         'http://www.dns.pl/nask-epp-schema/domain-2.0',
         'http://www.dns.pl/nask-epp-schema/future-2.0',
     ];
 
-    public static $serviceExtensions = [
+    public $serviceExtensions = [
         'http://www.dns.pl/nask-epp-schema/extcon-2.0',
         'http://www.dns.pl/nask-epp-schema/extdom-2.0',
         'http://www.dns.pl/nask-epp-schema/secDNS-2.0',
     ];
-
-    private static $backup;
-
-    public static function overwriteParent()
-    {
-        self::$backup = MainObjectSpec::$specs;
-        MainObjectSpec::$specs = self::$specs;
-    }
-
-    public static function restoreParent()
-    {
-        if (!empty(self::$backup)) {
-            MainObjectSpec::$specs = self::$backup;
-        }
-    }
 }

@@ -23,7 +23,7 @@ interface FrameInterface
      * @param string $path
      * @param mixed $value
      *
-     * @return \DOMElement
+     * @return \AfriCC\EPP\DOM\DOMElement
      */
     public function set($path, $value);
 

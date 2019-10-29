@@ -4,13 +4,18 @@ namespace AfriCC\EPP;
 
 use AfriCC\EPP\Frame\Command\Login as LoginCommand;
 use AfriCC\EPP\Frame\Response as ResponseFrame;
+use AfriCC\EPP\Frame\ResponseFactory;
+use Exception;
 
 /**
  * An abstract client client for the Extensible Provisioning Protocol (EPP)
  *
- * @see http://tools.ietf.org/html/rfc5734
+ * Extend this class in your custom EPP Client
  *
- * As this class is absctract and relies on subclass implementation details it's untestable
+ * @see http://tools.ietf.org/html/rfc5734
+ * @see ClientInterface
+ *
+ * As this class is abstract and relies on subclass implementation details it's untestable
  * @codeCoverageIgnore
  */
 abstract class AbstractClient implements ClientInterface
@@ -29,6 +34,7 @@ abstract class AbstractClient implements ClientInterface
     protected $debug;
     protected $connect_timeout;
     protected $timeout;
+    protected $objectSpec;
 
     /**
      * {@inheritdoc}
@@ -39,9 +45,80 @@ abstract class AbstractClient implements ClientInterface
 
     abstract public function close();
 
-    abstract public function request(FrameInterface $frame);
-
     abstract protected function log($message);
+
+    /**
+     * Send frame to EPP server
+     *
+     * @param FrameInterface $frame Frame to send
+     *
+     * @throws Exception on send error
+     */
+    abstract public function sendFrame(FrameInterface $frame);
+
+    /**
+     * Get response frame from EPP server (use after sendFrame)
+     *
+     * @throws Exception on frame receive error
+     *
+     * @return string raw XML of EPP Frame
+     */
+    abstract public function getFrame();
+
+    public function request(FrameInterface $frame)
+    {
+        if ($frame instanceof TransactionAwareInterface) {
+            $frame->setClientTransactionId(
+                $this->generateClientTransactionId()
+                );
+        }
+
+        $this->sendFrame($frame);
+
+        $return = $this->getFrame();
+
+        return ResponseFactory::build($return, $this->objectSpec);
+    }
+
+    public function __construct(array $config, ObjectSpec $objectSpec = null)
+    {
+        if (!empty($config['debug']) && is_bool($config['debug'])) {
+            $this->debug = $config['debug'];
+        } else {
+            $this->debug = false;
+        }
+
+        if (is_null($objectSpec)) {
+            $objectSpec = new ObjectSpec();
+        }
+
+        $this->objectSpec = $objectSpec;
+
+        $this->prepareConnectionOptions($config);
+        $this->prepareCredentials($config);
+        $this->prepareSSLOptions($config);
+        $this->prepareEPPServices($config);
+    }
+
+    /**
+     * Get client's ObjectSpec
+     *
+     * @return ObjectSpec
+     */
+    public function getObjectSpec()
+    {
+        return $this->objectSpec;
+    }
+
+    /**
+     * Set client's ObjectSpec
+     *
+     * @param ObjectSpec $newObjectSpec
+     */
+    public function setObjectSpec(ObjectSpec $newObjectSpec)
+    {
+        $this->objectSpec = $newObjectSpec;
+    }
 
     protected function prepareConnectionOptions(array $config)
     {
@@ -127,20 +204,6 @@ abstract class AbstractClient implements ClientInterface
         }
     }
 
-    public function __construct(array $config)
-    {
-        if (!empty($config['debug']) && is_bool($config['debug'])) {
-            $this->debug = $config['debug'];
-        } else {
-            $this->debug = false;
-        }
-
-        $this->prepareConnectionOptions($config);
-        $this->prepareCredentials($config);
-        $this->prepareSSLOptions($config);
-        $this->prepareEPPServices($config);
-    }
-
     protected function generateClientTransactionId()
     {
         return Random::id(64, $this->username);
@@ -149,7 +212,7 @@ abstract class AbstractClient implements ClientInterface
     /**
      * Generate and send login frame
      *
-     * @param bool|string $newPassword New password to set on longin, false if not changing pasword
+     * @param bool|string $newPassword New password to set on login, false if not changing password
      *
      * @throws \Exception On unsuccessful login
      *
@@ -158,7 +221,7 @@ abstract class AbstractClient implements ClientInterface
     protected function login($newPassword = false)
     {
         // send login command
-        $login = new LoginCommand();
+        $login = new LoginCommand($this->objectSpec);
         $login->setClientId($this->username);
         $login->setPassword($this->password);
         if ($newPassword) {

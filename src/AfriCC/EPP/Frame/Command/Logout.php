@@ -12,15 +12,16 @@
 namespace AfriCC\EPP\Frame\Command;
 
 use AfriCC\EPP\Frame\Command as CommandFrame;
+use AfriCC\EPP\ObjectSpec;
 
 /**
  * @see http://tools.ietf.org/html/rfc5730#section-2.9.1.2
  */
 class Logout extends CommandFrame
 {
-    public function __construct()
+    public function __construct(ObjectSpec $objectSpec = null)
     {
-        parent::__construct();
+        parent::__construct($objectSpec);
         $this->set();
     }
 }

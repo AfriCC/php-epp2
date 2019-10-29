@@ -12,7 +12,6 @@
 namespace AfriCC\EPP;
 
 use AfriCC\EPP\Frame\Command\Logout as LogoutCommand;
-use AfriCC\EPP\Frame\ResponseFactory;
 use Exception;
 
 /**
@@ -29,9 +28,9 @@ class Client extends AbstractClient implements ClientInterface
     protected $chunk_size;
     protected $verify_peer_name;
 
-    public function __construct(array $config)
+    public function __construct(array $config, ObjectSpec $objectSpec = null)
     {
-        parent::__construct($config);
+        parent::__construct($config, $objectSpec);
 
         if (!empty($config['chunk_size'])) {
             $this->chunk_size = (int) $config['chunk_size'];
@@ -154,7 +153,7 @@ class Client extends AbstractClient implements ClientInterface
     {
         if ($this->active()) {
             // send logout frame
-            $this->request(new LogoutCommand());
+            $this->request(new LogoutCommand($this->objectSpec));
 
             return fclose($this->socket);
         }
@@ -162,9 +161,6 @@ class Client extends AbstractClient implements ClientInterface
         return false;
     }
 
-    /**
-     * Get an EPP frame from the server.
-     */
     public function getFrame()
     {
         $header = $this->recv(4);
@@ -178,37 +174,16 @@ class Client extends AbstractClient implements ClientInterface
         } else {
             $length -= 4;
 
-            return ResponseFactory::build($this->recv($length));
+            return $this->recv($length);
         }
     }
 
-    /**
-     * sends a XML-based frame to the server
-     *
-     * @param FrameInterface $frame the frame to send to the server
-     */
     public function sendFrame(FrameInterface $frame)
     {
-        // some frames might require a client transaction identifier, so let us
-        // inject it before sending the frame
-        if ($frame instanceof TransactionAwareInterface) {
-            $frame->setClientTransactionId($this->generateClientTransactionId());
-        }
-
         $buffer = (string) $frame;
         $header = pack('N', mb_strlen($buffer, 'ASCII') + 4);
 
         return $this->send($header . $buffer);
-    }
-
-    /**
-     * a wrapper around sendFrame() and getFrame()
-     */
-    public function request(FrameInterface $frame)
-    {
-        $this->sendFrame($frame);
-
-        return $this->getFrame();
     }
 
     protected function log($message, $color = '0;32')

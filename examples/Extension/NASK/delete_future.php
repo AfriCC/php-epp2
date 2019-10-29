@@ -8,10 +8,8 @@ chdir(__DIR__);
 
 require './_autoload.php';
 use AfriCC\EPP\Extension\NASK\Delete\Future as DeleteFuture;
-use AfriCC\EPP\Extension\NASK\ObjectSpec;
+use AfriCC\EPP\Extension\NASK\ObjectSpec as NASKObjectSpec;
 
-ObjectSpec::overwriteParent();
-
-$frame = new DeleteFuture();
+$frame = new DeleteFuture(new NASKObjectSpec());
 $frame->setFuture('futuretest.pl');
 echo $frame;
