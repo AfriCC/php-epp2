@@ -3,13 +3,10 @@
 namespace AfriCC\EPP\Extension\NASK\Renew;
 
 use AfriCC\EPP\ExtensionInterface;
-use AfriCC\EPP\ExtensionTrait;
 use AfriCC\EPP\Frame\Command\Renew\Domain as DomainRenew;
 
 class Domain extends DomainRenew implements ExtensionInterface
 {
-    use ExtensionTrait;
-
     protected $extension = 'extdom';
     protected $extension_xmlns = 'http://www.dns.pl/nask-epp-schema/extdom-2.0';
 

@@ -12,7 +12,6 @@
 namespace AfriCC\EPP\Extension\NICMX\Info;
 
 use AfriCC\EPP\ExtensionInterface as Extension;
-use AfriCC\EPP\ExtensionTrait;
 use AfriCC\EPP\Frame\Command\Info;
 
 /**
@@ -20,8 +19,6 @@ use AfriCC\EPP\Frame\Command\Info;
  */
 class Rar extends Info implements Extension
 {
-    use ExtensionTrait;
-
     protected $extension_xmlns = 'http://www.nic.mx/rar-1.0';
 
     public function __construct()

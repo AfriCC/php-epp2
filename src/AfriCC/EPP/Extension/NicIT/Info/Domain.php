@@ -12,14 +12,11 @@
 namespace AfriCC\EPP\Extension\NicIT\Info;
 
 use AfriCC\EPP\ExtensionInterface as Extension;
-use AfriCC\EPP\ExtensionTrait;
 use AfriCC\EPP\Frame\Command\Info\Domain as DomainInfo;
 use Exception;
 
 class Domain extends DomainInfo implements Extension
 {
-    use ExtensionTrait;
-
     protected $extension = 'extdom';
     protected $extension_xmlns = 'http://www.nic.it/ITNIC-EPP/extdom-2.0';
 

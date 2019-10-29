@@ -21,8 +21,6 @@ use Exception;
  */
 abstract class AbstractFrame extends DOMDocument implements FrameInterface
 {
-    use ExtensionTrait;
-
     protected $xpath;
     /**
      * @var \DOMElement[]
@@ -327,7 +325,7 @@ abstract class AbstractFrame extends DOMDocument implements FrameInterface
      *
      * @return string
      */
-    protected function className($class)
+    private function className($class)
     {
         if (!is_string($class)) {
             return $class;
@@ -337,5 +335,18 @@ abstract class AbstractFrame extends DOMDocument implements FrameInterface
         }
 
         return substr($class, $pos + 1);
+    }
+
+    public function getExtensionName()
+    {
+        return strtolower($this->className(get_class($this)));
+    }
+
+    public function getExtensionNamespace()
+    {
+        if(!isset($this->extension_xmlns) && ($this instanceof ExtensionInterface)){
+            throw new Exception(sprintf('Extension %s has no defined namespace', get_class($this)));
+        }
+        return $this->extension_xmlns;
     }
 }

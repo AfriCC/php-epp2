@@ -12,7 +12,6 @@
 namespace AfriCC\EPP\Extension\Nominet\Release;
 
 use AfriCC\EPP\ExtensionInterface as Extension;
-use AfriCC\EPP\ExtensionTrait;
 use AfriCC\EPP\Frame\Command\Update as UpdateCommand;
 use AfriCC\EPP\Validator;
 use Exception;
@@ -22,8 +21,6 @@ use Exception;
  */
 class Domain extends UpdateCommand implements Extension
 {
-    use ExtensionTrait;
-
     protected $extension = 'r';
     protected $extension_xmlns = 'http://www.nominet.org.uk/epp/xml/std-release-1.0';
 

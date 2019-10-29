@@ -12,15 +12,12 @@
 namespace AfriCC\EPP\Extension\NicIT\Create;
 
 use AfriCC\EPP\ExtensionInterface as Extension;
-use AfriCC\EPP\ExtensionTrait;
 use AfriCC\EPP\Frame\Command\Create\Contact as ContactCreate;
 use AfriCC\EPP\Validator;
 use Exception;
 
 class Contact extends ContactCreate implements Extension
 {
-    use ExtensionTrait;
-
     protected $extension = 'extcon';
     protected $extension_xmlns = 'http://www.nic.it/ITNIC-EPP/extcon-1.0';
 

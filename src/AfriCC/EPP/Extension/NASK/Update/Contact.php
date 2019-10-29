@@ -3,13 +3,10 @@
 namespace AfriCC\EPP\Extension\NASK\Update;
 
 use AfriCC\EPP\ExtensionInterface;
-use AfriCC\EPP\ExtensionTrait;
 use AfriCC\EPP\Frame\Command\Update\Contact as ContactUpdate;
 
 class Contact extends ContactUpdate implements ExtensionInterface
 {
-    use ExtensionTrait;
-
     protected $extension = 'extcon';
     protected $extension_xmlns = 'http://www.dns.pl/nask-epp-schema/extcon-2.0';
 

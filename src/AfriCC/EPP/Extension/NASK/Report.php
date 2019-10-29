@@ -4,12 +4,9 @@ namespace AfriCC\EPP\Extension\NASK;
 
 use AfriCC\EPP\Extension;
 use AfriCC\EPP\ExtensionInterface;
-use AfriCC\EPP\ExtensionTrait;
 
 class Report extends Extension implements ExtensionInterface
 {
-    use ExtensionTrait;
-
     protected $ignore_command = true;
     protected $command = 'report';
     protected $mapping = 'extreport';

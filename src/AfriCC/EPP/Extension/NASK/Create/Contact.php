@@ -3,13 +3,10 @@
 namespace AfriCC\EPP\Extension\NASK\Create;
 
 use AfriCC\EPP\ExtensionInterface;
-use AfriCC\EPP\ExtensionTrait;
 use AfriCC\EPP\Frame\Command\Create\Contact as ContactCreate;
 
 class Contact extends ContactCreate implements ExtensionInterface
 {
-    use ExtensionTrait;
-
     protected $extension = 'extcon';
     protected $extension_xmlns = 'http://www.dns.pl/nask-epp-schema/extcon-2.0';
 

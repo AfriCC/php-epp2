@@ -12,7 +12,6 @@
 namespace AfriCC\EPP\Extension\COZA\Info;
 
 use AfriCC\EPP\ExtensionInterface as Extension;
-use AfriCC\EPP\ExtensionTrait;
 use AfriCC\EPP\Frame\Command\Info\Contact as ContactInfo;
 
 /**
@@ -20,8 +19,6 @@ use AfriCC\EPP\Frame\Command\Info\Contact as ContactInfo;
  */
 class CozaContact extends ContactInfo implements Extension
 {
-    use ExtensionTrait;
-
     protected $extension_xmlns = 'http://co.za/epp/extensions/cozacontact-1-0';
 
     public function requestBalance()

@@ -12,7 +12,6 @@
 namespace AfriCC\EPP\Extension\Rgp\Update;
 
 use AfriCC\EPP\ExtensionInterface as Extension;
-use AfriCC\EPP\ExtensionTrait;
 use AfriCC\EPP\Frame\Command\Update\Domain as DomainUpdate;
 
 /**
@@ -20,8 +19,6 @@ use AfriCC\EPP\Frame\Command\Update\Domain as DomainUpdate;
  */
 class Domain extends DomainUpdate implements Extension
 {
-    use ExtensionTrait;
-
     protected $extension = 'rgp';
     protected $extension_xmlns = 'urn:ietf:params:xml:ns:rgp-1.0';
 

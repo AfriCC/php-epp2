@@ -3,14 +3,11 @@
 namespace AfriCC\EPP\Extension\NASK\Update;
 
 use AfriCC\EPP\ExtensionInterface;
-use AfriCC\EPP\ExtensionTrait;
 use AfriCC\EPP\Frame\Command\Update\Domain as DomainUpdate;
 use AfriCC\EPP\Validator;
 
 class Domain extends DomainUpdate implements ExtensionInterface
 {
-    use ExtensionTrait;
-
     protected $extension = 'extdom';
     protected $extension_xmlns = 'http://www.dns.pl/nask-epp-schema/extdom-2.0';
 
