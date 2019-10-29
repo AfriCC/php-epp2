@@ -112,13 +112,10 @@ class Client extends AbstractClient implements ClientInterface
         $this->socket = @stream_socket_client($target, $errno, $errstr, $this->connect_timeout, STREAM_CLIENT_CONNECT, $context);
 
         if ($this->socket === false) {
-            if ($errno === 0) {
-                // Socket initialization may fail, before system call connect()
-                // so the $errno isn't populated.
-                // see https://www.php.net/manual/en/function.stream-socket-client.php#refsect1-function.stream-socket-client-errors
-                throw new Exception('problem initializing the socket');
-            }
-            throw new Exception($errstr, $errno);
+            // Socket initialization may fail, before system call connect()
+            // so the $errno is 0 and $errstr isn't populated .
+            // see https://www.php.net/manual/en/function.stream-socket-client.php#refsect1-function.stream-socket-client-errors
+            throw new Exception(sprintf('problem initializing socket: %s code: [%d]',$errstr, $errno), $errno);
         }
 
         // set stream time out
