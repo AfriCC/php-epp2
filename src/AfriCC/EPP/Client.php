@@ -115,7 +115,7 @@ class Client extends AbstractClient implements ClientInterface
             // Socket initialization may fail, before system call connect()
             // so the $errno is 0 and $errstr isn't populated .
             // see https://www.php.net/manual/en/function.stream-socket-client.php#refsect1-function.stream-socket-client-errors
-            throw new Exception(sprintf('problem initializing socket: %s code: [%d]',$errstr, $errno), $errno);
+            throw new Exception(sprintf('problem initializing socket: %s code: [%d]', $errstr, $errno), $errno);
         }
 
         // set stream time out

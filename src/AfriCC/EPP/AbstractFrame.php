@@ -29,7 +29,22 @@ abstract class AbstractFrame extends DOMDocument implements FrameInterface
     protected $format;
     protected $command;
     protected $mapping;
+
+    /**
+     * Extension name
+     *
+     * Redefine in case it's different than class name
+     * @var string
+     */
     protected $extension;
+
+    /**
+     * Extension namespace
+     *
+     * Make sure to define it in class implementing ExtensionInterface
+     * @var string
+     */
+    protected $extension_xmlns;
     /**
      * @var bool whether to ignore command part when building realxpath
      */
@@ -344,7 +359,7 @@ abstract class AbstractFrame extends DOMDocument implements FrameInterface
 
     public function getExtensionNamespace()
     {
-        if(!isset($this->extension_xmlns) && ($this instanceof ExtensionInterface)){
+        if (empty($this->extension_xmlns) && ($this instanceof ExtensionInterface)) {
             throw new Exception(sprintf('Extension %s has no defined namespace', get_class($this)));
         }
         return $this->extension_xmlns;
