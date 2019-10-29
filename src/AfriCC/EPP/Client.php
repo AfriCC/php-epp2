@@ -170,7 +170,6 @@ class Client extends AbstractClient implements ClientInterface
     public function getFrame()
     {
         $hard_time_limit = time() + $this->timeout + 2;
-        $header = '';
         do {
             $header = $this->recv(4);
         } while (empty($header) && (time() < $hard_time_limit));
