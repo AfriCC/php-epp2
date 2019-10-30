@@ -65,12 +65,15 @@ abstract class AbstractClient implements ClientInterface, LoggerAwareInterface
         }
     }
 
-    protected function logResponse(ResponseFrame $frame)
+    /**
+     * @param ResponseFrame|string $frame
+     */
+    protected function logResponse($frame)
     {
         if (isset($this->logger)) {
-            $type = \get_class($frame);
+            $type = $frame instanceof ResponseFrame ? \get_class($frame) : 'INCORRECT';
             $frame_xml = (string) $frame;
-            $this->logger->info("Received EPP Response '$type'. Full frame: $frame_xml");
+            $this->logger->info("Received EPP '$type' Response. Full frame: $frame_xml");
         }
     }
 

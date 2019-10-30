@@ -240,7 +240,7 @@ class Client extends AbstractClient implements ClientInterface, LoggerAwareInter
 
             // If the buffer actually contains something then add it to the result
             if ($buffer !== false) {
-                $this->debuLog($buffer);
+                $this->debugLog($buffer);
                 $result .= $buffer;
 
                 // break if all data received
