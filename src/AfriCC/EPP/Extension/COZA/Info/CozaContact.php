@@ -30,9 +30,4 @@ class CozaContact extends ContactInfo implements Extension
     {
         $this->set('//epp:epp/epp:command/epp:extension/cozacontact:info/cozacontact:domainListing', 'true');
     }
-
-    public function getExtensionNamespace()
-    {
-        return $this->extension_xmlns;
-    }
 }

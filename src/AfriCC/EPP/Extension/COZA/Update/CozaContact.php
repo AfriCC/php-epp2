@@ -25,9 +25,4 @@ class CozaContact extends ContactUpdate implements Extension
     {
         $this->set('//epp:epp/epp:command/epp:extension/cozacontact:update[@cancelPendingAction=\'PendingUpdate\']');
     }
-
-    public function getExtensionNamespace()
-    {
-        return $this->extension_xmlns;
-    }
 }

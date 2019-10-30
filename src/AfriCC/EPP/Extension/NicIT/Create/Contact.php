@@ -31,11 +31,6 @@ class Contact extends ContactCreate implements Extension
         7, // Foreigners who match 2-6
     ];
 
-    public function getExtensionNamespace()
-    {
-        return $this->extension_xmlns;
-    }
-
     public function setConsentForPublishing($consent = false)
     {
         $this->set('//epp:epp/epp:command/epp:extension/extcon:create/extcon:consentForPublishing', $consent ? 'true' : 'false');

@@ -10,11 +10,6 @@ class Contact extends ContactUpdate implements ExtensionInterface
     protected $extension = 'extcon';
     protected $extension_xmlns = 'http://www.dns.pl/nask-epp-schema/extcon-2.0';
 
-    public function getExtensionNamespace()
-    {
-        return $this->extension_xmlns;
-    }
-
     /**
      * Set entity type of contact
      *

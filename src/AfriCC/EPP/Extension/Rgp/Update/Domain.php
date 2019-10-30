@@ -84,9 +84,4 @@ class Domain extends DomainUpdate implements Extension
     {
         $this->set('//epp:epp/epp:command/epp:extension/rgp:update/rgp:restore[@op=\'report\']/rgp:report/rgp:other', $other);
     }
-
-    public function getExtensionNamespace()
-    {
-        return $this->extension_xmlns;
-    }
 }

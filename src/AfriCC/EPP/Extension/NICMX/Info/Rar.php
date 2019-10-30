@@ -27,9 +27,4 @@ class Rar extends Info implements Extension
 
         $this->set();
     }
-
-    public function getExtensionNamespace()
-    {
-        return $this->extension_xmlns;
-    }
 }

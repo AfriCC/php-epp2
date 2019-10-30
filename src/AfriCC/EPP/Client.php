@@ -99,7 +99,7 @@ class Client extends AbstractClient implements ClientInterface
      *
      * @param resource|null $context SSL context or null in case of tcp connection
      *
-     * @throws Exception
+     * @throws Exception on socket errors
      */
     private function setupSocket($context = null)
     {
@@ -112,7 +112,10 @@ class Client extends AbstractClient implements ClientInterface
         $this->socket = @stream_socket_client($target, $errno, $errstr, $this->connect_timeout, STREAM_CLIENT_CONNECT, $context);
 
         if ($this->socket === false) {
-            throw new Exception($errstr, $errno);
+            // Socket initialization may fail, before system call connect()
+            // so the $errno is 0 and $errstr isn't populated .
+            // see https://www.php.net/manual/en/function.stream-socket-client.php#refsect1-function.stream-socket-client-errors
+            throw new Exception(sprintf('problem initializing socket: %s code: [%d]', $errstr, $errno), $errno);
         }
 
         // set stream time out
@@ -163,7 +166,14 @@ class Client extends AbstractClient implements ClientInterface
 
     public function getFrame()
     {
-        $header = $this->recv(4);
+        $hard_time_limit = time() + $this->timeout + 2;
+        do {
+            $header = $this->recv(4);
+        } while (empty($header) && (time() < $hard_time_limit));
+
+        if (time() >= $hard_time_limit) {
+            throw new Exception('Timeout while reading header from EPP Server');
+        }
 
         // Unpack first 4 bytes which is our length
         $unpacked = unpack('N', $header);

@@ -26,9 +26,4 @@ class Domain extends Renew implements Extension
     {
         $this->set('//epp:epp/epp:command/epp:renew/nicmx-domrst:restore/nicmx-domrst:name', $domain);
     }
-
-    public function getExtensionNamespace()
-    {
-        return $this->extension_xmlns;
-    }
 }

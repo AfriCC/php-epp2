@@ -37,9 +37,4 @@ class Domain extends UpdateCommand implements Extension
     {
         $this->set('//epp:epp/epp:command/epp:update/r:release/r:registrarTag', $tag);
     }
-
-    public function getExtensionNamespace()
-    {
-        return $this->extension_xmlns;
-    }
 }

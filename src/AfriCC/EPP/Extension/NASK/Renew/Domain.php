@@ -8,13 +8,7 @@ use AfriCC\EPP\Frame\Command\Renew\Domain as DomainRenew;
 class Domain extends DomainRenew implements ExtensionInterface
 {
     protected $extension = 'extdom';
-
     protected $extension_xmlns = 'http://www.dns.pl/nask-epp-schema/extdom-2.0';
-
-    public function getExtensionNamespace()
-    {
-        return $this->extension_xmlns;
-    }
 
     public function setReactivate()
     {

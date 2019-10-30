@@ -13,11 +13,6 @@ class Report extends Extension implements ExtensionInterface
     protected $extension = 'extreport';
     protected $extension_xmlns = 'http://www.dns.pl/nask-epp-schema/extreport-2.0';
 
-    public function getExtensionNamespace()
-    {
-        return $this->extension_xmlns;
-    }
-
     public function setOffset($offset)
     {
         $this->set('extreport:offset', $offset);

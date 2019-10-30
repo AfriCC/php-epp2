@@ -20,11 +20,6 @@ class Domain extends DomainInfo implements Extension
     protected $extension = 'extdom';
     protected $extension_xmlns = 'http://www.nic.it/ITNIC-EPP/extdom-2.0';
 
-    public function getExtensionNamespace()
-    {
-        return $this->extension_xmlns;
-    }
-
     public function setInfContacts($op = null)
     {
         if (!is_null($op)) {
