@@ -13,6 +13,8 @@ namespace AfriCC\EPP;
 
 use AfriCC\EPP\Frame\Command\Logout as LogoutCommand;
 use Exception;
+use Psr\Log\LoggerAwareInterface;
+use Psr\Log\LoggerAwareTrait;
 
 /**
  * A high level TCP (SSL) based client for the Extensible Provisioning Protocol (EPP)
@@ -22,8 +24,10 @@ use Exception;
  * As this class deals directly with sockets it's untestable
  * @codeCoverageIgnore
  */
-class Client extends AbstractClient implements ClientInterface
+class Client extends AbstractClient implements ClientInterface, LoggerAwareInterface
 {
+    use LoggerAwareTrait;
+
     protected $socket;
     protected $chunk_size;
     protected $verify_peer_name;
@@ -196,7 +200,7 @@ class Client extends AbstractClient implements ClientInterface
         return $this->send($header . $buffer);
     }
 
-    protected function log($message, $color = '0;32')
+    protected function debugLog($message, $color = '0;32')
     {
         if ($message === '' || !$this->debug) {
             return;
@@ -236,7 +240,7 @@ class Client extends AbstractClient implements ClientInterface
 
             // If the buffer actually contains something then add it to the result
             if ($buffer !== false) {
-                $this->log($buffer);
+                $this->debuLog($buffer);
                 $result .= $buffer;
 
                 // break if all data received
@@ -289,7 +293,7 @@ class Client extends AbstractClient implements ClientInterface
             // If we read something, bump up the position
             if ($written) {
                 if ($this->debug) {
-                    $this->log(mb_substr($buffer, $pos, $wlen, 'ASCII'), '1;31');
+                    $this->debugLog(mb_substr($buffer, $pos, $wlen, 'ASCII'), '1;31');
                 }
                 $pos += $written;
 
