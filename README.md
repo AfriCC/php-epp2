@@ -43,6 +43,7 @@ Features
 
 * modern PHP standards
     * [PSR-1](http://www.php-fig.org/psr/psr-1/), [PSR-2](http://www.php-fig.org/psr/psr-2/) & [PSR-4](http://www.php-fig.org/psr/psr-4/)
+    * [PSR-3](http://www.php-fig.org/psr/psr-3/) for logging command and response frames
     * notice and warning free (find them, and I'll fix it!)
 * high-level usage (Plug & Play)
 * simplified client for socket and http(s) connections (auto login/logout, auto inject clTRID)
