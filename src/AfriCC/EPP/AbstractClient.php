@@ -131,6 +131,7 @@ abstract class AbstractClient implements ClientInterface
      * @param array $config
      * @param string $key
      * @param mixed $default
+     *
      * @return mixed
      */
     protected function getConfigDefault(array $config, string $key, $default = null)
@@ -138,6 +139,7 @@ abstract class AbstractClient implements ClientInterface
         if (!empty($config[$key])) {
             return $config[$key];
         }
+
         return $default;
     }
 
@@ -149,7 +151,9 @@ abstract class AbstractClient implements ClientInterface
      * @param array $config
      * @param string $key
      * @param mixed $default
+     *
      * @return mixed
+     *
      * @see AbstractClient::getConfigDefault
      */
     protected function getConfigDefaultBool(array $config, string $key, $default = null)
@@ -157,6 +161,7 @@ abstract class AbstractClient implements ClientInterface
         if (!empty($config[$key]) && is_bool($config[$key])) {
             return $config[$key];
         }
+
         return $default;
     }
 
@@ -168,7 +173,9 @@ abstract class AbstractClient implements ClientInterface
      * @param array $config
      * @param string $key
      * @param mixed $default
+     *
      * @return mixed
+     *
      * @see AbstractClient::getConfigDefault
      */
     protected function getConfigDefaultArray(array $config, string $key, $default = null)
@@ -176,6 +183,7 @@ abstract class AbstractClient implements ClientInterface
         if (!empty($config[$key]) && is_array($config[$key])) {
             return $config[$key];
         }
+
         return $default;
     }
 
@@ -187,8 +195,11 @@ abstract class AbstractClient implements ClientInterface
      * @param array $config
      * @param string $key
      * @param mixed $default
-     * @return mixed
+     *
      * @throws Exception in case file is specified but not readable
+     *
+     * @return mixed
+     *
      * @see AbstractClient::getConfigDefault
      */
     protected function getConfigDefaultReadableFile(array $config, string $key, $default = null)
@@ -197,10 +208,12 @@ abstract class AbstractClient implements ClientInterface
             $return = (string) $config[$key];
 
             if (!is_readable($return)) {
-                throw new \Exception(sprintf('unable to read %s: %s',$key, $return));
+                throw new \Exception(sprintf('unable to read %s: %s', $key, $return));
             }
+
             return $return;
         }
+
         return $default;
     }
 
