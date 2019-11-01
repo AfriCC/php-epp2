@@ -24,6 +24,8 @@ abstract class AbstractClient implements ClientInterface
     protected $port;
     protected $username;
     protected $password;
+    protected $lang;
+    protected $version;
     protected $services;
     protected $serviceExtensions;
     protected $ssl;
@@ -98,6 +100,7 @@ abstract class AbstractClient implements ClientInterface
         $this->prepareCredentials($config);
         $this->prepareSSLOptions($config);
         $this->prepareEPPServices($config);
+        $this->prepareEPPVersionLang($lang);
     }
 
     /**
@@ -120,88 +123,122 @@ abstract class AbstractClient implements ClientInterface
         $this->objectSpec = $newObjectSpec;
     }
 
+    /**
+     * Get config value from config array if set (default otherwise)
+     *
+     * Basically, a simple null coallesce operator (since we need to support PHP 5.5)
+     *
+     * @param array $config
+     * @param string $key
+     * @param mixed $default
+     * @return mixed
+     */
+    protected function getConfigDefault(array $config, string $key, $default = null)
+    {
+        if (!empty($config[$key])) {
+            return $config[$key];
+        }
+        return $default;
+    }
+
+    /**
+     * Get config value from config array if set (default otherwise)
+     *
+     * special version for bool values
+     *
+     * @param array $config
+     * @param string $key
+     * @param mixed $default
+     * @return mixed
+     * @see AbstractClient::getConfigDefault
+     */
+    protected function getConfigDefaultBool(array $config, string $key, $default = null)
+    {
+        if (!empty($config[$key]) && is_bool($config[$key])) {
+            return $config[$key];
+        }
+        return $default;
+    }
+
+    /**
+     * Get config value from config array if set (default otherwise)
+     *
+     * special version for aray values
+     *
+     * @param array $config
+     * @param string $key
+     * @param mixed $default
+     * @return mixed
+     * @see AbstractClient::getConfigDefault
+     */
+    protected function getConfigDefaultArray(array $config, string $key, $default = null)
+    {
+        if (!empty($config[$key]) && is_array($config[$key])) {
+            return $config[$key];
+        }
+        return $default;
+    }
+
+    /**
+     * Get config value from config array if set (default otherwise)
+     *
+     * special version for files
+     *
+     * @param array $config
+     * @param string $key
+     * @param mixed $default
+     * @return mixed
+     * @throws Exception in case file is specified but not readable
+     * @see AbstractClient::getConfigDefault
+     */
+    protected function getConfigDefaultReadableFile(array $config, string $key, $default = null)
+    {
+        if (!empty($config[$key])) {
+            $return = (string) $config[$key];
+
+            if (!is_readable($return)) {
+                throw new \Exception(sprintf('unable to read %s: %s',$key, $return));
+            }
+            return $return;
+        }
+        return $default;
+    }
+
     protected function prepareConnectionOptions(array $config)
     {
-        if (!empty($config['host'])) {
-            $this->host = (string) $config['host'];
-        }
-
-        if (!empty($config['port'])) {
-            $this->port = (int) $config['port'];
-        } else {
-            $this->port = false;
-        }
-
-        if (!empty($config['connect_timeout'])) {
-            $this->connect_timeout = (int) $config['connect_timeout'];
-        } else {
-            $this->connect_timeout = 16;
-        }
-
-        if (!empty($config['timeout'])) {
-            $this->timeout = (int) $config['timeout'];
-        } else {
-            $this->timeout = 32;
-        }
+        $this->host = $this->getConfigDefault($config, 'host');
+        $this->port = $this->getConfigDefault($config, 'port', false);
+        $this->connect_timeout = (int) $this->getConfigDefault($config, 'connect_timeout', 16);
+        $this->timeout = (int) $this->getConfigDefault($config, 'timeout', 32);
     }
 
     protected function prepareCredentials(array $config)
     {
-        if (!empty($config['username'])) {
-            $this->username = (string) $config['username'];
-        }
-
-        if (!empty($config['password'])) {
-            $this->password = (string) $config['password'];
-        }
+        $this->username = $this->getConfigDefault($config, 'username');
+        $this->password = $this->getConfigDefault($config, 'password');
     }
 
     protected function prepareSSLOptions(array $config)
     {
-        if ((!empty($config['ssl']) && is_bool($config['ssl']))) {
-            $this->ssl = $config['ssl'];
-        } else {
-            $this->ssl = false;
-        }
+        $this->ssl = $this->getConfigDefaultBool($config, 'ssl', false);
 
-        if (!empty($config['local_cert'])) {
-            $this->local_cert = (string) $config['local_cert'];
+        $this->local_cert = $this->getConfigDefaultReadableFile($config, 'local_cert');
+        $this->ca_cert = $this->getConfigDefaultReadableFile($config, 'ca_cert');
+        $this->pk_cert = $this->getConfigDefaultReadableFile($config, 'pk_cert');
 
-            if (!is_readable($this->local_cert)) {
-                throw new \Exception(sprintf('unable to read local_cert: %s', $this->local_cert));
-            }
-        }
-
-        if (!empty($config['ca_cert'])) {
-            $this->ca_cert = (string) $config['ca_cert'];
-
-            if (!is_readable($this->ca_cert)) {
-                throw new \Exception(sprintf('unable to read ca_cert: %s', $this->ca_cert));
-            }
-        }
-
-        if (!empty($config['pk_cert'])) {
-            $this->pk_cert = (string) $config['pk_cert'];
-
-            if (!is_readable($this->pk_cert)) {
-                throw new \Exception(sprintf('unable to read pk_cert: %s', $this->pk_cert));
-            }
-        }
-
-        if (!empty($config['passphrase'])) {
-            $this->passphrase = (string) $config['passphrase'];
-        }
+        $this->passphrase = $this->getConfigDefault($config, 'passphrase');
     }
 
     protected function prepareEPPServices(array $config)
     {
-        if (!empty($config['services']) && is_array($config['services'])) {
-            $this->services = $config['services'];
+        $this->services = $this->getConfigDefaultArray($config, 'services');
+        $this->serviceExtensions = $this->getConfigDefaultArray($config, 'serviceExtensions');
+    }
 
-            if (!empty($config['serviceExtensions']) && is_array($config['serviceExtensions'])) {
-                $this->serviceExtensions = $config['serviceExtensions'];
-            }
-        }
+    protected function prepareEPPVersionLang(array $config)
+    {
+        $this->lang = $this->getConfigDefault($config, 'lang', 'en');
+        $this->version = $this->getConfigDefault($config, 'version', '1.0');
     }
 
     protected function generateClientTransactionId()
@@ -227,8 +264,8 @@ abstract class AbstractClient implements ClientInterface
         if ($newPassword) {
             $login->setNewPassword($newPassword);
         }
-        $login->setVersion('1.0');
-        $login->setLanguage('en');
+        $login->setVersion($this->version);
+        $login->setLanguage($this->lang);
 
         if (!empty($this->services) && is_array($this->services)) {
             foreach ($this->services as $urn) {
