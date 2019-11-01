@@ -100,7 +100,7 @@ abstract class AbstractClient implements ClientInterface
         $this->prepareCredentials($config);
         $this->prepareSSLOptions($config);
         $this->prepareEPPServices($config);
-        $this->prepareEPPVersionLang($lang);
+        $this->prepareEPPVersionLang($config);
     }
 
     /**
