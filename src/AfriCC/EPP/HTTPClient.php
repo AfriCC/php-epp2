@@ -33,11 +33,7 @@ class HTTPClient extends AbstractClient implements ClientInterface
 
     protected function prepareCookieJar(array $config)
     {
-        if (!empty($config['cookiejar'])) {
-            $this->cookiejar = $config['cookiejar'];
-        } else {
-            $this->cookiejar = tempnam(sys_get_temp_dir(), 'ehc');
-        }
+        $this->cookiejar = $this->getConfigDefault($config, 'cookiejar', tempnam(sys_get_temp_dir(), 'ehc'));
 
         if (!is_readable($this->cookiejar) || !is_writable($this->cookiejar)) {
             throw new \Exception(

@@ -32,22 +32,11 @@ class Client extends AbstractClient implements ClientInterface
     {
         parent::__construct($config, $objectSpec);
 
-        if (!empty($config['chunk_size'])) {
-            $this->chunk_size = (int) $config['chunk_size'];
-        } else {
-            $this->chunk_size = 1024;
-        }
+        $this->chunk_size = (int) $this->getConfigDefault($config, 'chunk_size', 1024);
+        $this->verify_peer_name = $this->getConfigDefaultBool($config, 'verify_peer_name', true);
 
-        if (isset($config['verify_peer_name'])) {
-            $this->verify_peer_name = (bool) $config['verify_peer_name'];
-        } else {
-            $this->verify_peer_name = true;
-        }
-
-        if ($this->port === false) {
-            // if not set, default port is 700
-            $this->port = 700;
-        }
+        // override 'port' default to false from AbstractClient::prepareConnectionOptions
+        $this->port = (int) $this->getConfigDefault($config, 'port', 700);
     }
 
     public function __destruct()
