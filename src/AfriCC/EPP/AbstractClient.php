@@ -158,7 +158,7 @@ abstract class AbstractClient implements ClientInterface
      */
     protected function getConfigDefaultBool(array $config, string $key, $default = null)
     {
-        if (!empty($config[$key]) && is_bool($config[$key])) {
+        if (isset($config[$key]) && is_bool($config[$key])) {
             return $config[$key];
         }
 
