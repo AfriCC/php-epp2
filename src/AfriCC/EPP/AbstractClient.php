@@ -6,6 +6,8 @@ use AfriCC\EPP\Frame\Command\Login as LoginCommand;
 use AfriCC\EPP\Frame\Response as ResponseFrame;
 use AfriCC\EPP\Frame\ResponseFactory;
 use Exception;
+use Psr\Log\LoggerAwareInterface;
+use Psr\Log\LoggerAwareTrait;
 
 /**
  * An abstract client client for the Extensible Provisioning Protocol (EPP)
@@ -18,8 +20,10 @@ use Exception;
  * As this class is abstract and relies on subclass implementation details it's untestable
  * @codeCoverageIgnore
  */
-abstract class AbstractClient implements ClientInterface
+abstract class AbstractClient implements ClientInterface, LoggerAwareInterface
 {
+    use LoggerAwareTrait;
+
     protected $host;
     protected $port;
     protected $username;
@@ -47,7 +51,33 @@ abstract class AbstractClient implements ClientInterface
 
     abstract public function close();
 
-    abstract protected function log($message);
+    /**
+     * Prints out debugging data (eg raw frame bytes)
+     *
+     * @param string $message
+     */
+    abstract protected function debugLog($message);
+
+    protected function logCommand(FrameInterface $frame)
+    {
+        if (isset($this->logger)) {
+            $command = \get_class($frame);
+            $frame_xml = (string) $frame;
+            $this->logger->info("Sending EPP Command '$command'. Full frame: $frame_xml");
+        }
+    }
+
+    /**
+     * @param ResponseFrame|string $frame
+     */
+    protected function logResponse($frame)
+    {
+        if (isset($this->logger)) {
+            $type = $frame instanceof ResponseFrame ? \get_class($frame) : 'INCORRECT';
+            $frame_xml = (string) $frame;
+            $this->logger->info("Received EPP '$type' Response. Full frame: $frame_xml");
+        }
+    }
 
     /**
      * Send frame to EPP server
@@ -75,11 +105,14 @@ abstract class AbstractClient implements ClientInterface
                 );
         }
 
+        $this->logCommand($frame);
         $this->sendFrame($frame);
 
         $return = $this->getFrame();
+        $response = ResponseFactory::build($return, $this->objectSpec);
+        $this->logResponse($response);
 
-        return ResponseFactory::build($return, $this->objectSpec);
+        return $response;
     }
 
     public function __construct(array $config, ObjectSpec $objectSpec = null)

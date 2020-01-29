@@ -3,6 +3,8 @@
 namespace AfriCC\EPP;
 
 use AfriCC\EPP\Frame\Command\Logout as LogoutCommand;
+use Psr\Log\LoggerAwareInterface;
+use Psr\Log\LoggerAwareTrait;
 
 /**
  * A high level HTTP(S) based client for the Extensible Provisioning Protocol (EPP)
@@ -12,10 +14,13 @@ use AfriCC\EPP\Frame\Command\Logout as LogoutCommand;
  * As this class deals directly with cURL it's untestable
  * @codeCoverageIgnore
  */
-class HTTPClient extends AbstractClient implements ClientInterface
+class HTTPClient extends AbstractClient implements ClientInterface, LoggerAwareInterface
 {
+    use LoggerAwareTrait;
+
     protected $curl;
     protected $cookiejar;
+    protected $curlDebugStream;
 
     public function __construct(array $config, ObjectSpec $objectSpec = null)
     {
@@ -64,6 +69,10 @@ class HTTPClient extends AbstractClient implements ClientInterface
         if ($this->ssl) {
             $this->setupCurlSSL();
         }
+
+        if ($this->debug) {
+            $this->setupCurlDebug();
+        }
     }
 
     private function setupCurlOpts()
@@ -103,6 +112,13 @@ class HTTPClient extends AbstractClient implements ClientInterface
         if ($this->passphrase) {
             curl_setopt($this->curl, CURLOPT_SSLCERTPASSWD, $this->passphrase);
         }
+    }
+
+    private function setupCurlDebug()
+    {
+        curl_setopt($this->curl, CURLOPT_VERBOSE, true);
+        $this->curlDebugStream = fopen('php://temp', 'w+');
+        curl_setopt($this->curl, CURLOPT_STDERR, $this->curlDebugStream);
     }
 
     /**
@@ -152,16 +168,20 @@ class HTTPClient extends AbstractClient implements ClientInterface
         if ($return === false) {
             $code = curl_errno($this->curl);
             $msg = curl_error($this->curl);
+            $this->debugLog("cURL error: $msg");
             throw new \Exception($msg, $code);
         }
 
         return $return;
     }
 
-    protected function log($message)
+    protected function debugLog($message)
     {
         if ($this->debug) {
             \error_log($message);
+            rewind($this->curlDebugStream);
+            $curlDebug = stream_get_contents($this->curlDebugStream);
+            \error_log("Full info:\n$curlDebug");
         }
     }
 
