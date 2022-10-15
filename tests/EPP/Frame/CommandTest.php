@@ -21,7 +21,7 @@ class CommandTest extends TestCase
             </epp>
             ',
             (string) $frame
-            );
+        );
     }
 
     public function testCommandFrameOverlongTrId()
@@ -38,7 +38,7 @@ class CommandTest extends TestCase
             </epp>
             ',
             (string) $frame
-            );
+        );
     }
 
     public function testCommandFrameGetTrId()

@@ -23,7 +23,7 @@ class ReportContactTest extends TestCase
             </epp>
             ',
             (string) $frame
-            );
+        );
     }
 
     public function testReportSpecificContactFrame()
@@ -44,6 +44,6 @@ class ReportContactTest extends TestCase
             </epp>
             ',
             (string) $frame
-            );
+        );
     }
 }

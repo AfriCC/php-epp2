@@ -39,7 +39,7 @@ class FutureTransferTest extends TestCase
 
             ',
             (string) $frame
-            );
+        );
     }
 
     public function testFutureTransferRoid()
@@ -65,7 +65,7 @@ class FutureTransferTest extends TestCase
             </epp>
             ',
             (string) $frame
-            );
+        );
     }
 
     public function testFutureTransferFrameInvalidFuture()
