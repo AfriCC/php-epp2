@@ -1,6 +1,6 @@
-[![Build Status](https://travis-ci.org/AfriCC/php-epp2.svg?branch=master)](https://travis-ci.org/AfriCC/php-epp2)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/AfriCC/php-epp2/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/AfriCC/php-epp2/?branch=master)
-[![Coverage Status](https://coveralls.io/repos/github/AfriCC/php-epp2/badge.svg?branch=master)](https://coveralls.io/github/AfriCC/php-epp2?branch=master)
+[![build and publish](https://github.com/AfriCC/php-epp2/actions/workflows/build-and-publish.yml/badge.svg)](https://github.com/AfriCC/php-epp2/actions/workflows/build-and-publish.yml)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/AfriCC/php-epp2/badges/quality-score.png?b=main)](https://scrutinizer-ci.com/g/AfriCC/php-epp2/?branch=main)
+[![Coverage Status](https://coveralls.io/repos/github/AfriCC/php-epp2/badge.svg?branch=main)](https://coveralls.io/github/AfriCC/php-epp2?branch=main)
 [![Latest Stable Version](https://poser.pugx.org/africc/php-epp2/v/stable.svg)](https://packagist.org/packages/africc/php-epp2)
 [![Packagist](https://img.shields.io/packagist/dt/africc/php-epp2.svg)](https://packagist.org/packages/africc/php-epp2)
 [![Latest Unstable Version](https://poser.pugx.org/africc/php-epp2/v/unstable.svg)](https://packagist.org/packages/africc/php-epp2)
@@ -66,8 +66,8 @@ $ composer require africc/php-epp2
 Usage
 -----
 
-See the [examples](https://github.com/AfriCC/php-epp2/blob/master/examples)
-folder for a more or less complete usage reference. Additionally have a look at 
+See the [examples](https://github.com/AfriCC/php-epp2/blob/main/examples)
+folder for a more or less complete usage reference. Additionally have a look at
 [whmcs-registrars-coza](https://github.com/AfriCC/whmcs-registrars-coza)
 which is a [WHMCS](https://www.whmcs.com) Registrar Module for the
 [co.za zone](https://www.registry.net.za) using this library.
@@ -173,7 +173,7 @@ foreach ($data['chkData']['cd'] as $cd) {
 ```
 ### Custom ObjectSpec
 
-If registrar you're working with uses custom namespace names (eg NASK) you can 
+If registrar you're working with uses custom namespace names (eg NASK) you can
 use custom ObjectSpec. Clients always use specified ObjectSpec when decoding
 responses from EPP server.
 
@@ -283,5 +283,5 @@ License
 -------
 
 php-epp2 is released under the GPLv3 License. See the bundled
-[LICENSE](https://github.com/AfriCC/php-epp2/blob/master/LICENSE) file for
+[LICENSE](https://github.com/AfriCC/php-epp2/blob/main/LICENSE) file for
 details.
