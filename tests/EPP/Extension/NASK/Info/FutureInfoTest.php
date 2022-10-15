@@ -26,7 +26,7 @@ class FutureInfoTest extends TestCase
               </command>
             </epp>',
             (string) $frame
-            );
+        );
     }
 
     public function testFutureInfoFrameAuthinfo()
@@ -50,7 +50,7 @@ class FutureInfoTest extends TestCase
               </command>
             </epp>',
             (string) $frame
-            );
+        );
     }
 
     public function testFutureInfoFrameAuthinfoRoid()
@@ -74,7 +74,7 @@ class FutureInfoTest extends TestCase
               </command>
             </epp>',
             (string) $frame
-            );
+        );
     }
 
     public function testFutureInfoFrameInvalidDomain()

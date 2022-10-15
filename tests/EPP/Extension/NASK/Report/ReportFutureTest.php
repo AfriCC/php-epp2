@@ -23,7 +23,7 @@ class ReportFutureTest extends TestCase
             </epp>
             ',
             (string) $frame
-            );
+        );
     }
 
     public function testReportSpecificFutureFrame()
@@ -44,6 +44,6 @@ class ReportFutureTest extends TestCase
             </epp>
             ',
             (string) $frame
-            );
+        );
     }
 }

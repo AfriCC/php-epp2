@@ -37,6 +37,6 @@ class DomainTransferTest extends TestCase
             </epp>
             ',
             (string) $frame
-            );
+        );
     }
 }

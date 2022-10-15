@@ -26,7 +26,7 @@ class FutureDeleteTest extends TestCase
               </command>
             </epp>',
             (string) $frame
-            );
+        );
     }
 
     public function testFutureDeleteFrameInvalidDomain()

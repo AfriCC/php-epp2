@@ -123,6 +123,6 @@ xmlns:extcon="http://www.dns.pl/nask-epp-schema/extcon-2.0">
 </command>
 </epp>',
             (string) $frame
-            );
+        );
     }
 }

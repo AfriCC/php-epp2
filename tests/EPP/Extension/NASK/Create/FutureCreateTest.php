@@ -34,7 +34,7 @@ class FutureCreateTest extends TestCase
               </command>
             </epp>',
             (string) $frame
-            );
+        );
     }
 
     public function testFutureCreateFrameInvalidDomain()
