@@ -28,7 +28,7 @@ EOF;
         $import = ResponseFactory::build($raw_data);
         $stub = $this->getMockForAbstractClass(AbstractFrame::class, [$import]);
 
-        $this->assertXmlStringEqualsXmlString($import, (string) $stub);
+        $this->assertXmlStringEqualsXmlString((string) $import, (string) $stub);
     }
 
     public function testImportSpec()
@@ -53,7 +53,7 @@ EOF;
         $import = ResponseFactory::build($raw_data, $objectSpec);
         $stub = $this->getMockForAbstractClass(AbstractFrame::class, [$import, $objectSpec]);
 
-        $this->assertXmlStringEqualsXmlString($import, (string) $stub);
+        $this->assertXmlStringEqualsXmlString((string) $import, (string) $stub);
     }
 
     public function testExtensionName()
