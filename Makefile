@@ -7,6 +7,7 @@ all:
 
 .PHONY: build
 build:
+	composer validate
 	composer install \
 		--no-interaction \
 		--prefer-dist
