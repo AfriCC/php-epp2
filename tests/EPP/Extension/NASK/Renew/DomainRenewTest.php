@@ -36,7 +36,7 @@ class DomainRenewTest extends TestCase
             </epp>
             ',
             (string) $frame
-            );
+        );
     }
 
     public function testDomainRenewToDate()
@@ -65,6 +65,6 @@ class DomainRenewTest extends TestCase
             </epp>
             ',
             (string) $frame
-            );
+        );
     }
 }

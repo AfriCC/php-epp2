@@ -26,6 +26,6 @@ class ReportCancelTest extends TestCase
             </epp>
             ',
             (string) $frame
-            );
+        );
     }
 }

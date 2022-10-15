@@ -40,8 +40,8 @@ class HTTPClient extends AbstractClient implements ClientInterface
                 sprintf(
                     'unable to read/write cookiejar: %s',
                     $this->cookiejar
-                    )
-                );
+                )
+            );
         }
     }
 
@@ -74,7 +74,7 @@ class HTTPClient extends AbstractClient implements ClientInterface
             $this->curl,
             CURLOPT_CONNECTTIMEOUT,
             $this->connect_timeout
-            );
+        );
 
         // set necessary options
         curl_setopt($this->curl, CURLOPT_RETURNTRANSFER, true);

@@ -26,6 +26,6 @@ class ReportGetDataTest extends TestCase
             </epp>
             ',
             (string) $frame
-            );
+        );
     }
 }

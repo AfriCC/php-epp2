@@ -100,7 +100,8 @@ class ResponseTest extends TestCase
 
         $results = $response->results();
 
-        $this->assertEquals([
+        $this->assertEquals(
+            [
             'hostObj' => [
                 'ns21.yoann.mx',
                 'ns2.yoann.mx',
@@ -108,7 +109,8 @@ class ResponseTest extends TestCase
             $results[0]->values()
         );
 
-        $this->assertEquals([
+        $this->assertEquals(
+            [
             'value' => [
                 'hostObj' => ['ns2.yoann.mx'],
             ],
@@ -161,7 +163,8 @@ class ResponseTest extends TestCase
             '
         );
 
-        $this->assertEquals([
+        $this->assertEquals(
+            [
             'chkData' => [
                 'cd' => [
                 [
@@ -199,7 +202,7 @@ class ResponseTest extends TestCase
              </response>
             </epp>
             '
-            );
+        );
 
         $this->assertTrue($response->results()[0]->success());
     }
@@ -216,7 +219,7 @@ class ResponseTest extends TestCase
              </response>
             </epp>
             '
-            );
+        );
 
         $this->assertFalse($response->results()[0]->success());
         $this->assertFalse($response->success());

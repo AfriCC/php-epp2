@@ -40,7 +40,7 @@ xmlns:future="http://www.dns.pl/nask-epp-schema/future-2.0">
 </epp>
             ',
             (string) $frame
-            );
+        );
     }
 
     public function testDomainCheckFrameInvalidDomain()
