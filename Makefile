@@ -15,9 +15,8 @@ build:
 .PHONY: test
 test:
 ifeq ($(RUN_COVERAGE),true)
-	mkdir -p build/logs
-	XDEBUG_MODE=coverage vendor/bin/phpunit --coverage-text --coverage-clover build/logs/clover.xml
-	vendor/bin/php-coveralls --quiet
+	mkdir -p build
+	XDEBUG_MODE=coverage vendor/bin/phpunit --coverage-text --coverage-clover build/clover.xml
 else
 	vendor/bin/phpunit
 endif

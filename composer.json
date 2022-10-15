@@ -25,8 +25,7 @@
     "ext-openssl": "*"
   },
   "require-dev": {
-    "php-coveralls/php-coveralls": "^1.0|^2.0",
-    "phpunit/phpunit": "^9.0|^4.8"
+    "phpunit/phpunit": "^9.5|^4.8"
   },
   "autoload": {
     "psr-4": {
