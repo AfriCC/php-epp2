@@ -219,7 +219,7 @@ abstract class AbstractFrame extends DOMDocument implements FrameInterface
             if (preg_match('/^(.*)\[(\d+)\]$/', $node_name, $matches)) {
                 // direct node-array access
                 $node_name = $matches[1];
-            } elseif (preg_match('/^(.*)\[@([a-z0-9]+)=\'([a-z0-9_]+)\'\]$/i', $node_name, $matches)) {
+            } elseif (preg_match('/^(.*)\[@([a-z0-9]+)=\'([a-z0-9_-]+)\'\]$/i', $node_name, $matches)) {
                 // check if attribute needs to be set
                 $node_name = $matches[1];
                 $attr_name = $matches[2];
