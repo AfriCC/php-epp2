@@ -23,7 +23,7 @@ class ReportHostTest extends TestCase
             </epp>
             ',
             (string) $frame
-            );
+        );
     }
 
     public function testReportSpecificHostFrame()
@@ -44,6 +44,6 @@ class ReportHostTest extends TestCase
             </epp>
             ',
             (string) $frame
-            );
+        );
     }
 }

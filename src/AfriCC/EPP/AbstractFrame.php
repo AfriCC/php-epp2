@@ -155,9 +155,9 @@ abstract class AbstractFrame extends DOMDocument implements FrameInterface
 
         // @see http://stackoverflow.com/a/24730245/567193
         if ($nodes->length === 1 && (
-                ($last_bit[0] === '@' && $nodes->item(0)->nodeType === XML_ATTRIBUTE_NODE) ||
+            ($last_bit[0] === '@' && $nodes->item(0)->nodeType === XML_ATTRIBUTE_NODE) ||
                 (stripos($last_bit, 'text()') === 0 && $nodes->item(0)->nodeType === XML_TEXT_NODE)
-            )) {
+        )) {
             return $nodes->item(0)->nodeValue;
         } else {
             return $nodes;

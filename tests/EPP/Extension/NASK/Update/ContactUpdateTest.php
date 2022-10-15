@@ -59,6 +59,6 @@ class ContactUpdateTest extends TestCase
             </epp>
             ',
             (string) $frame
-            );
+        );
     }
 }

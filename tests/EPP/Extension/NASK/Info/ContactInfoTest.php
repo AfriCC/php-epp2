@@ -33,7 +33,7 @@ class ContactInfoTest extends TestCase
               </command>
             </epp>',
             (string) $frame
-            );
+        );
     }
 
     public function testFutureInfoFrameAuthinfoRoid()
@@ -61,6 +61,6 @@ class ContactInfoTest extends TestCase
               </command>
             </epp>',
             (string) $frame
-            );
+        );
     }
 }

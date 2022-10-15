@@ -26,6 +26,6 @@ xmlns:extreport="http://www.dns.pl/nask-epp-schema/extreport-2.0">
 </epp>
             ',
             (string) $frame
-            );
+        );
     }
 }

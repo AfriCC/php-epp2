@@ -34,7 +34,7 @@ xmlns:extreport="http://www.dns.pl/nask-epp-schema/extreport-2.0">
 </epp>
             ',
             (string) $frame
-            );
+        );
     }
 
     public function testNaskPrepaidFundsFrame()
@@ -58,7 +58,7 @@ xmlns:extreport="http://www.dns.pl/nask-epp-schema/extreport-2.0">
 </epp>
             ',
             (string) $frame
-            );
+        );
     }
 
     public function testPrepaidFundsEnumFrame()
@@ -82,7 +82,7 @@ xmlns:extreport="http://www.dns.pl/nask-epp-schema/extreport-2.0">
 </epp>
             ',
             (string) $frame
-            );
+        );
     }
 
     public function testPrepaidFundsInvalidAccount()

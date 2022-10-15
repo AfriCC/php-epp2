@@ -6,11 +6,12 @@
 /.buildpath
 /.project
 # Intellij IDEA
-/.idea
+/.idea/
 *.iml
 
 # composer
 /vendor/
+/composer.lock
 
 # configs
 /config.php
@@ -18,3 +19,4 @@
 
 # build
 /build/
+/.phpunit.result.cache

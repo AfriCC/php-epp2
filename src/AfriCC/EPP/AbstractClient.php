@@ -72,7 +72,7 @@ abstract class AbstractClient implements ClientInterface
         if ($frame instanceof TransactionAwareInterface) {
             $frame->setClientTransactionId(
                 $this->generateClientTransactionId()
-                );
+            );
         }
 
         $this->sendFrame($frame);

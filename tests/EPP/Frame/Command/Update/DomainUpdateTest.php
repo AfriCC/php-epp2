@@ -98,7 +98,7 @@ class DomainUpdateTest extends TestCase
             </epp>
             ',
             (string) $frame
-            );
+        );
     }
 
     public function testDomainUpdateFrameDNSSecdsData()

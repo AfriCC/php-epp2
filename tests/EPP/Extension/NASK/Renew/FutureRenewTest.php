@@ -31,7 +31,7 @@ class FutureRenewTest extends TestCase
             </epp>
             ',
             (string) $frame
-            );
+        );
     }
 
     public function testFutureInfoFrameInvalidDomain()
