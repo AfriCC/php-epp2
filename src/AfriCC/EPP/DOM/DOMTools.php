@@ -73,7 +73,6 @@ class DOMTools
 
                 if (!$ignore_attributes && !in_array($each->localName, $ignoreAttributeKeys) && $each->hasAttributes()) {
                     foreach ($each->attributes as $attr) {
-
                         // single attribute with empty node, use the attr-value directly
                         if ($each->localName === 'status' || ($each->attributes->length === 1 && $each->nodeValue === '')) {
                             $current = $attr->nodeValue;

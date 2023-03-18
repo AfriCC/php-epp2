@@ -10,6 +10,7 @@ use AfriCC\EPP\Frame\Command\Logout as LogoutCommand;
  * @see http://tools.ietf.org/html/rfc5734
  *
  * As this class deals directly with cURL it's untestable
+ *
  * @codeCoverageIgnore
  */
 class HTTPClient extends AbstractClient implements ClientInterface
