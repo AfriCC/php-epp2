@@ -16,6 +16,7 @@ use Exception;
  * @see ClientInterface
  *
  * As this class is abstract and relies on subclass implementation details it's untestable
+ *
  * @codeCoverageIgnore
  */
 abstract class AbstractClient implements ClientInterface

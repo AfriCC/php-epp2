@@ -39,7 +39,6 @@ try {
     $response = $epp_client->request($frame);
 
     while ($response->success() && $response->code() !== 1300) { // 1300 = result successful, no more mesages
-
         echo 'Epp Poll message ID: ';
         echo $response->queueId();
         echo "\n";
